@@ -24,6 +24,8 @@ import os
 import re
 import itertools
 
+from copy import deepcopy
+
 from ansible import constants as C
 from ansible.errors import AnsibleError, AnsibleOptionsError, AnsibleParserError
 from ansible.inventory.data import InventoryData
@@ -85,11 +87,12 @@ def split_host_pattern(pattern):
 
     if isinstance(pattern, list):
         return list(itertools.chain(*map(split_host_pattern, pattern)))
+    elif not isinstance(pattern, string_types):
+        pattern = to_native(pattern)
 
     # If it's got commas in it, we'll treat it as a straightforward
     # comma-separated list of patterns.
-
-    elif ',' in pattern:
+    if ',' in pattern:
         patterns = re.split('\s*,\s*', pattern)
 
     # If it doesn't, it could still be a single pattern. This accounts for
@@ -256,7 +259,12 @@ class InventoryManager(object):
                 # initialize
                 if plugin.verify_file(source):
                     try:
-                        plugin.parse(self._inventory, self._loader, source, cache=cache)
+                        # in case plugin fails 1/2 way we dont want partial inventory
+                        inventory = deepcopy(self._inventory)
+                        plugin.parse(inventory, self._loader, source, cache=cache)
+
+                        # plugin worked! so lets use the more complete inventory
+                        self._inventory = inventory
                         parsed = True
                         display.vvv('Parsed %s inventory source with %s plugin' % (to_native(source), plugin_name))
                         break
