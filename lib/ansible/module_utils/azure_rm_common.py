@@ -313,76 +313,7 @@ class AzureRMModuleBase(object):
                                                                       AZURE_MIN_RELEASE))
 
     def exec_module(self, **kwargs):
-        # self.fail("Error: {0} failed to implement exec_module method.".format(self.__class__.__name__))
-
-        # General processing flow for Azure modules
-        for key in list(self.module_arg_spec.keys()) + ['tags']:
-            setattr(self, key, kwargs[key])
-
-        if hasattr(self, 'location') and getattr(self, 'location', None) is None:
-            resource_group = self.get_resource_group(self.resource_group)
-            setattr(self, 'location', resource_group.location)
-
-        self.results['check_mode'] = self.check_mode
-
-        changed = False
-        results = dict()
-
-        try:
-            instance = self.get_instance()
-            results = self.format_result(instance=instance)
-
-            if self.state == 'present':
-                changed, results['tags'] = self.update_tags(results['tags'])
-            elif self.state == 'absent':
-                changed = True
-
-        except CloudError:
-            if self.state == 'present':
-                changed = True
-            elif self.state == 'absent':
-                changed = False
-
-        self.results['changed'] = changed
-        self.results['state'] = results
-
-        # return the results if your only gathering information
-        if self.check_mode:
-            return self.results
-
-        if changed:
-            if self.state == 'present':
-                self.results['state'] = self.update_instance(instance) if instance else self.create_instance()
-
-            elif self.state == 'absent':
-                self.delete_instance()
-                self.results['state']['status'] = 'Deleted'
-
-        return self.results
-
-    def create_instance(self):
-        self.fail("Error: {0} failed to implement create_instance method.".format(self.__class__.__name__))
-
-    def update_instance(self, instance):
-        self.fail("Error: {0} failed to implement update_instance method.".format(self.__class__.__name__))
-
-    def get_instance(self, op, **kwargs):
-        params = {}
-        op_args = extract_args(op)
-        input_args = {}
-        for arg_name in [a for a in op_args if a in input_args]:
-            params[arg_name] = kwargs[arg_name]
-
-        try:
-            op(**params)
-        except CloudError:
-            self.fail("Error: {0} failed to implement get_instance method.".format(self.__class__.__name__))
-
-    def delete_instance(self):
-        self.fail("Error: {0} failed to implement delete_instance method.".format(self.__class__.__name__))
-
-    def format_result(self, instance):
-        return instance
+        self.fail("Error: {0} failed to implement exec_module method.".format(self.__class__.__name__))
 
     def extract_args(self, operation):
         excluded_params = []
@@ -394,8 +325,6 @@ class AzureRMModuleBase(object):
         except AttributeError:
             sig = inspect.getargspec(operation)  # pylint: disable=deprecated-method
             args = sig.args
-
-
 
         for arg_name in [a for a in args if a not in excluded_params]:
             try:
@@ -872,3 +801,77 @@ class AzureRMModuleBase(object):
         if not self._web_client:
             self._web_client = self.get_mgmt_svc_client(WebSiteManagementClient, base_url=self.base_url)
         return self._web_client
+
+
+class AzureRMProvisionModuleBase(AzureRMModuleBase):
+
+    def _get_module_argspec(self):
+        self.fail("Error: {0} failed to implement _get_module_argspec method.".format(self.__class__.__name__))
+
+    def exec_module(self, **kwargs):
+        # General processing flow for Azure modules
+        for key in list(self._get_module_argspec().keys()) + ['tags']:
+            setattr(self, key, kwargs[key])
+
+        if hasattr(self, 'resource_group') and hasattr(self, 'location') and getattr(self, 'location', None) is None:
+            resource_group = self.get_resource_group(self.resource_group)
+            self.location = resource_group.location
+
+        self.results['check_mode'] = self.check_mode
+
+        changed = False
+        results = dict()
+
+        try:
+            instance = self.get_instance()
+            results = self.format_result(instance)
+
+            if self.state == 'present':
+                changed = self.need_update(instance)
+            elif self.state == 'absent':
+                changed = True
+
+        except CloudError:
+            if self.state == 'present':
+                changed = True
+            elif self.state == 'absent':
+                changed = False
+
+        self.results['changed'] = changed
+        self.results['state'] = results
+
+        # return the results if your only gathering information
+        if self.check_mode:
+            return self.results
+
+        if changed:
+            if self.state == 'present':
+                self.results['state'] = self.update_instance(instance) if instance else self.create_instance()
+
+            elif self.state == 'absent':
+                self.delete_instance()
+                self.results['state']['status'] = 'Deleted'
+
+        return self.results
+
+    def create_instance(self):
+        self.fail("Error: {0} failed to implement create_instance method.".format(self.__class__.__name__))
+
+    def update_instance(self, instance):
+        self.fail("Error: {0} failed to implement update_instance method.".format(self.__class__.__name__))
+
+    def get_instance(self):
+        self.fail("Error: {0} failed to implement get_instance method.".format(self.__class__.__name__))
+
+    def delete_instance(self):
+        self.fail("Error: {0} failed to implement delete_instance method.".format(self.__class__.__name__))
+
+    def need_update(self, instance):
+        self.fail("Error: {0} failed to implement is_update_needed method.".format(self.__class__.__name__))
+
+    def format_result(self, instance):
+        self.fail("Error: {0} failed to implement delete_instance method.".format(self.__class__.__name__))
+
+
+class AzureRMModuleFactsBase(AzureRMModuleBase):
+    pass
