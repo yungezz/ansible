@@ -16,10 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
 import os
 import re
-import sys
 import copy
 import inspect
 import traceback
@@ -29,6 +27,7 @@ from os.path import expanduser
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.six.moves import configparser
 import ansible.module_utils.six.moves.urllib.parse as urlparse
+
 try:
     from ansible.release import __version__ as ansible_version
 except ImportError:
@@ -92,6 +91,7 @@ except ImportError:
 
 try:
     from packaging.version import Version
+
     HAS_PACKAGING_VERSION = True
     HAS_PACKAGING_VERSION_EXC = None
 except ImportError as exc:
@@ -131,7 +131,6 @@ except ImportError as exc:
     HAS_AZURE_EXC = exc
     HAS_AZURE = False
 
-
 try:
     from azure.cli.core.util import CLIError
     from azure.common.credentials import get_azure_cli_credentials, get_cli_profile
@@ -141,7 +140,7 @@ except ImportError:
 
 
 def azure_id_to_dict(id):
-    pieces = re.sub(r'^\/', '', id).split('/')
+    pieces = re.sub(r'^/', '', id).split('/')
     result = {}
     index = 0
     while index < len(pieces) - 1:
@@ -183,7 +182,6 @@ AZURE_PKG_VERSIONS = {
     },
 } if HAS_AZURE else {}
 
-
 AZURE_MIN_RELEASE = '2.0.0'
 
 
@@ -193,19 +191,20 @@ class AzureRMModuleBase(object):
                  required_one_of=None, add_file_common_args=False, supports_check_mode=False,
                  required_if=None, supports_tags=True, facts_module=False, skip_exec=False):
 
-        merged_arg_spec = dict()
-        merged_arg_spec.update(AZURE_COMMON_ARGS)
-        if supports_tags:
-            merged_arg_spec.update(AZURE_TAG_ARGS)
+        def get_merged_arg_spec(supports_tags, derived_arg_spec):
+            merged_arg_spec = dict()
+            merged_arg_spec.update(AZURE_COMMON_ARGS)
+            if supports_tags:
+                merged_arg_spec.update(AZURE_TAG_ARGS)
+            if derived_arg_spec:
+                merged_arg_spec.update(derived_arg_spec)
 
-        if derived_arg_spec:
-            merged_arg_spec.update(derived_arg_spec)
+        def get_merged_required_if(required_if):
+            merged_required_if = list(AZURE_COMMON_REQUIRED_IF)
+            if required_if:
+                merged_required_if += required_if
 
-        merged_required_if = list(AZURE_COMMON_REQUIRED_IF)
-        if required_if:
-            merged_required_if += required_if
-
-        self.module = AnsibleModule(argument_spec=merged_arg_spec,
+        self.module = AnsibleModule(argument_spec=get_merged_arg_spec(supports_tags, derived_arg_spec),
                                     bypass_checks=bypass_checks,
                                     no_log=no_log,
                                     check_invalid_arguments=check_invalid_arguments,
@@ -214,19 +213,20 @@ class AzureRMModuleBase(object):
                                     required_one_of=required_one_of,
                                     add_file_common_args=add_file_common_args,
                                     supports_check_mode=supports_check_mode,
-                                    required_if=merged_required_if)
+                                    required_if=get_merged_required_if(required_if))
 
-        if not HAS_PACKAGING_VERSION:
-            self.fail("Do you have packaging installed? Try `pip install packaging`"
-                      "- {0}".format(HAS_PACKAGING_VERSION_EXC))
+        def check_existence(obj, msg):
+            if not obj:
+                self.fail(msg)
 
-        if not HAS_MSRESTAZURE:
-            self.fail("Do you have msrestazure installed? Try `pip install msrestazure`"
-                      "- {0}".format(HAS_MSRESTAZURE_EXC))
+        check_existence(HAS_PACKAGING_VERSION,
+                        "Do you have packaging installed? Try `pip install packaging`- {0}".format(HAS_PACKAGING_VERSION_EXC))
 
-        if not HAS_AZURE:
-            self.fail("Do you have azure>={1} installed? Try `pip install 'azure>={1}' --upgrade`"
-                      "- {0}".format(HAS_AZURE_EXC, AZURE_MIN_RELEASE))
+        check_existence(HAS_MSRESTAZURE,
+                        "Do you have msrestazure installed? Try `pip install msrestazure`- {0}".format(HAS_MSRESTAZURE_EXC))
+
+        check_existence(HAS_AZURE,
+                        "Do you have azure>={1} installed? Try `pip install 'azure>={1}' --upgrade`- {0}".format(HAS_AZURE_EXC, AZURE_MIN_RELEASE))
 
         self._cloud_environment = None
         self._network_client = None
@@ -235,7 +235,6 @@ class AzureRMModuleBase(object):
         self._compute_client = None
         self._dns_client = None
         self._web_client = None
-        self._containerservice_client = None
 
         self.check_mode = self.module.check_mode
         self.facts_module = facts_module
@@ -243,9 +242,9 @@ class AzureRMModuleBase(object):
 
         # authenticate
         self.credentials = self._get_credentials(self.module.params)
-        if not self.credentials:
-            self.fail("Failed to get credentials. Either pass as parameters, set environment variables, "
-                      "or define a profile in ~/.azure/credentials or be logged using AzureCLI.")
+        check_existence(self.credentials,
+                        "Failed to get credentials. Either pass as parameters, set environment variables, "
+                        "or define a profile in ~/.azure/credentials or be logged using AzureCLI.")
 
         # if cloud_environment specified, look up/build Cloud object
         raw_cloud_env = self.credentials.get('cloud_environment')
@@ -267,14 +266,13 @@ class AzureRMModuleBase(object):
                 except Exception as e:
                     self.fail("cloud_environment {0} could not be resolved: {1}".format(raw_cloud_env, e.message), exception=traceback.format_exc(e))
 
-        if self.credentials.get('subscription_id', None) is None:
-            self.fail("Credentials did not include a subscription_id value.")
+        check_existence(self.credentials.get('subscription_id', None), "Credentials did not include a subscription_id value.")
         self.log("setting subscription_id")
         self.subscription_id = self.credentials['subscription_id']
 
         if self.credentials.get('client_id') is not None and \
-           self.credentials.get('secret') is not None and \
-           self.credentials.get('tenant') is not None:
+                        self.credentials.get('secret') is not None and \
+                        self.credentials.get('tenant') is not None:
             self.azure_credentials = ServicePrincipalCredentials(client_id=self.credentials['client_id'],
                                                                  secret=self.credentials['secret'],
                                                                  tenant=self.credentials['tenant'],
@@ -315,16 +313,117 @@ class AzureRMModuleBase(object):
                                                                       AZURE_MIN_RELEASE))
 
     def exec_module(self, **kwargs):
-        self.fail("Error: {0} failed to implement exec_module method.".format(self.__class__.__name__))
+        # self.fail("Error: {0} failed to implement exec_module method.".format(self.__class__.__name__))
+
+        # General processing flow for Azure modules
+        for key in list(self.module_arg_spec.keys()) + ['tags']:
+            setattr(self, key, kwargs[key])
+
+        if hasattr(self, 'location') and getattr(self, 'location', None) is None:
+            resource_group = self.get_resource_group(self.resource_group)
+            setattr(self, 'location', resource_group.location)
+
+        self.results['check_mode'] = self.check_mode
+
+        changed = False
+        results = dict()
+
+        try:
+            instance = self.get_instance()
+            results = self.format_result(instance=instance)
+
+            if self.state == 'present':
+                changed, results['tags'] = self.update_tags(results['tags'])
+            elif self.state == 'absent':
+                changed = True
+
+        except CloudError:
+            if self.state == 'present':
+                changed = True
+            elif self.state == 'absent':
+                changed = False
+
+        self.results['changed'] = changed
+        self.results['state'] = results
+
+        # return the results if your only gathering information
+        if self.check_mode:
+            return self.results
+
+        if changed:
+            if self.state == 'present':
+                self.results['state'] = self.update_instance(instance) if instance else self.create_instance()
+
+            elif self.state == 'absent':
+                self.delete_instance()
+                self.results['state']['status'] = 'Deleted'
+
+        return self.results
+
+    def create_instance(self):
+        self.fail("Error: {0} failed to implement create_instance method.".format(self.__class__.__name__))
+
+    def update_instance(self, instance):
+        self.fail("Error: {0} failed to implement update_instance method.".format(self.__class__.__name__))
+
+    def get_instance(self, op, **kwargs):
+        params = {}
+        op_args = extract_args(op)
+        input_args = {}
+        for arg_name in [a for a in op_args if a in input_args]:
+            params[arg_name] = kwargs[arg_name]
+
+        try:
+            op(**params)
+        except CloudError:
+            self.fail("Error: {0} failed to implement get_instance method.".format(self.__class__.__name__))
+
+    def delete_instance(self):
+        self.fail("Error: {0} failed to implement delete_instance method.".format(self.__class__.__name__))
+
+    def format_result(self, instance):
+        return instance
+
+    def extract_args(self, operation):
+        excluded_params = []
+        args = []
+        try:
+            # only supported in python3 - falling back to argspec if not available
+            sig = inspect.signature(operation)
+            args = sig.parameters
+        except AttributeError:
+            sig = inspect.getargspec(operation)  # pylint: disable=deprecated-method
+            args = sig.args
+
+
+
+        for arg_name in [a for a in args if a not in excluded_params]:
+            try:
+                # this works in python3
+                default = args[arg_name].default
+                required = default == inspect.Parameter.empty  # pylint: disable=no-member
+            except TypeError:
+                arg_defaults = (dict(zip(sig.args[-len(sig.defaults):], sig.defaults))
+                                if sig.defaults
+                                else {})
+                default = arg_defaults.get(arg_name)
+                required = arg_name not in arg_defaults
+
+            try:
+                default = (default
+                           if default != inspect._empty  # pylint: disable=protected-access, no-member
+                           else None)
+            except AttributeError:
+                pass
 
     def fail(self, msg, **kwargs):
-        '''
+        """
         Shortcut for calling module.fail()
 
         :param msg: Error message text.
         :param kwargs: Any key=value pairs
         :return: None
-        '''
+        """
         self.module.fail_json(msg=msg, **kwargs)
 
     def log(self, msg, pretty_print=False):
@@ -338,12 +437,12 @@ class AzureRMModuleBase(object):
         #         log_file.write(msg + u'\n')
 
     def validate_tags(self, tags):
-        '''
+        """
         Check if tags dictionary contains string:string pairs.
 
         :param tags: dictionary of string:string pairs
         :return: None
-        '''
+        """
         if not self.facts_module:
             if not isinstance(tags, dict):
                 self.fail("Tags must be a dictionary of string:string values.")
@@ -352,14 +451,14 @@ class AzureRMModuleBase(object):
                     self.fail("Tags values must be strings. Found {0}:{1}".format(str(key), str(value)))
 
     def update_tags(self, tags):
-        '''
+        """
         Call from the module to update metadata tags. Returns tuple
         with bool indicating if there was a change and dict of new
         tags to assign to the object.
 
         :param tags: metadata tags from the object
         :return: bool, dict
-        '''
+        """
         new_tags = copy.copy(tags) if isinstance(tags, dict) else dict()
         changed = False
         if isinstance(self.module.params.get('tags'), dict):
@@ -374,15 +473,16 @@ class AzureRMModuleBase(object):
                         changed = True
         return changed, new_tags
 
-    def has_tags(self, obj_tags, tag_list):
-        '''
+    @staticmethod
+    def has_tags(obj_tags, tag_list):
+        """
         Used in fact modules to compare object tags to list of parameter tags. Return true if list of parameter tags
         exists in object tags.
 
         :param obj_tags: dictionary of tags from an Azure object.
         :param tag_list: list of tag keys or tag key:value pairs
         :return: bool
-        '''
+        """
 
         if not obj_tags and tag_list:
             return False
@@ -406,12 +506,12 @@ class AzureRMModuleBase(object):
         return result
 
     def get_resource_group(self, resource_group):
-        '''
+        """
         Fetch a resource group.
 
         :param resource_group: name of a resource group
         :return: resource group object
-        '''
+        """
         try:
             return self.rm_client.resource_groups.get(resource_group)
         except CloudError:
@@ -508,14 +608,14 @@ class AzureRMModuleBase(object):
         return None
 
     def serialize_obj(self, obj, class_name, enum_modules=None):
-        '''
+        """
         Return a JSON representation of an Azure object.
 
         :param obj: Azure object
         :param class_name: Name of the object's class
         :param enum_modules: List of module names to build enum dependencies from.
         :return: serialized result
-        '''
+        """
         enum_modules = [] if enum_modules is None else enum_modules
 
         dependencies = dict()
@@ -530,12 +630,12 @@ class AzureRMModuleBase(object):
         return serializer.body(obj, class_name)
 
     def get_poller_result(self, poller, wait=5):
-        '''
+        """
         Consistent method of waiting on and retrieving results from Azure's long poller
 
         :param poller Azure poller object
         :return object resulting from the original request
-        '''
+        """
         try:
             delay = wait
             while not poller.done():
@@ -547,42 +647,37 @@ class AzureRMModuleBase(object):
             raise
 
     def check_provisioning_state(self, azure_object, requested_state='present'):
-        '''
+        """
         Check an Azure object's provisioning state. If something did not complete the provisioning
         process, then we cannot operate on it.
 
         :param azure_object An object such as a subnet, storageaccount, etc. Must have provisioning_state
                             and name attributes.
+        :param requested_state Requested state of the azure_object
         :return None
-        '''
+        """
+
+        provision_state = None
 
         if hasattr(azure_object, 'properties') and hasattr(azure_object.properties, 'provisioning_state') and \
-           hasattr(azure_object, 'name'):
+                hasattr(azure_object, 'name'):
             # resource group object fits this model
             if isinstance(azure_object.properties.provisioning_state, Enum):
-                if azure_object.properties.provisioning_state.value != AZURE_SUCCESS_STATE and \
-                   requested_state != 'absent':
-                    self.fail("Error {0} has a provisioning state of {1}. Expecting state to be {2}.".format(
-                              azure_object.name, azure_object.properties.provisioning_state, AZURE_SUCCESS_STATE))
-                return
-            if azure_object.properties.provisioning_state != AZURE_SUCCESS_STATE and \
-               requested_state != 'absent':
-                self.fail("Error {0} has a provisioning state of {1}. Expecting state to be {2}.".format(
-                    azure_object.name, azure_object.properties.provisioning_state, AZURE_SUCCESS_STATE))
-            return
+                provision_state = azure_object.properties.provisioning_state.value
+            else:
+                provision_state = azure_object.properties.provisioning_state
 
-        if hasattr(azure_object, 'provisioning_state') or not hasattr(azure_object, 'name'):
+        elif hasattr(azure_object, 'provisioning_state') or not hasattr(azure_object, 'name'):
             if isinstance(azure_object.provisioning_state, Enum):
-                if azure_object.provisioning_state.value != AZURE_SUCCESS_STATE and requested_state != 'absent':
-                    self.fail("Error {0} has a provisioning state of {1}. Expecting state to be {2}.".format(
-                        azure_object.name, azure_object.provisioning_state, AZURE_SUCCESS_STATE))
-                return
-            if azure_object.provisioning_state != AZURE_SUCCESS_STATE and requested_state != 'absent':
-                self.fail("Error {0} has a provisioning state of {1}. Expecting state to be {2}.".format(
-                    azure_object.name, azure_object.provisioning_state, AZURE_SUCCESS_STATE))
+                provision_state = azure_object.provisioning_state.value
+            else:
+                provision_state = azure_object.provisioning_state
+
+        if provision_state and provision_state != AZURE_SUCCESS_STATE and requested_state != 'absent':
+            self.fail("Error {0} has a provisioning state of {1}. Expecting state to be {2}.".format(
+                azure_object.name, provision_state, AZURE_SUCCESS_STATE))
 
     def get_blob_client(self, resource_group_name, storage_account_name, storage_blob_type='block'):
-        keys = dict()
         try:
             # Get keys from the storage account
             self.log('Getting keys')
@@ -603,7 +698,7 @@ class AzureRMModuleBase(object):
                                                                                                 str(exc)))
 
     def create_default_pip(self, resource_group, location, name, allocation_method='Dynamic'):
-        '''
+        """
         Create a default public IP address <name>01 to associate with a network interface.
         If a PIP address matching <vm name>01 exists, return it. Otherwise, create one.
 
@@ -612,7 +707,7 @@ class AzureRMModuleBase(object):
         :param name: base name to assign the public IP address
         :param allocation_method: one of 'Static' or 'Dynamic'
         :return: PIP object
-        '''
+        """
         public_ip_name = name + '01'
         pip = None
 
@@ -641,7 +736,7 @@ class AzureRMModuleBase(object):
         return self.get_poller_result(poller)
 
     def create_default_securitygroup(self, resource_group, location, name, os_type, open_ports):
-        '''
+        """
         Create a default security group <name>01 to associate with a network interface. If a security group matching
         <name>01 exists, return it. Otherwise, create one.
 
@@ -652,7 +747,7 @@ class AzureRMModuleBase(object):
         :param ssh_port: for os_type 'Linux' port used in rule allowing SSH access.
         :param rdp_port: for os_type 'Windows' port used in rule allowing RDP access.
         :return: security_group object
-        '''
+        """
         security_group_name = name + '01'
         group = None
 
@@ -777,10 +872,3 @@ class AzureRMModuleBase(object):
         if not self._web_client:
             self._web_client = self.get_mgmt_svc_client(WebSiteManagementClient, base_url=self.base_url)
         return self._web_client
-
-    @property
-    def containerservice_client(self):
-        self.log('Getting container service client')
-        if not self._containerservice_client:
-            self._containerservice_client = self.get_mgmt_svc_client(ContainerServiceClient)
-        return self._containerservice_client

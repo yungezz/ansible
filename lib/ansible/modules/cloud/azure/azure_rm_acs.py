@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -241,6 +242,7 @@ from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:
     from msrestazure.azure_exceptions import CloudError
+    from azure.mgmt.containerservice import ContainerServiceClient
     from azure.mgmt.containerservice.models import (
         ContainerService, ContainerServiceOrchestratorProfile, ContainerServiceCustomProfile,
         ContainerServiceServicePrincipalProfile, ContainerServiceMasterProfile,
@@ -506,11 +508,20 @@ class AzureRMContainerService(AzureRMModuleBase):
         self.service_principal = None
         self.diagnostics_profile = None
 
+        self._mgmt_client = None
+
         self.results = dict(changed=False, state=dict())
 
         super(AzureRMContainerService, self).__init__(derived_arg_spec=self.module_arg_spec,
                                                       supports_check_mode=True,
                                                       supports_tags=True)
+
+    @property
+    def containerservice_client(self):
+        self.log('Getting container service client')
+        if not self._mgmt_client:
+            self._mgmt_client = self.get_mgmt_svc_client(ContainerServiceClient)
+        return self._mgmt_client
 
     def exec_module(self, **kwargs):
         """Main module execution method"""
@@ -518,15 +529,11 @@ class AzureRMContainerService(AzureRMModuleBase):
         for key in list(self.module_arg_spec.keys()) + ['tags']:
             setattr(self, key, kwargs[key])
 
-        resource_group = None
         response = None
         results = dict()
         to_be_updated = False
 
-        try:
-            resource_group = self.get_resource_group(self.resource_group)
-        except CloudError:
-            self.fail('resource group {} not found'.format(self.resource_group))
+        resource_group = self.get_resource_group(self.resource_group)
         if not self.location:
             self.location = resource_group.location
 
@@ -714,6 +721,7 @@ class AzureRMContainerService(AzureRMModuleBase):
 def main():
     """Main execution"""
     AzureRMContainerService()
+
 
 if __name__ == '__main__':
     main()

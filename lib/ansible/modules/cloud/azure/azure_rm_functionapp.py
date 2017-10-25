@@ -163,12 +163,7 @@ class AzureRMFunctionApp(AzureRMModuleBase):
         if self.app_settings is None:
             self.app_settings = dict()
 
-        try:
-            resource_group = self.rm_client.resource_groups.get(self.resource_group)
-        except CloudError:
-            self.fail('Unable to retrieve resource group')
-
-        self.location = self.location or resource_group.location
+        self.location = self.location or self.get_resource_group(self.resource_group)
 
         try:
             function_app = self.web_client.web_apps.get(
