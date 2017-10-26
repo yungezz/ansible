@@ -347,11 +347,11 @@ class AzureRMContainerInstance(AzureRMModuleBase):
                 self.log("ACI instance deleted")
             elif self.state == 'present':
                 self.log("Need to check if container group has to be deleted or may be updated")
-                to_be_updated = self.check_need_update(response)
+                to_be_updated = True #self.check_need_update(response)
                 if to_be_updated:
                     self.log('Deleting ACI instance before update')
-                    if not self.check:
-                        self.delete_aci()
+                    #if not self.check:
+                    self.delete_aci()
 
         if self.state == 'present':
 
