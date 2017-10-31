@@ -463,6 +463,7 @@ class AzureRMContainerInstance(AzureRMModuleBase):
 
         return False
 
+
     def check_need_update(self, cg):
 
         if self.location.lower() != cg["location"].lower():
