@@ -1,0 +1,13 @@
+- name: Create sample BlobAuditingPolicies
+  azure_rm_databaseblobauditingpolicies:
+    resource_group_name: ansible-demo-rg
+    server_name: zims-server
+    database_name: zims-database
+    audit_actions_and_groups:
+    - XXXX - VALUE XXXX
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

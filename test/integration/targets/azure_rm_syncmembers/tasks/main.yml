@@ -1,0 +1,13 @@
+- name: Create sample SyncMembers
+  azure_rm_syncmembers:
+    resource_group_name: ansible-demo-rg
+    server_name: zims-server
+    database_name: zims-database
+    server_name: zims-server
+    database_name: zims-database
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

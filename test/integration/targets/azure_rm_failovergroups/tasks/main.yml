@@ -1,0 +1,13 @@
+- name: Create sample FailoverGroups
+  azure_rm_failovergroups:
+    resource_group_name: ansible-demo-rg
+    server_name: zims-server
+    partner_servers:
+    databases:
+    - XXXX - VALUE XXXX
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

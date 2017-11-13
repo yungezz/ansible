@@ -1,0 +1,10 @@
+- name: Create sample ServerAzureADAdministrators
+  azure_rm_serverazureadadministrators:
+    resource_group_name: ansible-demo-rg
+    server_name: zims-server
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

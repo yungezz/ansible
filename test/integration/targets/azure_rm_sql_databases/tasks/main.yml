@@ -1,0 +1,13 @@
+- name: Create sample Sql
+  azure_rm_sql_databases:
+    resource_group_name: ansible-demo-rg
+    server_name: zims-server
+    database_name: zims-database
+    location: westus
+    elastic_pool_name: zims-elastic-pool
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

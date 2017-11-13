@@ -1,0 +1,8 @@
+- name: Create sample ReplicationLinks
+  azure_rm_replicationlinks:
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

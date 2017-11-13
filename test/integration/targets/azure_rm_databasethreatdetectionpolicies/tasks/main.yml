@@ -1,0 +1,12 @@
+- name: Create sample DatabaseSecurityAlertPolicies
+  azure_rm_databasethreatdetectionpolicies:
+    resource_group_name: ansible-demo-rg
+    server_name: zims-server
+    database_name: zims-database
+    location: westus
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'
