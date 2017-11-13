@@ -347,11 +347,13 @@ def is_group_env_installed(name):
     return False
 
 
-def is_installed(module, repoq, pkgspec, conf_file, qf=def_qf, en_repos=None, dis_repos=None, is_pkg=False, installroot='/'):
+def is_installed(module, repoq, pkgspec, conf_file, qf=None, en_repos=None, dis_repos=None, is_pkg=False, installroot='/'):
     if en_repos is None:
         en_repos = []
     if dis_repos is None:
         dis_repos = []
+    if qf is None:
+        qf = "%{epoch}:%{name}-%{version}-%{release}.%{arch}\n"
 
     if not repoq:
         pkgs = []
@@ -747,6 +749,18 @@ def install(module, items, repoq, yum_basecmd, conf_file, en_repos, dis_repos, i
             (name, ver, rel, epoch, arch) = splitFilename(envra)
             installed_pkgs = is_installed(module, repoq, name, conf_file, en_repos=en_repos, dis_repos=dis_repos, installroot=installroot)
 
+            # case for two same envr but differrent archs like x86_64 and i686
+            if len(installed_pkgs) == 2:
+                (cur_name0, cur_ver0, cur_rel0, cur_epoch0, cur_arch0) = splitFilename(installed_pkgs[0])
+                (cur_name1, cur_ver1, cur_rel1, cur_epoch1, cur_arch1) = splitFilename(installed_pkgs[1])
+                cur_epoch0 = cur_epoch0 or '0'
+                cur_epoch1 = cur_epoch1 or '0'
+                compare = compareEVR((cur_epoch0, cur_ver0, cur_rel0), (cur_epoch1, cur_ver1, cur_rel1))
+                if compare == 0 and cur_arch0 != cur_arch1:
+                    for installed_pkg in installed_pkgs:
+                        if installed_pkg.endswith(arch):
+                            installed_pkgs = [installed_pkg]
+
             if len(installed_pkgs) == 1:
                 installed_pkg = installed_pkgs[0]
                 (cur_name, cur_ver, cur_rel, cur_epoch, cur_arch) = splitFilename(installed_pkg)
@@ -1115,7 +1129,8 @@ def latest(module, items, repoq, yum_basecmd, conf_file, en_repos, dis_repos, up
         res['changed'] = True
     elif pkgs['install'] or will_update:
         cmd = yum_basecmd + ['install'] + pkgs['install'] + pkgs['update']
-        rc, out, err = module.run_command(cmd)
+        lang_env = dict(LANG='C', LC_ALL='C', LC_MESSAGES='C')
+        rc, out, err = module.run_command(cmd, environ_update=lang_env)
         out_lower = out.strip().lower()
         if not out_lower.endswith("no packages marked for update") and \
                 not out_lower.endswith("nothing to do"):

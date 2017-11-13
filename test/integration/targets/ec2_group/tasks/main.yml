@@ -20,7 +20,7 @@
       assert:
         that:
            - 'result.failed'
-           - 'result.msg == "one of the following is required: name,group_id"'
+           - 'result.msg == "one of the following is required: name, group_id"'
 
     # ============================================================
     - name: test failure with only name
@@ -46,7 +46,7 @@
       assert:
         that:
            - 'result.failed'
-           - 'result.msg == "one of the following is required: name,group_id"'
+           - 'result.msg == "one of the following is required: name, group_id"'
 
     # ============================================================
     - name: test failure with empty description (AWS API requires non-empty string desc)
@@ -108,7 +108,7 @@
       assert:
         that:
            - 'result.failed'
-           - 'result.msg.startswith("The AWS region must be specified as an environment variable or in the AWS credentials profile")'
+           - 'result.msg.startswith("The ec2_group module requires a region")'
 
     # ============================================================
     - name: test valid ec2_url parameter
@@ -124,7 +124,7 @@
       assert:
         that:
            - 'result.failed'
-           - 'result.msg.startswith("The AWS region must be specified as an environment variable or in the AWS credentials profile")'
+           - 'result.msg.startswith("The ec2_group module requires a region")'
 
     # ============================================================
     - name: test credentials from environment

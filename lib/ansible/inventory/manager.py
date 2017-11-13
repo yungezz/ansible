@@ -28,9 +28,9 @@ from ansible import constants as C
 from ansible.errors import AnsibleError, AnsibleOptionsError, AnsibleParserError
 from ansible.inventory.data import InventoryData
 from ansible.module_utils.six import string_types
-from ansible.module_utils._text import to_bytes, to_native
+from ansible.module_utils._text import to_bytes, to_native, to_text
 from ansible.parsing.utils.addresses import parse_address
-from ansible.plugins.loader import PluginLoader
+from ansible.plugins.loader import inventory_loader
 from ansible.utils.path import unfrackpath
 
 try:
@@ -91,7 +91,7 @@ def split_host_pattern(pattern):
     # If it's got commas in it, we'll treat it as a straightforward
     # comma-separated list of patterns.
     if ',' in pattern:
-        patterns = re.split('\s*,\s*', pattern)
+        patterns = pattern.split(',')
 
     # If it doesn't, it could still be a single pattern. This accounts for
     # non-separator uses of colons: IPv6 addresses and [x:y] host ranges.
@@ -178,7 +178,6 @@ class InventoryManager(object):
     def _setup_inventory_plugins(self):
         ''' sets up loaded inventory plugins for usage '''
 
-        inventory_loader = PluginLoader('InventoryModule', 'ansible.plugins.inventory', C.DEFAULT_INVENTORY_PLUGIN_PATH, 'inventory_plugins')
         display.vvvv('setting up inventory plugins')
 
         for name in C.INVENTORY_ENABLED:
@@ -260,13 +259,16 @@ class InventoryManager(object):
                         # in case plugin fails 1/2 way we dont want partial inventory
                         plugin.parse(self._inventory, self._loader, source, cache=cache)
                         parsed = True
-                        display.vvv('Parsed %s inventory source with %s plugin' % (to_native(source), plugin_name))
+                        display.vvv('Parsed %s inventory source with %s plugin' % (to_text(source), plugin_name))
                         break
                     except AnsibleParserError as e:
-                        display.debug('%s did not meet %s requirements' % (to_native(source), plugin_name))
+                        display.debug('%s was not parsable by %s' % (to_text(source), plugin_name))
+                        failures.append({'src': source, 'plugin': plugin_name, 'exc': e})
+                    except Exception as e:
+                        display.debug('%s failed to parse %s' % (plugin_name, to_text(source)))
                         failures.append({'src': source, 'plugin': plugin_name, 'exc': e})
                 else:
-                    display.debug('%s did not meet %s requirements' % (to_native(source), plugin_name))
+                    display.debug('%s did not meet %s requirements' % (to_text(source), plugin_name))
             else:
                 if not parsed and failures:
                     # only if no plugin processed files should we show errors.
@@ -279,11 +281,10 @@ class InventoryManager(object):
                         raise AnsibleParserError(msg)
                     else:
                         for fail in failures:
-                            display.warning('\n* Failed to parse %s with %s plugin: %s' % (to_native(fail['src']), fail['plugin'], to_native(fail['exc'])))
-                            display.vvv(fail['exc'].tb)
-
+                            display.warning(u'\n* Failed to parse %s with %s plugin: %s' % (to_text(fail['src']), fail['plugin'], to_text(fail['exc'])))
+                            display.vvv(to_text(fail['exc'].tb))
         if not parsed:
-            display.warning("Unable to parse %s as an inventory source" % to_native(source))
+            display.warning("Unable to parse %s as an inventory source" % to_text(source))
 
         # clear up, jic
         self._inventory.current_source = None

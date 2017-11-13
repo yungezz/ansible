@@ -77,8 +77,8 @@ eos_top_spec = {
 eos_argument_spec.update(eos_top_spec)
 
 
-def get_argspec():
-    return eos_argument_spec
+def get_provider_argspec():
+    return eos_provider_spec
 
 
 def check_args(module, warnings):
@@ -176,7 +176,7 @@ class Cli:
         rc = 0
         for command in to_list(commands):
             if command == 'end':
-                pass
+                continue
 
             if command.startswith('banner') or multiline:
                 multiline = True

@@ -153,7 +153,8 @@ files:
   $modules/cloud/amazon/sts_assume_role.py: bekelchik
   $modules/cloud/amazon/sts_session_token.py: pwnall
   $modules/cloud/atomic/: krsacme
-  $modules/cloud/azure/azure.py: jwhitbeck
+  $modules/cloud/azure/azure.py:
+    ignored: jwhitbeck
   $modules/cloud/azure/azure_rm_networkinterface.py:
     ignored: chouseknecht
     maintainers: $team_azure
@@ -400,7 +401,8 @@ files:
   $modules/monitoring/honeybadger_deployment.py: stympy
   $modules/monitoring/icinga2_feature.py: nerzhul
   $modules/monitoring/librato_annotation.py: sedward
-  $modules/monitoring/logentries.py: ivanvanderbyl
+  $modules/monitoring/logentries.py:
+    ignored: ivanvanderbyl
   $modules/monitoring/logicmonitor.py: ethanculler woz5999
   $modules/monitoring/logstash_plugin.py: nerzhul
   $modules/monitoring/monit.py: brian-brazil dstoflet
@@ -470,6 +472,7 @@ files:
   $modules/network/netvisor/: $team_netvisor
   $modules/network/nuage/: pdellaert
   $modules/network/nxos/: $team_nxos
+  $modules/network/nso/: $team_nso
   $modules/network/openvswitch/:
     ignored: stygstra
     maintainers: $team_networking
@@ -847,6 +850,14 @@ files:
     - inventory script
     labels: "c:inventory/contrib_script"
     support: community
+  contrib/inventory/digital_ocean.py:
+    keywords:
+    - digital_ocean dynamic inventory script
+    maintainers: BondAnthony
+    labels:
+    - cloud
+    - digital_ocean
+    support: community
   contrib/inventory/linode.py:
     keywords:
     - linode dynamic inventory script
@@ -990,9 +1001,14 @@ files:
   $module_utils/network.py:
     maintainers: $team_networking
     labels: networking
+  $module_utils/nso.py:
+    maintainers: $team_nso
+    labels: networking
   $module_utils/nxos.py:
     maintainers: $team_networking
-    labels: networking
+    labels:
+    - networking
+    - nxos
   $module_utils/openstack.py:
     maintainers: $team_openstack
     labels:
@@ -1067,7 +1083,9 @@ files:
     labels: networking
   lib/ansible/plugins/action/nxos:
     maintainers: $team_networking
-    labels: networking
+    labels:
+    - networking
+    - nxos
   lib/ansible/plugins/action/sros:
     maintainers: $team_networking
     labels: networking
@@ -1080,6 +1098,11 @@ files:
   lib/ansible/plugins/cliconf/ironware.py:
     maintainers: paulquack
     labels: networking
+  lib/ansible/plugins/cliconf/nxos.py:
+    maintainers: $team_nxos
+    labels:
+    - networking
+    - nxos
   lib/ansible/plugins/connection/netconf.py:
     maintainers: $team_networking
     labels: networking
@@ -1140,7 +1163,9 @@ files:
     labels: networking
   lib/ansible/plugins/terminal/nxos.py:
     maintainers: $team_networking
-    labels: networking
+    labels:
+    - networking
+    - nxos
   lib/ansible/plugins/terminal/sros.py:
     maintainers: $team_networking
     labels: networking
@@ -1160,19 +1185,33 @@ files:
   packaging/:
   test/:
     # 'test' is a component path, then 'test' label will be automatically added
+  test/integration/targets/nxos:
+    maintainers: $team_nxos
+    labels:
+    - networking
+    - nxos
+  test/units/modules/network:
+    maintainers: $team_networking
+    labels: networking
+  test/units/modules/network/nxos:
+    maintainers: $team_nxos
+    labels:
+    - networking
+    - nxos
 macros:
   module_utils: lib/ansible/module_utils
   modules: lib/ansible/modules
-  team_aci: dagwieers jmcgill298 schunduri 
+  team_aci: dagwieers jmcgill298 schunduri
   team_ansible: []
   team_avi: ericsysmin grastogi23 khaltore
-  team_azure: haroldwongms nitzmahone tstringer
+  team_azure: haroldwongms nitzmahone tstringer yaweiw xscript zikalino
   team_cumulus: isharacomix jrrivers privateip
   team_manageiq: gtanzillo abellotti zgalor yaacov cben
   team_netapp: hulquest lmprice broncofan gouthampacha
   team_netscaler: chiradeep giorgos-nikolopoulos
   team_netvisor: Qalthos amitsi gundalow privateip
   team_networking: Qalthos ganeshrn gundalow privateip rcarrillocruz trishnaguha kedarX
+  team_nso: cmoberg pekdon
   team_nxos: GGabriele jedelman8 mikewiebe privateip rahushen rcarrillocruz trishnaguha kedarX
   team_openstack: emonty j2sol juliakreger rcarrillocruz shrews thingee dagnello
   team_openswitch: Qalthos gundalow privateip

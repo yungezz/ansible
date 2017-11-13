@@ -82,6 +82,8 @@ options:
     description:
     - Manage some VM hardware attributes.
     - 'Valid attributes are:'
+    - ' - C(hotadd_cpu) (boolean): Allow cpus to be added while the VM is running.'
+    - ' - C(hotadd_memory) (boolean): Allow memory to be added while the VM is running.'
     - ' - C(memory_mb) (integer): Amount of memory in MB.'
     - ' - C(num_cpus) (integer): Number of CPUs.'
     - ' - C(scsi) (string): Valid values are C(buslogic), C(lsilogic), C(lsilogicsas) and C(paravirtual) (default).'
@@ -604,6 +606,16 @@ class PyVmomiHelper(PyVmomi):
             # memory_mb is mandatory for VM creation
             elif vm_creation and not self.params['template']:
                 self.module.fail_json(msg="hardware.memory_mb attribute is mandatory for VM creation")
+
+            if 'hotadd_memory' in self.params['hardware']:
+                self.configspec.memoryHotAddEnabled = bool(self.params['hardware']['hotadd_memory'])
+                if vm_obj is None or self.configspec.memoryHotAddEnabled != vm_obj.config.memoryHotAddEnabled:
+                    self.change_detected = True
+
+            if 'hotadd_cpu' in self.params['hardware']:
+                self.configspec.cpuHotAddEnabled = bool(self.params['hardware']['hotadd_cpu'])
+                if vm_obj is None or self.configspec.cpuHotAddEnabled != vm_obj.config.cpuHotAddEnabled:
+                    self.change_detected = True
 
     def configure_cdrom(self, vm_obj):
         # Configure the VM CD-ROM
@@ -1198,17 +1210,24 @@ class PyVmomiHelper(PyVmomi):
         return root
 
     def get_resource_pool(self):
-
         resource_pool = None
-
-        if self.params['esxi_hostname']:
+        # highest priority, resource_pool given.
+        if self.params['resource_pool']:
+            resource_pool = self.select_resource_pool_by_name(self.params['resource_pool'])
+        # next priority, esxi hostname given.
+        elif self.params['esxi_hostname']:
             host = self.select_host()
             resource_pool = self.select_resource_pool_by_host(host)
+        # next priority, cluster given, take the root of the pool
+        elif self.params['cluster']:
+            cluster = self.cache.get_cluster(self.params['cluster'])
+            resource_pool = cluster.resourcePool
+        # fallback, pick any RP
         else:
             resource_pool = self.select_resource_pool_by_name(self.params['resource_pool'])
 
         if resource_pool is None:
-            self.module.fail_json(msg='Unable to find resource pool "%(resource_pool)s"' % self.params)
+            self.module.fail_json(msg='Unable to find resource pool, need esxi_hostname, resource_pool, or cluster')
 
         return resource_pool
 
@@ -1267,7 +1286,7 @@ class PyVmomiHelper(PyVmomi):
         # set the destination datastore for VM & disks
         (datastore, datastore_name) = self.select_datastore(vm_obj)
 
-        self.configspec = vim.vm.ConfigSpec(cpuHotAddEnabled=True, memoryHotAddEnabled=True)
+        self.configspec = vim.vm.ConfigSpec()
         self.configspec.deviceChange = []
         self.configure_guestid(vm_obj=vm_obj, vm_creation=True)
         self.configure_cpu_and_memory(vm_obj=vm_obj, vm_creation=True)
@@ -1436,6 +1455,30 @@ class PyVmomiHelper(PyVmomi):
         if self.params['is_template'] and not self.current_vm_obj.config.template:
             self.current_vm_obj.MarkAsTemplate()
             change_applied = True
+
+        # Mark Template as VM
+        elif not self.params['is_template'] and self.current_vm_obj.config.template:
+            if self.params['resource_pool']:
+                resource_pool = self.select_resource_pool_by_name(self.params['resource_pool'])
+
+                if resource_pool is None:
+                    self.module.fail_json(msg='Unable to find resource pool "%(resource_pool)s"' % self.params)
+
+                self.current_vm_obj.MarkAsVirtualMachine(pool=resource_pool)
+
+                # Automatically update VMWare UUID when converting template to VM.
+                # This avoids an interactive prompt during VM startup.
+                uuid_action = [x for x in self.current_vm_obj.config.extraConfig if x.key == "uuid.action"]
+                if not uuid_action:
+                    uuid_action_opt = vim.option.OptionValue()
+                    uuid_action_opt.key = "uuid.action"
+                    uuid_action_opt.value = "create"
+                    self.configspec.extraConfig.append(uuid_action_opt)
+                    self.change_detected = True
+
+                change_applied = True
+            else:
+                self.module.fail_json(msg="Resource pool must be specified when converting template to VM!")
 
         vm_facts = self.gather_facts(self.current_vm_obj)
         return {'changed': change_applied, 'failed': False, 'instance': vm_facts}

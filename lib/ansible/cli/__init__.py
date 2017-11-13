@@ -112,6 +112,7 @@ class CLI(with_metaclass(ABCMeta, object)):
     # -F (quit-if-one-screen) -R (allow raw ansi control chars)
     # -S (chop long lines) -X (disable termcap init and de-init)
     LESS_OPTS = 'FRSX'
+    SKIP_INVENTORY_DEFAULTS = False
 
     def __init__(self, args, callback=None):
         """
@@ -414,7 +415,7 @@ class CLI(with_metaclass(ABCMeta, object)):
     @staticmethod
     def base_parser(usage="", output_opts=False, runas_opts=False, meta_opts=False, runtask_opts=False, vault_opts=False, module_opts=False,
                     async_opts=False, connect_opts=False, subset_opts=False, check_opts=False, inventory_opts=False, epilog=None, fork_opts=False,
-                    runas_prompt_opts=False, desc=None):
+                    runas_prompt_opts=False, desc=None, basedir_opts=False):
         ''' create an options parser for most ansible scripts '''
 
         # base opts
@@ -424,8 +425,7 @@ class CLI(with_metaclass(ABCMeta, object)):
 
         if inventory_opts:
             parser.add_option('-i', '--inventory', '--inventory-file', dest='inventory', action="append",
-                              help="specify inventory host path (default=[%s]) or comma separated host list. "
-                                   "--inventory-file is deprecated" % C.DEFAULT_HOST_LIST)
+                              help="specify inventory host path or comma separated host list. --inventory-file is deprecated")
             parser.add_option('--list-hosts', dest='listhosts', action='store_true',
                               help='outputs a list of matching hosts; does not execute anything else')
             parser.add_option('-l', '--limit', default=C.DEFAULT_SUBSET, dest='subset',
@@ -546,6 +546,10 @@ class CLI(with_metaclass(ABCMeta, object)):
             parser.add_option('--flush-cache', dest='flush_cache', action='store_true',
                               help="clear the fact cache")
 
+        if basedir_opts:
+            parser.add_option('--playbook-dir', default=None, dest='basedir', action='store',
+                              help="Since this tool does not use playbooks, use this as a subsitute playbook directory."
+                                   "This sets the relative path for many features including roles/ group_vars/ etc.")
         return parser
 
     @abstractmethod
@@ -605,8 +609,8 @@ class CLI(with_metaclass(ABCMeta, object)):
                     skip_tags.add(tag.strip())
             self.options.skip_tags = list(skip_tags)
 
-        # process inventory options
-        if hasattr(self.options, 'inventory'):
+        # process inventory options except for CLIs that require their own processing
+        if hasattr(self.options, 'inventory') and not self.SKIP_INVENTORY_DEFAULTS:
 
             if self.options.inventory:
 
@@ -616,7 +620,6 @@ class CLI(with_metaclass(ABCMeta, object)):
 
                 # Ensure full paths when needed
                 self.options.inventory = [unfrackpath(opt, follow=False) if ',' not in opt else opt for opt in self.options.inventory]
-
             else:
                 self.options.inventory = C.DEFAULT_HOST_LIST
 
@@ -775,6 +778,10 @@ class CLI(with_metaclass(ABCMeta, object)):
 
         # all needs loader
         loader = DataLoader()
+
+        basedir = getattr(options, 'basedir', False)
+        if basedir:
+            loader.set_basedir(basedir)
 
         vault_ids = options.vault_ids
         default_vault_ids = C.DEFAULT_VAULT_IDENTITY_LIST

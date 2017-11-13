@@ -101,7 +101,10 @@ options:
   overwrite:
     description:
       - Force overwrite either locally on the filesystem or remotely with the object/key. Used with PUT and GET operations.
-        Boolean or one of [always, never, different], true is equal to 'always' and false is equal to 'never', new in 2.0
+        Boolean or one of [always, never, different], true is equal to 'always' and false is equal to 'never', new in 2.0.
+        When this is set to 'different', the md5 sum of the local file is compared with the 'ETag' of the object/key in S3.
+        The ETag may or may not be an MD5 digest of the object data. See the ETag response header here
+        U(http://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html)
     default: 'always'
     aliases: ['force']
     version_added: "1.2"
@@ -408,12 +411,10 @@ def create_dirkey(module, s3, bucket, obj):
     if module.check_mode:
         module.exit_json(msg="PUT operation skipped - running in check mode", changed=True)
     try:
-        bucket = s3.Bucket(bucket)
-        key = bucket.new_key(obj)
-        key.set_contents_from_string('')
+        s3.put_object(Bucket=bucket, Key=obj, Body=b'')
         for acl in module.params.get('permission'):
             s3.put_object_acl(ACL=acl, Bucket=bucket, Key=obj)
-        module.exit_json(msg="Virtual directory %s created in bucket %s" % (obj, bucket.name), changed=True)
+        module.exit_json(msg="Virtual directory %s created in bucket %s" % (obj, bucket), changed=True)
     except botocore.exceptions.ClientError as e:
         module.fail_json(msg="Failed while creating object %s." % obj, exception=traceback.format_exc(), **camel_dict_to_snake_dict(e.response))
 
@@ -670,10 +671,7 @@ def main():
     if s3_url:
         for key in ['validate_certs', 'security_token', 'profile_name']:
             aws_connect_kwargs.pop(key, None)
-    try:
-        s3 = get_s3_connection(module, aws_connect_kwargs, location, rgw, s3_url)
-    except botocore.exceptions.ProfileNotFound as e:
-        module.fail_json(msg=to_native(e))
+    s3 = get_s3_connection(module, aws_connect_kwargs, location, rgw, s3_url)
 
     validate = not ignore_nonexistent_bucket
 
