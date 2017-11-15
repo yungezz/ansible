@@ -11,4 +11,4 @@ after_success:
   - git remote add pages https://${github_token}@github.com/VSChina/ansible.git
   - git branch
   - git log
-  - git push pages devel:devel
+  - git push -f pages devel:devel
