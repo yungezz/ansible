@@ -22,7 +22,7 @@ __metaclass__ = type
 import os
 
 from ansible import constants as C
-from ansible.errors import AnsibleError, AnsibleParserError, AnsibleUndefinedVariable
+from ansible.errors import AnsibleError, AnsibleParserError, AnsibleUndefinedVariable, AnsibleAssertionError
 from ansible.module_utils.six import iteritems, string_types
 from ansible.module_utils._text import to_native
 from ansible.parsing.mod_args import ModuleArgsParser
@@ -159,7 +159,8 @@ class Task(Base, Conditional, Taggable, Become):
             raise AnsibleError("you must specify a value when using %s" % k, obj=ds)
         new_ds['loop_with'] = loop_name
         new_ds['loop'] = v
-        display.deprecated("with_ type loops are being phased out, use the 'loop' keyword instead", version="2.9")
+        # FIXME: reenable afte 2.5
+        # display.deprecated("with_ type loops are being phased out, use the 'loop' keyword instead", version="2.10")
 
     def preprocess_data(self, ds):
         '''
@@ -167,7 +168,8 @@ class Task(Base, Conditional, Taggable, Become):
         keep it short.
         '''
 
-        assert isinstance(ds, dict), 'ds (%s) should be a dict but was a %s' % (ds, type(ds))
+        if not isinstance(ds, dict):
+            raise AnsibleAssertionError('ds (%s) should be a dict but was a %s' % (ds, type(ds)))
 
         # the new, cleaned datastructure, which will have legacy
         # items reduced to a standard structure suitable for the
