@@ -1,0 +1,266 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_serverkeys",
+      "ModuleNameAlt": "azure_rm_serverkeys",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "key_name",
+          "NameAlt": "key_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server key to be operated on (updated or created). The key name is required to be in the format of 'vault_key_version'. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901, then the server key name should be formatted as: YourVaultName_YourKeyName_01234567890123456789012345678901",
+          "DefaultValueSample": "\"{{ key_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The requested server key resource state.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "kind",
+          "NameAlt": "kind",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Kind of encryption protector. This is metadata used for the Azure portal experience.",
+          "DefaultValueSample": "\"{{ kind }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_key_type",
+          "NameAlt": "server_key_type",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The server key type like 'ServiceManaged', 'AzureKeyVault'. Possible values include: 'ServiceManaged', 'AzureKeyVault'",
+          "DefaultValueSample": "\"{{ server_key_type }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "uri",
+          "NameAlt": "uri",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The URI of the server key.",
+          "DefaultValueSample": "\"{{ uri }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "thumbprint",
+          "NameAlt": "thumbprint",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Thumbprint of the server key.",
+          "DefaultValueSample": "\"{{ thumbprint }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "creation_date",
+          "NameAlt": "creation_date",
+          "Disposition": "parameters",
+          "Type": "datetime",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The server key creation date.",
+          "DefaultValueSample": "\"{{ creation_date }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "key_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "key_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "key_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "key_name",
+            "parameters"
+          ]
+        },
+        {
+          "Name": "delete",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "key_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "key_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ServerKeys",
+      "ModuleOperationName": "server_keys",
+      "ObjectName": "ServerKeys"
+    },
+    {
+      "ModuleName": "azure_rm_serverkeys_facts",
+      "ModuleNameAlt": "azure_rm_serverkeys_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "key_name",
+          "NameAlt": "key_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the server key to be retrieved.",
+          "DefaultValueSample": "\"{{ key_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "key_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "key_name"
+          ]
+        },
+        {
+          "Name": "list_by_server",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ServerKeys",
+      "ModuleOperationName": "server_keys",
+      "ObjectName": "ServerKeys"
+    }
+  ],
+  "Namespace": "serverkeys",
+  "NamespaceUpper": "ServerKeys",
+  "Name": "SqlManagementClient"
+}

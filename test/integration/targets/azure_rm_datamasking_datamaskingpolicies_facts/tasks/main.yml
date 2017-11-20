@@ -1,0 +1,8 @@
+- name: Create DataMasking
+  azure_rm_datamasking_datamaskingpolicies_facts:
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

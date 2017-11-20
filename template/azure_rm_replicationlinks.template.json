@@ -1,0 +1,104 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_replicationlinks_facts",
+      "ModuleNameAlt": "azure_rm_replicationlinks_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database to get the link for.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "link_id",
+          "NameAlt": "link_id",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The replication link ID to be retrieved.",
+          "DefaultValueSample": "\"{{ link_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "link_id"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "link_id"
+          ]
+        },
+        {
+          "Name": "list_by_database",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ReplicationLinks",
+      "ModuleOperationName": "replication_links",
+      "ObjectName": "ReplicationLinks"
+    }
+  ],
+  "Namespace": "replicationlinks",
+  "NamespaceUpper": "ReplicationLinks",
+  "Name": "AzureSQLDatabasereplicationlinks"
+}

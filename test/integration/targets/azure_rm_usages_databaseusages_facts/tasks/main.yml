@@ -1,0 +1,8 @@
+- name: Create Usages
+  azure_rm_usages_databaseusages_facts:
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

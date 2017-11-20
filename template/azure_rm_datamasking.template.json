@@ -1,0 +1,588 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_datamasking_datamaskingpolicies",
+      "ModuleNameAlt": "azure_rm_datamasking_datamaskingpolicies",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "data_masking_policy_name",
+          "NameAlt": "data_masking_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database for which the data masking rule applies.",
+          "DefaultValueSample": "\"{{ data_masking_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "Parameters for creating or updating a data masking policy.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "data_masking_state",
+          "NameAlt": "data_masking_state",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The state of the data masking policy. Possible values include: 'Disabled', 'Enabled'",
+          "DefaultValueSample": "\"{{ data_masking_state }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "exempt_principals",
+          "NameAlt": "exempt_principals",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries.",
+          "DefaultValueSample": "\"{{ exempt_principals }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name",
+            "parameters"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DataMaskingPolicies",
+      "ModuleOperationName": "data_masking_policies",
+      "ObjectName": "DataMaskingPolicies"
+    },
+    {
+      "ModuleName": "azure_rm_datamasking_datamaskingpolicies_facts",
+      "ModuleNameAlt": "azure_rm_datamasking_datamaskingpolicies_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "data_masking_policy_name",
+          "NameAlt": "data_masking_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database for which the data masking rule applies.",
+          "DefaultValueSample": "\"{{ data_masking_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DataMaskingPolicies",
+      "ModuleOperationName": "data_masking_policies",
+      "ObjectName": "DataMaskingPolicies"
+    },
+    {
+      "ModuleName": "azure_rm_datamasking_datamaskingrules",
+      "ModuleNameAlt": "azure_rm_datamasking_datamaskingrules",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "data_masking_policy_name",
+          "NameAlt": "data_masking_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database for which the data masking rule applies.",
+          "DefaultValueSample": "\"{{ data_masking_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "data_masking_rule_name",
+          "NameAlt": "data_masking_rule_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the data masking rule.",
+          "DefaultValueSample": "\"{{ data_masking_rule_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The required parameters for creating or updating a data masking rule.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "alias_name",
+          "NameAlt": "alias_name",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The alias name. This is a legacy parameter and is no longer used.",
+          "DefaultValueSample": "\"{{ alias_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "rule_state",
+          "NameAlt": "rule_state",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. Possible values include: 'Disabled', 'Enabled'",
+          "DefaultValueSample": "\"{{ rule_state }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "schema_name",
+          "NameAlt": "schema_name",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The schema name on which the data masking rule is applied.",
+          "DefaultValueSample": "\"{{ schema_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "table_name",
+          "NameAlt": "table_name",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The table name on which the data masking rule is applied.",
+          "DefaultValueSample": "\"{{ table_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "column_name",
+          "NameAlt": "column_name",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The column name on which the data masking rule is applied.",
+          "DefaultValueSample": "\"{{ column_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "masking_function",
+          "NameAlt": "masking_function",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The masking function that is used for the data masking rule. Possible values include: 'Default', 'CCN', 'Email', 'Number', 'SSN', 'Text'",
+          "DefaultValueSample": "\"{{ masking_function }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "number_from",
+          "NameAlt": "number_from",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored.",
+          "DefaultValueSample": "\"{{ number_from }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "number_to",
+          "NameAlt": "number_to",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored.",
+          "DefaultValueSample": "\"{{ number_to }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "prefix_size",
+          "NameAlt": "prefix_size",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored.",
+          "DefaultValueSample": "\"{{ prefix_size }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "suffix_size",
+          "NameAlt": "suffix_size",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored.",
+          "DefaultValueSample": "\"{{ suffix_size }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "replacement_string",
+          "NameAlt": "replacement_string",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored.",
+          "DefaultValueSample": "\"{{ replacement_string }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name",
+            "data_masking_rule_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name",
+            "data_masking_rule_name",
+            "parameters"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DataMaskingRules",
+      "ModuleOperationName": "data_masking_rules",
+      "ObjectName": "DataMaskingRules"
+    },
+    {
+      "ModuleName": "azure_rm_datamasking_datamaskingrules_facts",
+      "ModuleNameAlt": "azure_rm_datamasking_datamaskingrules_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "data_masking_policy_name",
+          "NameAlt": "data_masking_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database for which the data masking rule applies.",
+          "DefaultValueSample": "\"{{ data_masking_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_by_database",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "data_masking_policy_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DataMaskingRules",
+      "ModuleOperationName": "data_masking_rules",
+      "ObjectName": "DataMaskingRules"
+    }
+  ],
+  "Namespace": "datamasking",
+  "NamespaceUpper": "DataMasking",
+  "Name": "AzureSQLDatabaseDatamaskingPoliciesandRules"
+}

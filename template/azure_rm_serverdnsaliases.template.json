@@ -1,0 +1,180 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_serverdnsaliases",
+      "ModuleNameAlt": "azure_rm_serverdnsaliases",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server that the alias is pointing to.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "dns_alias_name",
+          "NameAlt": "dns_alias_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server DNS alias.",
+          "DefaultValueSample": "\"{{ dns_alias_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ]
+        },
+        {
+          "Name": "delete",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ServerDnsAliases",
+      "ModuleOperationName": "server_dns_aliases",
+      "ObjectName": "ServerDnsAliases"
+    },
+    {
+      "ModuleName": "azure_rm_serverdnsaliases_facts",
+      "ModuleNameAlt": "azure_rm_serverdnsaliases_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server that the alias is pointing to.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "dns_alias_name",
+          "NameAlt": "dns_alias_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the server DNS alias.",
+          "DefaultValueSample": "\"{{ dns_alias_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "dns_alias_name"
+          ]
+        },
+        {
+          "Name": "list_by_server",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ServerDnsAliases",
+      "ModuleOperationName": "server_dns_aliases",
+      "ObjectName": "ServerDnsAliases"
+    }
+  ],
+  "Namespace": "serverdnsaliases",
+  "NamespaceUpper": "ServerDnsAliases",
+  "Name": "SqlManagementClient"
+}

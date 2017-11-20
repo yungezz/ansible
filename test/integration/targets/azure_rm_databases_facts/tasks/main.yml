@@ -1,0 +1,8 @@
+- name: Create Databases
+  azure_rm_databases_facts:
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.status == 'Online'

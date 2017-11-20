@@ -1,0 +1,233 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_geobackuppolicies",
+      "ModuleNameAlt": "azure_rm_geobackuppolicies",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "geo_backup_policy_name",
+          "NameAlt": "geo_backup_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the geo backup policy.",
+          "DefaultValueSample": "\"{{ geo_backup_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The required parameters for creating or updating the geo backup policy.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "state",
+          "NameAlt": "state",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The state of the geo backup policy. Possible values include: 'Disabled', 'Enabled'",
+          "DefaultValueSample": "\"{{ state }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "geo_backup_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "geo_backup_policy_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "geo_backup_policy_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "geo_backup_policy_name",
+            "parameters"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "GeoBackupPolicies",
+      "ModuleOperationName": "geo_backup_policies",
+      "ObjectName": "GeoBackupPolicies"
+    },
+    {
+      "ModuleName": "azure_rm_geobackuppolicies_facts",
+      "ModuleNameAlt": "azure_rm_geobackuppolicies_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "geo_backup_policy_name",
+          "NameAlt": "geo_backup_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the geo backup policy.",
+          "DefaultValueSample": "\"{{ geo_backup_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "geo_backup_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "geo_backup_policy_name"
+          ]
+        },
+        {
+          "Name": "list_by_database",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "GeoBackupPolicies",
+      "ModuleOperationName": "geo_backup_policies",
+      "ObjectName": "GeoBackupPolicies"
+    }
+  ],
+  "Namespace": "geobackuppolicies",
+  "NamespaceUpper": "GeoBackupPolicies",
+  "Name": "AzureSQLDatabase"
+}

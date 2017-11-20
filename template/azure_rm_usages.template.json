@@ -1,0 +1,127 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_usages_serverusages_facts",
+      "ModuleNameAlt": "azure_rm_usages_serverusages_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_by_server",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ServerUsages",
+      "ModuleOperationName": "server_usages",
+      "ObjectName": "ServerUsages"
+    },
+    {
+      "ModuleName": "azure_rm_usages_databaseusages_facts",
+      "ModuleNameAlt": "azure_rm_usages_databaseusages_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_by_database",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DatabaseUsages",
+      "ModuleOperationName": "database_usages",
+      "ObjectName": "DatabaseUsages"
+    }
+  ],
+  "Namespace": "usages",
+  "NamespaceUpper": "Usages",
+  "Name": "AzureSQLDatabase"
+}

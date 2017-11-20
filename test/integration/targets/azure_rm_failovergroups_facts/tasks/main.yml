@@ -1,0 +1,8 @@
+- name: Create FailoverGroups
+  azure_rm_failovergroups_facts:
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

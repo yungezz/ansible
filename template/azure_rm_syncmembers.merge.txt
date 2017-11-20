@@ -1,0 +1,7 @@
+Used existing template file
+Option 'server_name' Disposition - KEEPING OLD
+Option 'server_name' Documentation - KEEPING OLD
+Option 'server_name' Required - KEEPING OLD
+Option 'database_name' Disposition - KEEPING OLD
+Option 'database_name' Documentation - KEEPING OLD
+Option 'database_name' Required - KEEPING OLD

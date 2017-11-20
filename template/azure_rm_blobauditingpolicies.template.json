@@ -1,0 +1,304 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_databaseblobauditingpolicies",
+      "ModuleNameAlt": "azure_rm_databaseblobauditingpolicies",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database for which the blob auditing policy will be defined.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "blob_auditing_policy_name",
+          "NameAlt": "blob_auditing_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the blob auditing policy.",
+          "DefaultValueSample": "\"{{ blob_auditing_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The database blob auditing policy.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "state",
+          "NameAlt": "state",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "Specifies the state of the policy. If state is Enabled, storageEndpoint and storageAccountAccessKey are required. Possible values include: 'Enabled', 'Disabled'",
+          "DefaultValueSample": "\"{{ state }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "storage_endpoint",
+          "NameAlt": "storage_endpoint",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint is required.",
+          "DefaultValueSample": "\"{{ storage_endpoint }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "storage_account_access_key",
+          "NameAlt": "storage_account_access_key",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the identifier key of the auditing storage account. If state is Enabled, storageAccountAccessKey is required.",
+          "DefaultValueSample": "\"{{ storage_account_access_key }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "retention_days",
+          "NameAlt": "retention_days",
+          "Disposition": "parameters",
+          "Type": "int",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the number of days to keep in the audit logs.",
+          "DefaultValueSample": "\"{{ retention_days }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "audit_actions_and_groups",
+          "NameAlt": "audit_actions_and_groups",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": true,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the Actions and Actions-Groups to audit.",
+          "DefaultValueSample": "\"{{ audit_actions_and_groups }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "storage_account_subscription_id",
+          "NameAlt": "storage_account_subscription_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the blob storage subscription Id.",
+          "DefaultValueSample": "\"{{ storage_account_subscription_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "is_storage_secondary_key_in_use",
+          "NameAlt": "is_storage_secondary_key_in_use",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies whether storageAccountAccessKey value is the storage’s secondary key.",
+          "DefaultValueSample": "\"{{ is_storage_secondary_key_in_use }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "blob_auditing_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "blob_auditing_policy_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "blob_auditing_policy_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "blob_auditing_policy_name",
+            "parameters"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DatabaseBlobAuditingPolicies",
+      "ModuleOperationName": "database_blob_auditing_policies",
+      "ObjectName": "DatabaseBlobAuditingPolicies"
+    },
+    {
+      "ModuleName": "azure_rm_databaseblobauditingpolicies_facts",
+      "ModuleNameAlt": "azure_rm_databaseblobauditingpolicies_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database for which the blob audit policy is defined.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "blob_auditing_policy_name",
+          "NameAlt": "blob_auditing_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the blob auditing policy.",
+          "DefaultValueSample": "\"{{ blob_auditing_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "blob_auditing_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "blob_auditing_policy_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "DatabaseBlobAuditingPolicies",
+      "ModuleOperationName": "database_blob_auditing_policies",
+      "ObjectName": "DatabaseBlobAuditingPolicies"
+    }
+  ],
+  "Namespace": "blobauditingpolicies",
+  "NamespaceUpper": "BlobAuditingPolicies",
+  "Name": "SqlManagementClient"
+}

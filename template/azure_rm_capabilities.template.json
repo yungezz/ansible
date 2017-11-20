@@ -1,0 +1,43 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_capabilities_facts",
+      "ModuleNameAlt": "azure_rm_capabilities_facts",
+      "Options": [
+        {
+          "Name": "location_id",
+          "NameAlt": "location_id",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The location id whose capabilities are retrieved.",
+          "DefaultValueSample": "\"{{ location_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_by_location",
+          "Options": [
+            "location_id"
+          ],
+          "RequiredOptions": [
+            "location_id"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "Capabilities",
+      "ModuleOperationName": "capabilities",
+      "ObjectName": "Capabilities"
+    }
+  ],
+  "Namespace": "capabilities",
+  "NamespaceUpper": "Capabilities",
+  "Name": "AzureSQLDatabasecapabilities"
+}

@@ -1,0 +1,234 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_backuplongtermretentionpolicies",
+      "ModuleNameAlt": "azure_rm_backuplongtermretentionpolicies",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "backup_long_term_retention_policy_name",
+          "NameAlt": "backup_long_term_retention_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the backup long term retention policy",
+          "DefaultValueSample": "\"{{ backup_long_term_retention_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The required parameters to update a backup long term retention policy",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "state",
+          "NameAlt": "state",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The status of the backup long term retention policy. Possible values include: 'Disabled', 'Enabled'",
+          "DefaultValueSample": "\"{{ state }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "recovery_services_backup_policy_resource_id",
+          "NameAlt": "recovery_services_backup_policy_resource_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The azure recovery services backup protection policy resource id",
+          "DefaultValueSample": "\"{{ recovery_services_backup_policy_resource_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "backup_long_term_retention_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "backup_long_term_retention_policy_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "backup_long_term_retention_policy_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "backup_long_term_retention_policy_name",
+            "parameters"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "BackupLongTermRetentionPolicies",
+      "ModuleOperationName": "backup_long_term_retention_policies",
+      "ObjectName": "BackupLongTermRetentionPolicies"
+    },
+    {
+      "ModuleName": "azure_rm_backuplongtermretentionpolicies_facts",
+      "ModuleNameAlt": "azure_rm_backuplongtermretentionpolicies_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "backup_long_term_retention_policy_name",
+          "NameAlt": "backup_long_term_retention_policy_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the backup long term retention policy",
+          "DefaultValueSample": "\"{{ backup_long_term_retention_policy_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "backup_long_term_retention_policy_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "backup_long_term_retention_policy_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "BackupLongTermRetentionPolicies",
+      "ModuleOperationName": "backup_long_term_retention_policies",
+      "ObjectName": "BackupLongTermRetentionPolicies"
+    }
+  ],
+  "Namespace": "backuplongtermretentionpolicies",
+  "NamespaceUpper": "BackupLongTermRetentionPolicies",
+  "Name": "AzureSQLDatabaseBackupLongTermRetentionPolicy"
+}

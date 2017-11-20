@@ -1,0 +1,10 @@
+- name: Create BlobAuditingPolicies
+  azure_rm_databaseblobauditingpolicies:
+    audit_actions_and_groups:
+      - XXXX - list of values -- not implemented str
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

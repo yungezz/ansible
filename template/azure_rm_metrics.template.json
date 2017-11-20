@@ -1,0 +1,201 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_metrics_databases_facts",
+      "ModuleNameAlt": "azure_rm_metrics_databases_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "filter",
+          "NameAlt": "filter",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "An OData filter expression that describes a subset of metrics to return.",
+          "DefaultValueSample": "\"{{ filter }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_metrics",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "filter"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "filter"
+          ]
+        },
+        {
+          "Name": "list_metric_definitions",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "Databases",
+      "ModuleOperationName": "databases",
+      "ObjectName": "Databases"
+    },
+    {
+      "ModuleName": "azure_rm_metrics_elasticpools_facts",
+      "ModuleNameAlt": "azure_rm_metrics_elasticpools_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "elastic_pool_name",
+          "NameAlt": "elastic_pool_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the elastic pool.",
+          "DefaultValueSample": "\"{{ elastic_pool_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "filter",
+          "NameAlt": "filter",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "An OData filter expression that describes a subset of metrics to return.",
+          "DefaultValueSample": "\"{{ filter }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_metrics",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "elastic_pool_name",
+            "filter"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "elastic_pool_name",
+            "filter"
+          ]
+        },
+        {
+          "Name": "list_metric_definitions",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "elastic_pool_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "elastic_pool_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "ElasticPools",
+      "ModuleOperationName": "elastic_pools",
+      "ObjectName": "ElasticPools"
+    }
+  ],
+  "Namespace": "metrics",
+  "NamespaceUpper": "Metrics",
+  "Name": "AzureSQLDatabase"
+}

@@ -1,0 +1,257 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_servers",
+      "ModuleNameAlt": "azure_rm_sql_servers",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group }}\"",
+          "DefaultValueTest": "\"{{ resource_group }}\"",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "zims-server",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The requested server resource state.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "location",
+          "NameAlt": "location",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "Resource location.",
+          "DefaultValueSample": "\"{{ location }}\"",
+          "DefaultValueTest": "westus",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "tags",
+          "NameAlt": "tags",
+          "Disposition": "parameters",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Resource tags.",
+          "DefaultValueSample": "\"{{ tags }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "identity",
+          "NameAlt": "identity",
+          "Disposition": "parameters",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The Azure Active Directory identity of the server.",
+          "DefaultValueSample": "\"{{ identity }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [
+            {
+              "Name": "type",
+              "NameAlt": "type",
+              "Disposition": "default",
+              "Type": "str",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "The identity type. Set this to 'SystemAssigned' in order to automatically create and assign an Azure Active Directory principal for the resource. Possible values include: 'SystemAssigned'",
+              "DefaultValueSample": "\"{{ type }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            }
+          ],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "administrator_login",
+          "NameAlt": "administrator_login",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Administrator username for the server. Once created it cannot be changed.",
+          "DefaultValueSample": "\"{{ administrator_login }}\"",
+          "DefaultValueTest": "mylogin",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "administrator_login_password",
+          "NameAlt": "administrator_login_password",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The administrator login password (required for server creation).",
+          "DefaultValueSample": "\"{{ administrator_login_password }}\"",
+          "DefaultValueTest": "Testpasswordxyz12!",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "version",
+          "NameAlt": "version",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The version of the server.",
+          "DefaultValueSample": "\"{{ version }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "parameters"
+          ]
+        },
+        {
+          "Name": "delete",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "Servers",
+      "ModuleOperationName": "servers",
+      "ObjectName": "Server"
+    },
+    {
+      "ModuleName": "azure_rm_servers_facts",
+      "ModuleNameAlt": "azure_rm_servers_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        },
+        {
+          "Name": "list_by_resource_group",
+          "Options": [
+            "resource_group_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "Servers",
+      "ModuleOperationName": "servers",
+      "ObjectName": "Servers"
+    }
+  ],
+  "Namespace": "servers",
+  "NamespaceUpper": "Servers",
+  "Name": "SqlManagementClient"
+}

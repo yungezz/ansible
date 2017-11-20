@@ -1,0 +1,535 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_syncgroups",
+      "ModuleNameAlt": "azure_rm_syncgroups",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database on which the sync group is hosted.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "sync_group_name",
+          "NameAlt": "sync_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the sync group.",
+          "DefaultValueSample": "\"{{ sync_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The requested sync group resource state.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "interval",
+          "NameAlt": "interval",
+          "Disposition": "parameters",
+          "Type": "int",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Sync interval of the sync group.",
+          "DefaultValueSample": "\"{{ interval }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "conflict_resolution_policy",
+          "NameAlt": "conflict_resolution_policy",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Conflict resolution policy of the sync group. Possible values include: 'HubWin', 'MemberWin'",
+          "DefaultValueSample": "\"{{ conflict_resolution_policy }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "sync_database_id",
+          "NameAlt": "sync_database_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "ARM resource id of the sync database in the sync group.",
+          "DefaultValueSample": "\"{{ sync_database_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "hub_database_user_name",
+          "NameAlt": "hub_database_user_name",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "User name for the sync group hub database credential.",
+          "DefaultValueSample": "\"{{ hub_database_user_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "hub_database_password",
+          "NameAlt": "hub_database_password",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Password for the sync group hub database credential.",
+          "DefaultValueSample": "\"{{ hub_database_password }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "schema",
+          "NameAlt": "schema",
+          "Disposition": "parameters",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Sync schema of the sync group.",
+          "DefaultValueSample": "\"{{ schema }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [
+            {
+              "Name": "tables",
+              "NameAlt": "tables",
+              "Disposition": "default",
+              "Type": "dict",
+              "IsList": true,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "List of tables in sync group schema.",
+              "DefaultValueSample": "\"{{ tables }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [
+                {
+                  "Name": "columns",
+                  "NameAlt": "columns",
+                  "Disposition": "default",
+                  "Type": "dict",
+                  "IsList": true,
+                  "Required": "False",
+                  "VariableValue": "None",
+                  "Documentation": "List of columns in sync group schema.",
+                  "DefaultValueSample": "\"{{ columns }}\"",
+                  "DefaultValueTest": "",
+                  "SubOptions": [
+                    {
+                      "Name": "quoted_name",
+                      "NameAlt": "quoted_name",
+                      "Disposition": "default",
+                      "Type": "str",
+                      "IsList": false,
+                      "Required": "False",
+                      "VariableValue": "None",
+                      "Documentation": "Quoted name of sync group table column.",
+                      "DefaultValueSample": "\"{{ quoted_name }}\"",
+                      "DefaultValueTest": "",
+                      "SubOptions": [],
+                      "RequiredCount": 0
+                    },
+                    {
+                      "Name": "data_size",
+                      "NameAlt": "data_size",
+                      "Disposition": "default",
+                      "Type": "str",
+                      "IsList": false,
+                      "Required": "False",
+                      "VariableValue": "None",
+                      "Documentation": "Data size of the column.",
+                      "DefaultValueSample": "\"{{ data_size }}\"",
+                      "DefaultValueTest": "",
+                      "SubOptions": [],
+                      "RequiredCount": 0
+                    },
+                    {
+                      "Name": "data_type",
+                      "NameAlt": "data_type",
+                      "Disposition": "default",
+                      "Type": "str",
+                      "IsList": false,
+                      "Required": "False",
+                      "VariableValue": "None",
+                      "Documentation": "Data type of the column.",
+                      "DefaultValueSample": "\"{{ data_type }}\"",
+                      "DefaultValueTest": "",
+                      "SubOptions": [],
+                      "RequiredCount": 0
+                    }
+                  ],
+                  "RequiredCount": 0
+                },
+                {
+                  "Name": "quoted_name",
+                  "NameAlt": "quoted_name",
+                  "Disposition": "default",
+                  "Type": "str",
+                  "IsList": false,
+                  "Required": "False",
+                  "VariableValue": "None",
+                  "Documentation": "Quoted name of sync group schema table.",
+                  "DefaultValueSample": "\"{{ quoted_name }}\"",
+                  "DefaultValueTest": "",
+                  "SubOptions": [],
+                  "RequiredCount": 0
+                }
+              ],
+              "RequiredCount": 0
+            },
+            {
+              "Name": "master_sync_member_name",
+              "NameAlt": "master_sync_member_name",
+              "Disposition": "default",
+              "Type": "str",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "Name of master sync member where the schema is from.",
+              "DefaultValueSample": "\"{{ master_sync_member_name }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            }
+          ],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name",
+            "parameters"
+          ]
+        },
+        {
+          "Name": "delete",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "SyncGroups",
+      "ModuleOperationName": "sync_groups",
+      "ObjectName": "SyncGroups"
+    },
+    {
+      "ModuleName": "azure_rm_syncgroups_facts",
+      "ModuleNameAlt": "azure_rm_syncgroups_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the database on which the sync group is hosted.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "sync_group_name",
+          "NameAlt": "sync_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the sync group.",
+          "DefaultValueSample": "\"{{ sync_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "start_time",
+          "NameAlt": "start_time",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Get logs generated after this time.",
+          "DefaultValueSample": "\"{{ start_time }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "end_time",
+          "NameAlt": "end_time",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Get logs generated before this time.",
+          "DefaultValueSample": "\"{{ end_time }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "type",
+          "NameAlt": "type",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The types of logs to retrieve.",
+          "DefaultValueSample": "\"{{ type }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "continuation_token",
+          "NameAlt": "continuation_token",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The continuation token for this operation.",
+          "DefaultValueSample": "\"{{ continuation_token }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "location_name",
+          "NameAlt": "location_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the region where the resource is located.",
+          "DefaultValueSample": "\"{{ location_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "list_logs",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name",
+            "start_time",
+            "end_time",
+            "type",
+            "continuation_token"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name",
+            "start_time",
+            "end_time",
+            "type"
+          ]
+        },
+        {
+          "Name": "list_hub_schemas",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ]
+        },
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "sync_group_name"
+          ]
+        },
+        {
+          "Name": "list_by_database",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        },
+        {
+          "Name": "list_sync_database_ids",
+          "Options": [
+            "location_name"
+          ],
+          "RequiredOptions": [
+            "location_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "SyncGroups",
+      "ModuleOperationName": "sync_groups",
+      "ObjectName": "SyncGroups"
+    }
+  ],
+  "Namespace": "syncgroups",
+  "NamespaceUpper": "SyncGroups",
+  "Name": "SqlManagementClient"
+}

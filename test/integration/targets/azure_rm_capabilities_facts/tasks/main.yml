@@ -1,0 +1,8 @@
+- name: Create Capabilities
+  azure_rm_capabilities_facts:
+  register: output
+- name: Assert the resource instance is well created
+  assert:
+    that:
+      - output.changed
+      - output.state.state == 'Ready'

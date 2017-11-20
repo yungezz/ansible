@@ -1,0 +1,186 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_backuplongtermretentionvaults",
+      "ModuleNameAlt": "azure_rm_backuplongtermretentionvaults",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "backup_long_term_retention_vault_name",
+          "NameAlt": "backup_long_term_retention_vault_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the backup long term retention vault",
+          "DefaultValueSample": "\"{{ backup_long_term_retention_vault_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The required parameters to update a backup long term retention vault",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "recovery_services_vault_resource_id",
+          "NameAlt": "recovery_services_vault_resource_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The azure recovery services vault resource id",
+          "DefaultValueSample": "\"{{ recovery_services_vault_resource_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "backup_long_term_retention_vault_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "backup_long_term_retention_vault_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "backup_long_term_retention_vault_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "backup_long_term_retention_vault_name",
+            "parameters"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "BackupLongTermRetentionVaults",
+      "ModuleOperationName": "backup_long_term_retention_vaults",
+      "ObjectName": "BackupLongTermRetentionVaults"
+    },
+    {
+      "ModuleName": "azure_rm_backuplongtermretentionvaults_facts",
+      "ModuleNameAlt": "azure_rm_backuplongtermretentionvaults_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "backup_long_term_retention_vault_name",
+          "NameAlt": "backup_long_term_retention_vault_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the Azure SQL Server backup LongTermRetention vault",
+          "DefaultValueSample": "\"{{ backup_long_term_retention_vault_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "backup_long_term_retention_vault_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "backup_long_term_retention_vault_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "state",
+      "AssertStateExpectedValue": "Ready",
+      "ModuleOperationNameUpper": "BackupLongTermRetentionVaults",
+      "ModuleOperationName": "backup_long_term_retention_vaults",
+      "ObjectName": "BackupLongTermRetentionVaults"
+    }
+  ],
+  "Namespace": "backuplongtermretentionvaults",
+  "NamespaceUpper": "BackupLongTermRetentionVaults",
+  "Name": "AzureSQLServerBackupLongTermRetentionVault"
+}

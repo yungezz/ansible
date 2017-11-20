@@ -1,0 +1,532 @@
+{
+  "Modules": [
+    {
+      "ModuleName": "azure_rm_databases",
+      "ModuleNameAlt": "azure_rm_xsql_databases",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "parameters",
+          "NameAlt": "parameters",
+          "Disposition": "dictionary",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "dict()",
+          "Documentation": "The requested database resource state.",
+          "DefaultValueSample": "\"{{ parameters }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "location",
+          "NameAlt": "location",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "Resource location.",
+          "DefaultValueSample": "\"{{ location }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "tags",
+          "NameAlt": "tags",
+          "Disposition": "parameters",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Resource tags.",
+          "DefaultValueSample": "\"{{ tags }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "sku",
+          "NameAlt": "sku",
+          "Disposition": "parameters",
+          "Type": "dict",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name and tier of the SKU.",
+          "DefaultValueSample": "\"{{ sku }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [
+            {
+              "Name": "name",
+              "NameAlt": "name",
+              "Disposition": "default",
+              "Type": "str",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "The name of the SKU, typically, a letter + Number code, e.g. P3.",
+              "DefaultValueSample": "\"{{ name }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            },
+            {
+              "Name": "tier",
+              "NameAlt": "tier",
+              "Disposition": "default",
+              "Type": "str",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "The tier of the particular SKU, e.g. Basic, Premium.",
+              "DefaultValueSample": "\"{{ tier }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            },
+            {
+              "Name": "size",
+              "NameAlt": "size",
+              "Disposition": "default",
+              "Type": "str",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "Size of the particular SKU",
+              "DefaultValueSample": "\"{{ size }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            },
+            {
+              "Name": "family",
+              "NameAlt": "family",
+              "Disposition": "default",
+              "Type": "str",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "If the service has different generations of hardware, for the same SKU, then that can be captured here.",
+              "DefaultValueSample": "\"{{ family }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            },
+            {
+              "Name": "capacity",
+              "NameAlt": "capacity",
+              "Disposition": "default",
+              "Type": "int",
+              "IsList": false,
+              "Required": "False",
+              "VariableValue": "None",
+              "Documentation": "Capacity of the particular SKU.",
+              "DefaultValueSample": "\"{{ capacity }}\"",
+              "DefaultValueTest": "",
+              "SubOptions": [],
+              "RequiredCount": 0
+            }
+          ],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "create_mode",
+          "NameAlt": "create_mode",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the mode of database creation.\r\n\r\nDefault: regular database creation.\r\n\r\nCopy: creates a database as a copy of an existing database. sourceDatabaseId must be specified as the resource ID of the source database.\r\n\r\nSecondary: creates a database as a secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary database.\r\n\r\nPointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of the existing database, and restorePointInTime must be specified.\r\n\r\nRecovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.\r\n\r\nRestore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.\r\n\r\nRestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.\r\n\r\nCopy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition. Possible values include: 'Default', 'Copy', 'Secondary', 'PointInTimeRestore', 'Restore', 'Recovery', 'RestoreExternalBackup', 'RestoreExternalBackupSecondary', 'RestoreLongTermRetentionBackup'",
+          "DefaultValueSample": "\"{{ create_mode }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "collation",
+          "NameAlt": "collation",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The collation of the database.",
+          "DefaultValueSample": "\"{{ collation }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "max_size_bytes",
+          "NameAlt": "max_size_bytes",
+          "Disposition": "parameters",
+          "Type": "long",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The max size of the database expressed in bytes.",
+          "DefaultValueSample": "\"{{ max_size_bytes }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "sample_name",
+          "NameAlt": "sample_name",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the sample schema to apply when creating this database. Possible values include: 'AdventureWorksLT', 'WideWorldImportersStd', 'WideWorldImportersFull'",
+          "DefaultValueSample": "\"{{ sample_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "elastic_pool_id",
+          "NameAlt": "elastic_pool_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The resource identifier of the elastic pool containing this database.",
+          "DefaultValueSample": "\"{{ elastic_pool_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "source_database_id",
+          "NameAlt": "source_database_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The resource identifier of the source database associated with create operation of this database.",
+          "DefaultValueSample": "\"{{ source_database_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "restore_point_in_time",
+          "NameAlt": "restore_point_in_time",
+          "Disposition": "parameters",
+          "Type": "datetime",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database.",
+          "DefaultValueSample": "\"{{ restore_point_in_time }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "source_database_deletion_date",
+          "NameAlt": "source_database_deletion_date",
+          "Disposition": "parameters",
+          "Type": "datetime",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Specifies the time that the database was deleted.",
+          "DefaultValueSample": "\"{{ source_database_deletion_date }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "recovery_services_recovery_point_id",
+          "NameAlt": "recovery_services_recovery_point_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The resource identifier of the recovery point associated with create operation of this database.",
+          "DefaultValueSample": "\"{{ recovery_services_recovery_point_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "long_term_retention_backup_resource_id",
+          "NameAlt": "long_term_retention_backup_resource_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The resource identifier of the long term retention backup associated with create operation of this database.",
+          "DefaultValueSample": "\"{{ long_term_retention_backup_resource_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "recoverable_database_id",
+          "NameAlt": "recoverable_database_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The resource identifier of the recoverable database associated with create operation of this database.",
+          "DefaultValueSample": "\"{{ recoverable_database_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "restorable_dropped_database_id",
+          "NameAlt": "restorable_dropped_database_id",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The resource identifier of the restorable dropped database associated with create operation of this database.",
+          "DefaultValueSample": "\"{{ restorable_dropped_database_id }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "catalog_collation",
+          "NameAlt": "catalog_collation",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Collation of the metadata catalog. Possible values include: 'DATABASE_DEFAULT', 'SQL_Latin1_General_CP1_CI_AS'",
+          "DefaultValueSample": "\"{{ catalog_collation }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        },
+        {
+          "Name": "zone_redundant",
+          "NameAlt": "zone_redundant",
+          "Disposition": "parameters",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones.",
+          "DefaultValueSample": "\"{{ zone_redundant }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": [],
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        },
+        {
+          "Name": "create_or_update",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "parameters"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name",
+            "parameters"
+          ]
+        },
+        {
+          "Name": "delete",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "status",
+      "AssertStateExpectedValue": "Online",
+      "ModuleOperationNameUpper": "Databases",
+      "ModuleOperationName": "databases",
+      "ObjectName": "Databases"
+    },
+    {
+      "ModuleName": "azure_rm_databases_facts",
+      "ModuleNameAlt": "azure_rm_databases_facts",
+      "Options": [
+        {
+          "Name": "resource_group_name",
+          "NameAlt": "resource_group_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
+          "DefaultValueSample": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "server_name",
+          "NameAlt": "server_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "True",
+          "VariableValue": "None",
+          "Documentation": "The name of the server.",
+          "DefaultValueSample": "\"{{ server_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "database_name",
+          "NameAlt": "database_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the database.",
+          "DefaultValueSample": "\"{{ database_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        },
+        {
+          "Name": "elastic_pool_name",
+          "NameAlt": "elastic_pool_name",
+          "Disposition": "default",
+          "Type": "str",
+          "IsList": false,
+          "Required": "False",
+          "VariableValue": "None",
+          "Documentation": "The name of the elastic pool.",
+          "DefaultValueSample": "\"{{ elastic_pool_name }}\"",
+          "DefaultValueTest": "",
+          "SubOptions": null,
+          "RequiredCount": 0
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "get",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "database_name"
+          ]
+        },
+        {
+          "Name": "list_by_elastic_pool",
+          "Options": [
+            "resource_group_name",
+            "server_name",
+            "elastic_pool_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name",
+            "elastic_pool_name"
+          ]
+        },
+        {
+          "Name": "list_by_server",
+          "Options": [
+            "resource_group_name",
+            "server_name"
+          ],
+          "RequiredOptions": [
+            "resource_group_name",
+            "server_name"
+          ]
+        }
+      ],
+      "AssertStateVariable": "status",
+      "AssertStateExpectedValue": "Online",
+      "ModuleOperationNameUpper": "Databases",
+      "ModuleOperationName": "databases",
+      "ObjectName": "Databases"
+    }
+  ],
+  "Namespace": "databases",
+  "NamespaceUpper": "Databases",
+  "Name": "SqlManagementClient"
+}
