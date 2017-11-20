@@ -48,51 +48,93 @@ options:
         required: False
     create_mode:
         description:
-            - Specifies the mode of database creation.
+            - "Specifies the mode of database creation.
+Default: regular database creation.
+Copy: creates a database as a copy of an existing database. sou
+               rceDatabaseId must be specified as the resource ID of the source database.
+OnlineSecondary/NonReadableSecondary: creates a database as a (rea
+               dable or nonreadable) secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary
+                database.
+PointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be speci
+               fied as the resource ID of the existing database, and restorePointInTime must be specified.
+Recovery: Creates a database by restoring a geo-r
+               eplicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
+Restore: Creates a database by resto
+               ring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sour
+               ceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDel
+               etionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
+RestoreLongTermRetentionBackup: Crea
+               tes a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point
+               resource ID.
+Copy, NonReadableSecondary, OnlineSecondary and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition. Poss
+               ible values include: 'Copy', 'Default', 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore', 'RestoreLongTe
+               rmRetentionBackup'"
         required: False
     source_database_id:
         description:
-            - Conditional. If createMode is Copy, NonReadableSecondary, OnlineSecondary, PointInTimeRestore, Recovery, or Restore, then this value is required. Specifies the resource ID of the source database. If createMode is NonReadableSecondary or OnlineSecondary, the name of the source database must be the same as the new database being created.
+            - "Conditional. If createMode is Copy, NonReadableSecondary, OnlineSecondary, PointInTimeRestore, Recovery, or Restore, then this value is requir
+               ed. Specifies the resource ID of the source database. If createMode is NonReadableSecondary or OnlineSecondary, the name of the source databas
+               e must be the same as the new database being created."
         required: False
     source_database_deletion_date:
         description:
-            - Conditional. If createMode is Restore and sourceDatabaseId is the deleted database's original resource id when it existed (as opposed to its current restorable dropped database id), then this value is required. Specifies the time that the database was deleted.
+            - "Conditional. If createMode is Restore and sourceDatabaseId is the deleted database's original resource id when it existed (as opposed to its c
+               urrent restorable dropped database id), then this value is required. Specifies the time that the database was deleted."
         required: False
     restore_point_in_time:
         description:
-            - Conditional. If createMode is PointInTimeRestore, this value is required. If createMode is Restore, this value is optional. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value.
+            - "Conditional. If createMode is PointInTimeRestore, this value is required. If createMode is Restore, this value is optional. Specifies the poin
+               t in time (ISO8601 format) of the source database that will be restored to create the new database. Must be greater than or equal to the sourc
+               e database's earliestRestoreDate value."
         required: False
     recovery_services_recovery_point_resource_id:
         description:
-            - Conditional. If createMode is RestoreLongTermRetentionBackup, then this value is required. Specifies the resource ID of the recovery point to restore from.
+            - "Conditional. If createMode is RestoreLongTermRetentionBackup, then this value is required. Specifies the resource ID of the recovery point to
+               restore from."
         required: False
     edition:
         description:
-            - The edition of the database. The DatabaseEditions enumeration contains all the valid editions. If createMode is NonReadableSecondary or OnlineSecondary, this value is ignored. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.". Possible values include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System', 'System2'
+            - "The edition of the database. The DatabaseEditions enumeration contains all the valid editions. If createMode is NonReadableSecondary or Online
+               Secondary, this value is ignored. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/
+               locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.". Possible values include: 'Web', 'Business', '
+               Basic', 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System', 'System2'"
         required: False
     max_size_bytes:
         description:
-            - The max size of the database expressed in bytes. If createMode is not Default, this value is ignored. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation."
+            - "The max size of the database expressed in bytes. If createMode is not Default, this value is ignored. To see possible values, query the capabi
+               lities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabili
+               ties_ListByLocation.""
         required: False
     requested_service_objective_id:
         description:
-            - The configured service level objective ID of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of currentServiceObjectiveId property. If requestedServiceObjectiveId and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveId overrides the value of requestedServiceObjectiveName. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation."
+            - "The configured service level objective ID of the database. This is the service level objective that is in the process of being applied to the
+               database. Once successfully updated, it will match the value of currentServiceObjectiveId property. If requestedServiceObjectiveId and request
+               edServiceObjectiveName are both updated, the value of requestedServiceObjectiveId overrides the value of requestedServiceObjectiveName. To see
+                possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) ref
+               erred to by operationId: "Capabilities_ListByLocation.""
         required: False
     requested_service_objective_name:
         description:
-            - The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.". Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'System2', 'ElasticPool'
+            - "The name of the configured service level objective of the database. This is the service level objective that is in the process of being applie
+               d to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the cap
+               abilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capab
+               ilities_ListByLocation.". Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'Sys
+               tem2', 'ElasticPool'"
         required: False
     elastic_pool_name:
         description:
-            - The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored. Not supported for DataWarehouse edition.
+            - "The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requested
+               ServiceObjectiveName is ignored. Not supported for DataWarehouse edition."
         required: False
     read_scale:
         description:
-            - Conditional. If the database is a geo-secondary, readScale indicates whether read-only connections are allowed to this database or not. Not supported for DataWarehouse edition. Possible values include: 'Enabled', 'Disabled'
+            - "Conditional. If the database is a geo-secondary, readScale indicates whether read-only connections are allowed to this database or not. Not su
+               pported for DataWarehouse edition. Possible values include: 'Enabled', 'Disabled'"
         required: False
     sample_name:
         description:
-            - Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored. Not supported for DataWarehouse edition. Possible values include: 'AdventureWorksLT'
+            - "Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored. Not support
+               ed for DataWarehouse edition. Possible values include: 'AdventureWorksLT'"
         required: False
     zone_redundant:
         description:

@@ -44,11 +44,13 @@ options:
         required: False
     state:
         description:
-            - Specifies the state of the policy. If state is Enabled, storageEndpoint and storageAccountAccessKey are required. Possible values include: 'New', 'Enabled', 'Disabled'
+            - "Specifies the state of the policy. If state is Enabled, storageEndpoint and storageAccountAccessKey are required. Possible values include: 'Ne
+               w', 'Enabled', 'Disabled'"
         required: True
     disabled_alerts:
         description:
-            - Specifies the semicolon-separated list of alerts that are disabled, or empty string to disable no alerts. Possible values: Sql_Injection; Sql_Injection_Vulnerability; Access_Anomaly; Usage_Anomaly.
+            - "Specifies the semicolon-separated list of alerts that are disabled, or empty string to disable no alerts. Possible values: Sql_Injection; Sql_
+               Injection_Vulnerability; Access_Anomaly; Usage_Anomaly."
         required: False
     email_addresses:
         description:
@@ -60,7 +62,8 @@ options:
         required: False
     storage_endpoint:
         description:
-            - Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. If state is Enabled, storageEndpoint is required.
+            - "Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit log
+               s. If state is Enabled, storageEndpoint is required."
         required: False
     storage_account_access_key:
         description:

@@ -64,7 +64,8 @@ options:
         required: False
     zone_redundant:
         description:
-            - Whether or not this database elastic pool is zone redundant, which means the replicas of this database will be spread across multiple availability zones.
+            - "Whether or not this database elastic pool is zone redundant, which means the replicas of this database will be spread across multiple availabi
+               lity zones."
         required: False
 
 extends_documentation_fragment:

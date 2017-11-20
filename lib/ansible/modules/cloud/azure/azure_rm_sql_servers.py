@@ -45,7 +45,8 @@ options:
         suboptions:
             type:
                 description:
-                    - The identity type. Set this to 'SystemAssigned' in order to automatically create and assign an Azure Active Directory principal for the resource. Possible values include: 'SystemAssigned'
+                    - "The identity type. Set this to 'SystemAssigned' in order to automatically create and assign an Azure Active Directory principal for th
+                       e resource. Possible values include: 'SystemAssigned'"
                 required: False
     administrator_login:
         description:

@@ -48,7 +48,9 @@ options:
         required: False
     rule_state:
         description:
-            - The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. Possible values include: 'Disabled', 'Enabled'
+            - "The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify
+                ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the
+               provided value of ruleState. Possible values include: 'Disabled', 'Enabled'"
         required: False
     schema_name:
         description:
@@ -76,7 +78,8 @@ options:
         required: False
     prefix_size:
         description:
-            - If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored.
+            - "If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be
+                ignored."
         required: False
     suffix_size:
         description:

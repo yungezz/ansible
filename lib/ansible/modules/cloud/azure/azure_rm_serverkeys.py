@@ -32,7 +32,9 @@ options:
         required: True
     key_name:
         description:
-            - The name of the server key to be operated on (updated or created). The key name is required to be in the format of 'vault_key_version'. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901, then the server key name should be formatted as: YourVaultName_YourKeyName_01234567890123456789012345678901
+            - "The name of the server key to be operated on (updated or created). The key name is required to be in the format of 'vault_key_version'. For ex
+               ample, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901, then the server key name shoul
+               d be formatted as: YourVaultName_YourKeyName_01234567890123456789012345678901"
         required: True
     kind:
         description:
