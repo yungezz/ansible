@@ -72,6 +72,14 @@ EXAMPLES = '''
           tenant_id: "{{ tenant_id }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of ServerAzureADAdministrators
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

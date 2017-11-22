@@ -68,6 +68,14 @@ EXAMPLES = '''
           exempt_principals: "{{ exempt_principals }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of DataMaskingPolicies
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

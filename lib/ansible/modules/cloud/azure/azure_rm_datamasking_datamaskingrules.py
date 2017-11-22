@@ -120,6 +120,14 @@ EXAMPLES = '''
           replacement_string: "{{ replacement_string }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of DataMaskingRules
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

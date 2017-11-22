@@ -67,6 +67,14 @@ EXAMPLES = '''
           server_key_type: "{{ server_key_type }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of EncryptionProtectors
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

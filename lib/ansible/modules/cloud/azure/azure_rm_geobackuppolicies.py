@@ -62,6 +62,14 @@ EXAMPLES = '''
           state: "{{ state }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of GeoBackupPolicies
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

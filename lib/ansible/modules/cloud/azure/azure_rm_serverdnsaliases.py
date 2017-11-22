@@ -52,6 +52,14 @@ EXAMPLES = '''
           dns_alias_name: "{{ dns_alias_name }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of ServerDnsAliases
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

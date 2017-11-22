@@ -57,6 +57,14 @@ EXAMPLES = '''
           partner_server: "{{ partner_server }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of ServerCommunicationLinks
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

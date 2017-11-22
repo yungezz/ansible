@@ -79,6 +79,14 @@ EXAMPLES = '''
           creation_date: "{{ creation_date }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of ServerKeys
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

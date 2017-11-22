@@ -94,6 +94,14 @@ EXAMPLES = '''
           is_storage_secondary_key_in_use: "{{ is_storage_secondary_key_in_use }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of DatabaseBlobAuditingPolicies
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

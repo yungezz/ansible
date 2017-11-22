@@ -105,6 +105,14 @@ EXAMPLES = '''
           use_server_default: "{{ use_server_default }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of DatabaseThreatDetectionPolicies
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

@@ -57,6 +57,14 @@ EXAMPLES = '''
           sync_database_id: "{{ sync_database_id }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of SyncAgents
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

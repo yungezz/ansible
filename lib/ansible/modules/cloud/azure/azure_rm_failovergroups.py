@@ -103,6 +103,14 @@ EXAMPLES = '''
             - XXXX - list of values -- not implemented str
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of FailoverGroups
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

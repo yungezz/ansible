@@ -57,6 +57,14 @@ EXAMPLES = '''
           recovery_services_vault_resource_id: "{{ recovery_services_vault_resource_id }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of BackupLongTermRetentionVaults
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:

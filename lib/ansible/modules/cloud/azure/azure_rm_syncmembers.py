@@ -102,6 +102,14 @@ EXAMPLES = '''
           sync_direction: "{{ sync_direction }}"
 '''
 
+'''
+RETURN = '''
+state:
+    description: Current state of SyncMembers
+    returned: always
+    type: dict
+'''
+
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 
 try:
