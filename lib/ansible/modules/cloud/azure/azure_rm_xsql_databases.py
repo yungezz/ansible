@@ -69,26 +69,19 @@ options:
                 required: False
     create_mode:
         description:
-            - "Specifies the mode of database creation.
-Default: regular database creation.
-Copy: creates a database as a copy of an existing database.
-                sourceDatabaseId must be specified as the resource ID of the source database.
-Secondary: creates a database as a secondary replica of an e
-               xisting database. sourceDatabaseId must be specified as the resource ID of the existing primary database.
-PointInTimeRestore: Creates a dat
-               abase by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of the existing datab
-               ase, and restorePointInTime must be specified.
-Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be
-               specified as the recoverable database resource ID to restore.
-Restore: Creates a database by restoring a backup of a deleted database. sour
-               ceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified.
-                Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime
-               may also be specified to restore from an earlier point in time.
-RestoreLongTermRetentionBackup: Creates a database by restoring from a long
-                term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
-Copy, Secondary, and Re
-               storeLongTermRetentionBackup are not supported for DataWarehouse edition. Possible values include: 'Default', 'Copy', 'Secondary', 'PointInTim
-               eRestore', 'Restore', 'Recovery', 'RestoreExternalBackup', 'RestoreExternalBackupSecondary', 'RestoreLongTermRetentionBackup'"
+            - "Specifies the mode of database creation.\n\n\n\nDefault: regular database creation.\n\n\n\nCopy: creates a database as a copy of an existing d
+               atabase. sourceDatabaseId must be specified as the resource ID of the source database.\n\n\n\nSecondary: creates a database as a secondary rep
+               lica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary database.\n\n\n\nPointInTimeRestor
+               e: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of th
+               e existing database, and restorePointInTime must be specified.\n\n\n\nRecovery: Creates a database by restoring a geo-replicated backup. sourc
+               eDatabaseId must be specified as the recoverable database resource ID to restore.\n\n\n\nRestore: Creates a database by restoring a backup of
+               a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletio
+               nDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is igno
+               red. restorePointInTime may also be specified to restore from an earlier point in time.\n\n\n\nRestoreLongTermRetentionBackup: Creates a datab
+               ase by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID
+               .\n\n\n\nCopy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition. Possible values include: 'Default',
+               'Copy', 'Secondary', 'PointInTimeRestore', 'Restore', 'Recovery', 'RestoreExternalBackup', 'RestoreExternalBackupSecondary', 'RestoreLongTermR
+               etentionBackup'"
         required: False
     collation:
         description:

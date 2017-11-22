@@ -48,27 +48,19 @@ options:
         required: False
     create_mode:
         description:
-            - "Specifies the mode of database creation.
-Default: regular database creation.
-Copy: creates a database as a copy of an existing database. sou
-               rceDatabaseId must be specified as the resource ID of the source database.
-OnlineSecondary/NonReadableSecondary: creates a database as a (rea
-               dable or nonreadable) secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary
-                database.
-PointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be speci
-               fied as the resource ID of the existing database, and restorePointInTime must be specified.
-Recovery: Creates a database by restoring a geo-r
-               eplicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
-Restore: Creates a database by resto
-               ring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sour
-               ceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDel
-               etionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
-RestoreLongTermRetentionBackup: Crea
-               tes a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point
-               resource ID.
-Copy, NonReadableSecondary, OnlineSecondary and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition. Poss
-               ible values include: 'Copy', 'Default', 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore', 'RestoreLongTe
-               rmRetentionBackup'"
+            - "Specifies the mode of database creation.\n\nDefault: regular database creation.\n\nCopy: creates a database as a copy of an existing database.
+                sourceDatabaseId must be specified as the resource ID of the source database.\n\nOnlineSecondary/NonReadableSecondary: creates a database as
+               a (readable or nonreadable) secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing p
+               rimary database.\n\nPointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must
+               be specified as the resource ID of the existing database, and restorePointInTime must be specified.\n\nRecovery: Creates a database by restori
+               ng a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.\n\nRestore: Creates a datab
+               ase by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource I
+               D, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourc
+               eDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.\n\nRestoreLongTermRetenti
+               onBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the r
+               ecovery point resource ID.\n\nCopy, NonReadableSecondary, OnlineSecondary and RestoreLongTermRetentionBackup are not supported for DataWarehou
+               se edition. Possible values include: 'Copy', 'Default', 'NonReadableSecondary', 'OnlineSecondary', 'PointInTimeRestore', 'Recovery', 'Restore'
+               , 'RestoreLongTermRetentionBackup'"
         required: False
     source_database_id:
         description:
@@ -96,14 +88,14 @@ Copy, NonReadableSecondary, OnlineSecondary and RestoreLongTermRetentionBackup a
         description:
             - "The edition of the database. The DatabaseEditions enumeration contains all the valid editions. If createMode is NonReadableSecondary or Online
                Secondary, this value is ignored. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/
-               locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.". Possible values include: 'Web', 'Business', '
+               locations/{locationID}/capabilities) referred to by operationId: 'Capabilities_ListByLocation.'. Possible values include: 'Web', 'Business', '
                Basic', 'Standard', 'Premium', 'Free', 'Stretch', 'DataWarehouse', 'System', 'System2'"
         required: False
     max_size_bytes:
         description:
             - "The max size of the database expressed in bytes. If createMode is not Default, this value is ignored. To see possible values, query the capabi
-               lities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabili
-               ties_ListByLocation.""
+               lities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: 'Capabili
+               ties_ListByLocation.'"
         required: False
     requested_service_objective_id:
         description:
@@ -111,14 +103,14 @@ Copy, NonReadableSecondary, OnlineSecondary and RestoreLongTermRetentionBackup a
                database. Once successfully updated, it will match the value of currentServiceObjectiveId property. If requestedServiceObjectiveId and request
                edServiceObjectiveName are both updated, the value of requestedServiceObjectiveId overrides the value of requestedServiceObjectiveName. To see
                 possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) ref
-               erred to by operationId: "Capabilities_ListByLocation.""
+               erred to by operationId: 'Capabilities_ListByLocation.'"
         required: False
     requested_service_objective_name:
         description:
             - "The name of the configured service level objective of the database. This is the service level objective that is in the process of being applie
                d to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the cap
-               abilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capab
-               ilities_ListByLocation.". Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'Sys
+               abilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: 'Capab
+               ilities_ListByLocation.'. Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'Sys
                tem2', 'ElasticPool'"
         required: False
     elastic_pool_name:
