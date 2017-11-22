@@ -67,7 +67,6 @@ EXAMPLES = '''
           server_key_type: "{{ server_key_type }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of EncryptionProtectors

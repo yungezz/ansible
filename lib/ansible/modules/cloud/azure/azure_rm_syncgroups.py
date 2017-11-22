@@ -125,7 +125,6 @@ EXAMPLES = '''
             master_sync_member_name: "{{ master_sync_member_name }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of SyncGroups

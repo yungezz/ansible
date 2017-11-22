@@ -94,7 +94,6 @@ EXAMPLES = '''
           is_storage_secondary_key_in_use: "{{ is_storage_secondary_key_in_use }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of DatabaseBlobAuditingPolicies

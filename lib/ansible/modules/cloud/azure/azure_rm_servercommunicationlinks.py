@@ -57,7 +57,6 @@ EXAMPLES = '''
           partner_server: "{{ partner_server }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of ServerCommunicationLinks

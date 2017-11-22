@@ -63,7 +63,6 @@ EXAMPLES = '''
           end_ip_address: "{{ end_ip_address }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of FirewallRules

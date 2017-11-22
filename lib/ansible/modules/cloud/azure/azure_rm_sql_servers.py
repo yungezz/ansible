@@ -84,7 +84,6 @@ EXAMPLES = '''
           version: "{{ version }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of Server

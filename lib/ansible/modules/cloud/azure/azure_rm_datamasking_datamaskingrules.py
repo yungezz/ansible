@@ -120,7 +120,6 @@ EXAMPLES = '''
           replacement_string: "{{ replacement_string }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of DataMaskingRules

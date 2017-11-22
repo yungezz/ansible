@@ -57,7 +57,6 @@ EXAMPLES = '''
           recovery_services_vault_resource_id: "{{ recovery_services_vault_resource_id }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of BackupLongTermRetentionVaults

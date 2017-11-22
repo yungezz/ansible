@@ -57,7 +57,6 @@ EXAMPLES = '''
           connection_type: "{{ connection_type }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of ServerConnectionPolicies

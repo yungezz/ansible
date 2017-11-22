@@ -67,7 +67,6 @@ EXAMPLES = '''
           recovery_services_backup_policy_resource_id: "{{ recovery_services_backup_policy_resource_id }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of BackupLongTermRetentionPolicies

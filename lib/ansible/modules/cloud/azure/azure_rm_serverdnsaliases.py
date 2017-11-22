@@ -52,7 +52,6 @@ EXAMPLES = '''
           dns_alias_name: "{{ dns_alias_name }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of ServerDnsAliases

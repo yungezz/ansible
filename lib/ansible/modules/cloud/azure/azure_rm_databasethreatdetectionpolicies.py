@@ -105,7 +105,6 @@ EXAMPLES = '''
           use_server_default: "{{ use_server_default }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of DatabaseThreatDetectionPolicies

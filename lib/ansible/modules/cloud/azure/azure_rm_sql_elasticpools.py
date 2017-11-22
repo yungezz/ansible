@@ -93,7 +93,6 @@ EXAMPLES = '''
           zone_redundant: "{{ zone_redundant }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of ElasticPools

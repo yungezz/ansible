@@ -103,7 +103,6 @@ EXAMPLES = '''
             - XXXX - list of values -- not implemented str
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of FailoverGroups

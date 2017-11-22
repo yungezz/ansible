@@ -57,7 +57,6 @@ EXAMPLES = '''
           sync_database_id: "{{ sync_database_id }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of SyncAgents

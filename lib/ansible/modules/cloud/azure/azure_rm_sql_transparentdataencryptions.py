@@ -62,7 +62,6 @@ EXAMPLES = '''
           status: "{{ status }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of TransparentDataEncryptions

@@ -62,7 +62,6 @@ EXAMPLES = '''
           ignore_missing_vnet_service_endpoint: "{{ ignore_missing_vnet_service_endpoint }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of VirtualNetworkRules

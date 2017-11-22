@@ -62,7 +62,6 @@ EXAMPLES = '''
           state: "{{ state }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of GeoBackupPolicies

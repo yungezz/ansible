@@ -102,7 +102,6 @@ EXAMPLES = '''
           sync_direction: "{{ sync_direction }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of SyncMembers

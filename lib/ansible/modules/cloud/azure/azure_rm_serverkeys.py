@@ -79,7 +79,6 @@ EXAMPLES = '''
           creation_date: "{{ creation_date }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of ServerKeys

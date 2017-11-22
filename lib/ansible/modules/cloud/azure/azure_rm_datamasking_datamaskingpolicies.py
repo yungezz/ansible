@@ -68,7 +68,6 @@ EXAMPLES = '''
           exempt_principals: "{{ exempt_principals }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of DataMaskingPolicies

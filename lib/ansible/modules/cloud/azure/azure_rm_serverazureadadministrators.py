@@ -72,7 +72,6 @@ EXAMPLES = '''
           tenant_id: "{{ tenant_id }}"
 '''
 
-'''
 RETURN = '''
 state:
     description: Current state of ServerAzureADAdministrators
