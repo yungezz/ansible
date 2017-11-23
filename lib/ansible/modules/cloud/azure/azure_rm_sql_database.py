@@ -15,7 +15,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: azure_rm_sql_databases
+module: azure_rm_sql_database
 version_added: "2.5"
 short_description: Manage an Databases.
 description:
@@ -144,7 +144,7 @@ author:
 
 EXAMPLES = '''
       - name: Create (or update) Sql
-        azure_rm_sql_databases:
+        azure_rm_sql_database:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           database_name: "{{ database_name }}"

@@ -1,5 +1,5 @@
 - name: Create Sql
-  azure_rm_sql_databases:
+  azure_rm_sql_elasticpool:
   register: output
 - name: Assert the resource instance is well created
   assert:

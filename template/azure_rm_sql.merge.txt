@@ -1,1 +1,3 @@
 Used existing template file
+Option 'azure_rm_sql_databases' ModuleNameAlt - KEEPING OLD
+Option 'azure_rm_sql_elasticpools' ModuleNameAlt - KEEPING OLD

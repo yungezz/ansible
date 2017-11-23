@@ -15,7 +15,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: azure_rm_sql_elasticpools
+module: azure_rm_sql_elasticpool
 version_added: "2.5"
 short_description: Manage an ElasticPools.
 description:
@@ -79,7 +79,7 @@ author:
 
 EXAMPLES = '''
       - name: Create (or update) Sql
-        azure_rm_sql_elasticpools:
+        azure_rm_sql_elasticpool:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           elastic_pool_name: "{{ elastic_pool_name }}"

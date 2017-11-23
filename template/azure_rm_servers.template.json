@@ -2,7 +2,7 @@
   "Modules": [
     {
       "ModuleName": "azure_rm_servers",
-      "ModuleNameAlt": "azure_rm_sql_servers",
+      "ModuleNameAlt": "azure_rm_sql_server",
       "Options": [
         {
           "Name": "resource_group_name",
