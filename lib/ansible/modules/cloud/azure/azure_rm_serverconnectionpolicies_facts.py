@@ -45,7 +45,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of ConnectionPolicies
+      - name: Get instance of ServerConnectionPolicies
         azure_rm_serverconnectionpolicies_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

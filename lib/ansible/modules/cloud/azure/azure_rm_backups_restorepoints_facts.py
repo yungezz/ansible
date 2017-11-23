@@ -45,7 +45,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of Backups
+      - name: List instances of RestorePoints
         azure_rm_backups_restorepoints_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

@@ -49,7 +49,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of DataMasking
+      - name: List instances of DataMaskingRules
         azure_rm_datamasking_datamaskingrules_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

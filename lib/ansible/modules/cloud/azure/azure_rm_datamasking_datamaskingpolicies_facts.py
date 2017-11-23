@@ -49,7 +49,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of DataMasking
+      - name: Get instance of DataMaskingPolicies
         azure_rm_datamasking_datamaskingpolicies_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

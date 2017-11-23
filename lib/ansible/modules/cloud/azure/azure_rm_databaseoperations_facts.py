@@ -45,7 +45,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of CancelOperations
+      - name: List instances of DatabaseOperations
         azure_rm_databaseoperations_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

@@ -49,7 +49,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of BlobAuditingPolicies
+      - name: Get instance of DatabaseBlobAuditingPolicies
         azure_rm_databaseblobauditingpolicies_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

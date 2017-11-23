@@ -88,7 +88,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Create (or update) DatabaseSecurityAlertPolicies
+      - name: Create (or update) DatabaseThreatDetectionPolicies
         azure_rm_databasethreatdetectionpolicies:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

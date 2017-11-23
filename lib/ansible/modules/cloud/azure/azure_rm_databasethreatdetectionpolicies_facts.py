@@ -49,7 +49,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of DatabaseSecurityAlertPolicies
+      - name: Get instance of DatabaseThreatDetectionPolicies
         azure_rm_databasethreatdetectionpolicies_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

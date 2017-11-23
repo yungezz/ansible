@@ -100,7 +100,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Create (or update) DataMasking
+      - name: Create (or update) DataMaskingRules
         azure_rm_datamasking_datamaskingrules:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

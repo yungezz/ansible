@@ -45,13 +45,13 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of Backups
+      - name: Get instance of RecoverableDatabases
         azure_rm_backups_recoverabledatabases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           database_name: "{{ database_name }}"
 
-      - name: List instances of Backups
+      - name: List instances of RecoverableDatabases
         azure_rm_backups_recoverabledatabases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

@@ -49,14 +49,14 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of Metrics
+      - name: List instances of Databases
         azure_rm_metrics_databases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           database_name: "{{ database_name }}"
           filter: "{{ filter }}"
 
-      - name: List instances of Metrics
+      - name: List instances of Databases
         azure_rm_metrics_databases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

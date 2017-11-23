@@ -78,7 +78,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Create (or update) BlobAuditingPolicies
+      - name: Create (or update) DatabaseBlobAuditingPolicies
         azure_rm_databaseblobauditingpolicies:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
