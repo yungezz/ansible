@@ -44,7 +44,7 @@ options:
         required: False
     conflict_resolution_policy:
         description:
-            - Conflict resolution policy of the sync group. Possible values include: 'HubWin', 'MemberWin'
+            - "Conflict resolution policy of the sync group. Possible values include: 'HubWin', 'MemberWin'
         required: False
     sync_database_id:
         description:

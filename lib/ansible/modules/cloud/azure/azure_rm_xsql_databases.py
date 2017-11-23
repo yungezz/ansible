@@ -130,7 +130,7 @@ options:
         required: False
     catalog_collation:
         description:
-            - Collation of the metadata catalog. Possible values include: 'DATABASE_DEFAULT', 'SQL_Latin1_General_CP1_CI_AS'
+            - "Collation of the metadata catalog. Possible values include: 'DATABASE_DEFAULT', 'SQL_Latin1_General_CP1_CI_AS'
         required: False
     zone_redundant:
         description:

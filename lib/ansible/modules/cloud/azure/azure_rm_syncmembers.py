@@ -44,7 +44,7 @@ options:
         required: True
     database_type:
         description:
-            - Database type of the sync member. Possible values include: 'AzureSqlDatabase', 'SqlServerDatabase'
+            - "Database type of the sync member. Possible values include: 'AzureSqlDatabase', 'SqlServerDatabase'
         required: False
     sync_agent_id:
         description:
@@ -72,7 +72,7 @@ options:
         required: False
     sync_direction:
         description:
-            - Sync direction of the sync member. Possible values include: 'Bidirectional', 'OneWayMemberToHub', 'OneWayHubToMember'
+            - "Sync direction of the sync member. Possible values include: 'Bidirectional', 'OneWayMemberToHub', 'OneWayHubToMember'
         required: False
 
 extends_documentation_fragment:
