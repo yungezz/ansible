@@ -183,6 +183,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": "",
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "Servers",
@@ -244,6 +245,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": null,
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "Servers",

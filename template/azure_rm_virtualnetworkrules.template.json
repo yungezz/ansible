@@ -132,6 +132,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": "",
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "VirtualNetworkRules",
@@ -211,6 +212,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": null,
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "VirtualNetworkRules",

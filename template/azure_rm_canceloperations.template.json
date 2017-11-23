@@ -62,6 +62,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": null,
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "DatabaseOperations",

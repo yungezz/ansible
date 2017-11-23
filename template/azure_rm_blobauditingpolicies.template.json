@@ -207,6 +207,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": "",
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "DatabaseBlobAuditingPolicies",
@@ -291,6 +292,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": null,
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "DatabaseBlobAuditingPolicies",

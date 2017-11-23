@@ -88,6 +88,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": "",
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "ServerDnsAliases",
@@ -167,6 +168,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": null,
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "ServerDnsAliases",

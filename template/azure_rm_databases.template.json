@@ -413,6 +413,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": "",
       "AssertStateVariable": "status",
       "AssertStateExpectedValue": "Online",
       "ModuleOperationNameUpper": "Databases",
@@ -519,6 +520,7 @@
           ]
         }
       ],
+      "TestPrerequisitesModule": null,
       "AssertStateVariable": "status",
       "AssertStateExpectedValue": "Online",
       "ModuleOperationNameUpper": "Databases",
