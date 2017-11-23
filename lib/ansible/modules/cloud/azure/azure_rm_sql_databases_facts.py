@@ -61,27 +61,27 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of Sql
+      - name: Get instance of Databases
         azure_rm_sql_databases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           database_name: "{{ database_name }}"
           expand: "{{ expand }}"
 
-      - name: List instances of Sql
+      - name: List instances of Databases
         azure_rm_sql_databases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           expand: "{{ expand }}"
           filter: "{{ filter }}"
 
-      - name: List instances of Sql
+      - name: List instances of Databases
         azure_rm_sql_databases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           elastic_pool_name: "{{ elastic_pool_name }}"
 
-      - name: List instances of Sql
+      - name: List instances of Databases
         azure_rm_sql_databases_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
@@ -174,13 +174,12 @@ class AzureRMDatabasesFacts(AzureRMModuleBase):
 
         :return: deserialized Databasesinstance state dictionary
         '''
-        self.log("Checking if the Databases instance {0} is present".format(self.expand))
+        self.log("Checking if the Databases instance {0} is present".format(self.))
         found = False
         try:
             response = self.mgmt_client.databases.get(self.resource_group_name,
                                                       self.server_name,
-                                                      self.database_name,
-                                                      self.expand)
+                                                      self.database_name)
             found = True
             self.log("Response : {0}".format(response))
             self.log("Databases instance : {0} found".format(response.name))
@@ -197,13 +196,11 @@ class AzureRMDatabasesFacts(AzureRMModuleBase):
 
         :return: deserialized Databasesinstance state dictionary
         '''
-        self.log("Checking if the Databases instance {0} is present".format(self.expand))
+        self.log("Checking if the Databases instance {0} is present".format(self.))
         found = False
         try:
             response = self.mgmt_client.databases.list_by_server(self.resource_group_name,
-                                                                 self.server_name,
-                                                                 self.expand,
-                                                                 self.filter)
+                                                                 self.server_name)
             found = True
             self.log("Response : {0}".format(response))
             self.log("Databases instance : {0} found".format(response.name))
@@ -220,7 +217,7 @@ class AzureRMDatabasesFacts(AzureRMModuleBase):
 
         :return: deserialized Databasesinstance state dictionary
         '''
-        self.log("Checking if the Databases instance {0} is present".format(self.expand))
+        self.log("Checking if the Databases instance {0} is present".format(self.))
         found = False
         try:
             response = self.mgmt_client.databases.list_by_elastic_pool(self.resource_group_name,
@@ -242,7 +239,7 @@ class AzureRMDatabasesFacts(AzureRMModuleBase):
 
         :return: deserialized Databasesinstance state dictionary
         '''
-        self.log("Checking if the Databases instance {0} is present".format(self.expand))
+        self.log("Checking if the Databases instance {0} is present".format(self.))
         found = False
         try:
             response = self.mgmt_client.databases.list_by_recommended_elastic_pool(self.resource_group_name,
