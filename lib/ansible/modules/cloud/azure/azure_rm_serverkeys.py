@@ -42,7 +42,7 @@ options:
         required: False
     server_key_type:
         description:
-            - The server key type like 'ServiceManaged', 'AzureKeyVault'. Possible values include: 'ServiceManaged', 'AzureKeyVault'
+            - "The server key type like 'ServiceManaged', 'AzureKeyVault'. Possible values include: 'ServiceManaged', 'AzureKeyVault'
         required: True
     uri:
         description:

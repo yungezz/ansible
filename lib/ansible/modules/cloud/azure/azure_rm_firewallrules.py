@@ -36,7 +36,7 @@ options:
         required: True
     start_ip_address:
         description:
-            - The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' to represent all Azure-internal IP addresses.
+            - "The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' to represent all Azure-internal IP addresses.
         required: True
     end_ip_address:
         description:

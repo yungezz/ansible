@@ -65,7 +65,7 @@ options:
         required: False
     is_storage_secondary_key_in_use:
         description:
-            - Specifies whether storageAccountAccessKey value is the storage's secondary key.
+            - "Specifies whether storageAccountAccessKey value is the storage's secondary key.
         required: False
 
 extends_documentation_fragment:

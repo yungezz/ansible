@@ -66,7 +66,7 @@ options:
         required: True
     masking_function:
         description:
-            - The masking function that is used for the data masking rule. Possible values include: 'Default', 'CCN', 'Email', 'Number', 'SSN', 'Text'
+            - "The masking function that is used for the data masking rule. Possible values include: 'Default', 'CCN', 'Email', 'Number', 'SSN', 'Text'
         required: True
     number_from:
         description:

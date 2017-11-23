@@ -60,7 +60,7 @@ options:
         suboptions:
             failover_policy:
                 description:
-                    - Failover policy of the read-only endpoint for the failover group. Possible values include: 'Disabled', 'Enabled'
+                    - "Failover policy of the read-only endpoint for the failover group. Possible values include: 'Disabled', 'Enabled'
                 required: False
     partner_servers:
         description:

@@ -40,7 +40,7 @@ options:
         required: True
     state:
         description:
-            - The state of the geo backup policy. Possible values include: 'Disabled', 'Enabled'
+            - "The state of the geo backup policy. Possible values include: 'Disabled', 'Enabled'
         required: True
 
 extends_documentation_fragment:

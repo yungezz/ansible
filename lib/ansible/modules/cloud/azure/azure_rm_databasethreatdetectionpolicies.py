@@ -58,7 +58,7 @@ options:
         required: False
     email_account_admins:
         description:
-            - Specifies that the alert is sent to the account administrators. Possible values include: 'Enabled', 'Disabled'
+            - "Specifies that the alert is sent to the account administrators. Possible values include: 'Enabled', 'Disabled'
         required: False
     storage_endpoint:
         description:
@@ -75,7 +75,7 @@ options:
         required: False
     use_server_default:
         description:
-            - Specifies whether to use the default server policy. Possible values include: 'Enabled', 'Disabled'
+            - "Specifies whether to use the default server policy. Possible values include: 'Enabled', 'Disabled'
         required: False
 
 extends_documentation_fragment:

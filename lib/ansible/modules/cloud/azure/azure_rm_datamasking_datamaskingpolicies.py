@@ -40,7 +40,7 @@ options:
         required: True
     data_masking_state:
         description:
-            - The state of the data masking policy. Possible values include: 'Disabled', 'Enabled'
+            - "The state of the data masking policy. Possible values include: 'Disabled', 'Enabled'
         required: True
     exempt_principals:
         description:
