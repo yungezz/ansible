@@ -505,7 +505,7 @@
       "Options": [
         {
           "Name": "resource_group_name",
-          "NameAlt": "resource_group_name",
+          "NameAlt": "resource_group",
           "Disposition": "default",
           "Type": "str",
           "IsList": false,
@@ -527,13 +527,13 @@
           "VariableValue": "None",
           "Documentation": "The name of the server.",
           "DefaultValueSample": "\"{{ server_name }}\"",
-          "DefaultValueTest": "",
+          "DefaultValueTest": "zims-server",
           "SubOptions": null,
           "RequiredCount": 0
         },
         {
           "Name": "elastic_pool_name",
-          "NameAlt": "elastic_pool_name",
+          "NameAlt": "name",
           "Disposition": "default",
           "Type": "str",
           "IsList": false,
@@ -541,7 +541,7 @@
           "VariableValue": "None",
           "Documentation": "The name of the elastic pool to be operated on (updated or created).",
           "DefaultValueSample": "\"{{ elastic_pool_name }}\"",
-          "DefaultValueTest": "",
+          "DefaultValueTest": "test-elastic-pool",
           "SubOptions": null,
           "RequiredCount": 0
         },
@@ -583,7 +583,7 @@
           "VariableValue": "None",
           "Documentation": "Resource location.",
           "DefaultValueSample": "\"{{ location }}\"",
-          "DefaultValueTest": "",
+          "DefaultValueTest": "westus",
           "SubOptions": [],
           "RequiredCount": 0
         },

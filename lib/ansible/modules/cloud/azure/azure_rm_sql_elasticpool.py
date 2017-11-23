@@ -22,7 +22,7 @@ description:
     - Create, update and delete an instance of ElasticPools.
 
 options:
-    resource_group_name:
+    resource_group:
         description:
             - The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.
         required: True
@@ -30,7 +30,7 @@ options:
         description:
             - The name of the server.
         required: True
-    elastic_pool_name:
+    name:
         description:
             - The name of the elastic pool to be operated on (updated or created).
         required: True
@@ -80,11 +80,11 @@ author:
 EXAMPLES = '''
       - name: Create (or update) Sql
         azure_rm_sql_elasticpool:
-          resource_group_name: "{{ resource_group_name }}"
-          server_name: "{{ server_name }}"
-          elastic_pool_name: "{{ elastic_pool_name }}"
+          resource_group: "{{ resource_group_name }}"
+          server_name: zims-server
+          name: test-elastic-pool
           tags: "{{ tags }}"
-          location: "{{ location }}"
+          location: westus
           edition: "{{ edition }}"
           dtu: "{{ dtu }}"
           database_dtu_max: "{{ database_dtu_max }}"
@@ -117,7 +117,7 @@ class AzureRMElasticPools(AzureRMModuleBase):
 
     def __init__(self):
         self.module_arg_spec = dict(
-            resource_group_name=dict(
+            resource_group=dict(
                 type='str',
                 required=True
             ),
@@ -125,7 +125,7 @@ class AzureRMElasticPools(AzureRMModuleBase):
                 type='str',
                 required=True
             ),
-            elastic_pool_name=dict(
+            name=dict(
                 type='str',
                 required=True
             ),
@@ -169,9 +169,9 @@ class AzureRMElasticPools(AzureRMModuleBase):
             )
         )
 
-        self.resource_group_name = None
+        self.resource_group = None
         self.server_name = None
-        self.elastic_pool_name = None
+        self.name = None
         self.parameters = dict()
 
         self.results = dict(changed=False, state=dict())
@@ -258,12 +258,12 @@ class AzureRMElasticPools(AzureRMModuleBase):
 
         :return: deserialized ElasticPools instance state dictionary
         '''
-        self.log("Creating / Updating the ElasticPools instance {0}".format(self.elastic_pool_name))
+        self.log("Creating / Updating the ElasticPools instance {0}".format(self.name))
 
         try:
-            response = self.mgmt_client.elastic_pools.create_or_update(self.resource_group_name,
+            response = self.mgmt_client.elastic_pools.create_or_update(self.resource_group,
                                                                        self.server_name,
-                                                                       self.elastic_pool_name,
+                                                                       self.name,
                                                                        self.parameters)
             if isinstance(response, AzureOperationPoller):
                 response = self.get_poller_result(response)
@@ -279,11 +279,11 @@ class AzureRMElasticPools(AzureRMModuleBase):
 
         :return: True
         '''
-        self.log("Deleting the ElasticPools instance {0}".format(self.elastic_pool_name))
+        self.log("Deleting the ElasticPools instance {0}".format(self.name))
         try:
-            response = self.mgmt_client.elastic_pools.delete(self.resource_group_name,
+            response = self.mgmt_client.elastic_pools.delete(self.resource_group,
                                                              self.server_name,
-                                                             self.elastic_pool_name)
+                                                             self.name)
         except CloudError as e:
             self.log('Error attempting to delete the ElasticPools instance.')
             self.fail("Error deleting the ElasticPools instance: {0}".format(str(e)))
@@ -296,12 +296,12 @@ class AzureRMElasticPools(AzureRMModuleBase):
 
         :return: deserialized ElasticPools instance state dictionary
         '''
-        self.log("Checking if the ElasticPools instance {0} is present".format(self.elastic_pool_name))
+        self.log("Checking if the ElasticPools instance {0} is present".format(self.name))
         found = False
         try:
-            response = self.mgmt_client.elastic_pools.get(self.resource_group_name,
+            response = self.mgmt_client.elastic_pools.get(self.resource_group,
                                                           self.server_name,
-                                                          self.elastic_pool_name)
+                                                          self.name)
             found = True
             self.log("Response : {0}".format(response))
             self.log("ElasticPools instance : {0} found".format(response.name))
