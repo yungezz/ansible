@@ -22,7 +22,7 @@ description:
     - Create, update and delete an instance of Databases.
 
 options:
-    resource_group_name:
+    resource_group:
         description:
             - The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.
         required: True
@@ -30,7 +30,7 @@ options:
         description:
             - The name of the server.
         required: True
-    database_name:
+    name:
         description:
             - The name of the database to be operated on (updated or created).
         required: True
@@ -145,11 +145,11 @@ author:
 EXAMPLES = '''
       - name: Create (or update) Sql
         azure_rm_sql_database:
-          resource_group_name: "{{ resource_group_name }}"
-          server_name: "{{ server_name }}"
-          database_name: "{{ database_name }}"
+          resource_group: "{{ resource_group_name }}"
+          server_name: zims-server
+          name: test-database
           tags: "{{ tags }}"
-          location: "{{ location }}"
+          location: westus
           collation: "{{ collation }}"
           create_mode: "{{ create_mode }}"
           source_database_id: "{{ source_database_id }}"
@@ -190,7 +190,7 @@ class AzureRMDatabases(AzureRMModuleBase):
 
     def __init__(self):
         self.module_arg_spec = dict(
-            resource_group_name=dict(
+            resource_group=dict(
                 type='str',
                 required=True
             ),
@@ -198,7 +198,7 @@ class AzureRMDatabases(AzureRMModuleBase):
                 type='str',
                 required=True
             ),
-            database_name=dict(
+            name=dict(
                 type='str',
                 required=True
             ),
@@ -274,9 +274,9 @@ class AzureRMDatabases(AzureRMModuleBase):
             )
         )
 
-        self.resource_group_name = None
+        self.resource_group = None
         self.server_name = None
-        self.database_name = None
+        self.name = None
         self.parameters = dict()
 
         self.results = dict(changed=False, state=dict())
@@ -379,12 +379,12 @@ class AzureRMDatabases(AzureRMModuleBase):
 
         :return: deserialized Databases instance state dictionary
         '''
-        self.log("Creating / Updating the Databases instance {0}".format(self.expand))
+        self.log("Creating / Updating the Databases instance {0}".format(self.name))
 
         try:
-            response = self.mgmt_client.databases.create_or_update(self.resource_group_name,
+            response = self.mgmt_client.databases.create_or_update(self.resource_group,
                                                                    self.server_name,
-                                                                   self.database_name,
+                                                                   self.name,
                                                                    self.parameters)
             if isinstance(response, AzureOperationPoller):
                 response = self.get_poller_result(response)
@@ -400,11 +400,11 @@ class AzureRMDatabases(AzureRMModuleBase):
 
         :return: True
         '''
-        self.log("Deleting the Databases instance {0}".format(self.expand))
+        self.log("Deleting the Databases instance {0}".format(self.name))
         try:
-            response = self.mgmt_client.databases.delete(self.resource_group_name,
+            response = self.mgmt_client.databases.delete(self.resource_group,
                                                          self.server_name,
-                                                         self.database_name)
+                                                         self.name)
         except CloudError as e:
             self.log('Error attempting to delete the Databases instance.')
             self.fail("Error deleting the Databases instance: {0}".format(str(e)))
@@ -417,13 +417,12 @@ class AzureRMDatabases(AzureRMModuleBase):
 
         :return: deserialized Databases instance state dictionary
         '''
-        self.log("Checking if the Databases instance {0} is present".format(self.expand))
+        self.log("Checking if the Databases instance {0} is present".format(self.name))
         found = False
         try:
-            response = self.mgmt_client.databases.get(self.resource_group_name,
+            response = self.mgmt_client.databases.get(self.resource_group,
                                                       self.server_name,
-                                                      self.database_name,
-                                                      self.expand)
+                                                      self.name)
             found = True
             self.log("Response : {0}".format(response))
             self.log("Databases instance : {0} found".format(response.name))
