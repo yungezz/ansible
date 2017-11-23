@@ -1,4 +1,4 @@
-- name: Create Servers
+- name: Create instance of Servers
   azure_rm_servers_facts:
   register: output
 - name: Assert the resource instance is well created

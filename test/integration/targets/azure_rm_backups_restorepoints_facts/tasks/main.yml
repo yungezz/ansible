@@ -1,4 +1,4 @@
-- name: Create Backups
+- name: Create instance of RestorePoints
   azure_rm_backups_restorepoints_facts:
   register: output
 - name: Assert the resource instance is well created

@@ -1,4 +1,4 @@
-- name: Create SyncMembers
+- name: Create instance of SyncMembers
   azure_rm_syncmembers:
   register: output
 - name: Assert the resource instance is well created

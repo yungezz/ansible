@@ -1,4 +1,4 @@
-- name: Create ReplicationLinks
+- name: Create instance of ReplicationLinks
   azure_rm_replicationlinks_facts:
   register: output
 - name: Assert the resource instance is well created

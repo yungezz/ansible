@@ -1,4 +1,4 @@
-- name: Create Usages
+- name: Create instance of ServerUsages
   azure_rm_usages_serverusages_facts:
   register: output
 - name: Assert the resource instance is well created

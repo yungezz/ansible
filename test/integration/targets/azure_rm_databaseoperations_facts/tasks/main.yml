@@ -1,4 +1,4 @@
-- name: Create CancelOperations
+- name: Create instance of DatabaseOperations
   azure_rm_databaseoperations_facts:
   register: output
 - name: Assert the resource instance is well created

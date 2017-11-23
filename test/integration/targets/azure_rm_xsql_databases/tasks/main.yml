@@ -1,4 +1,4 @@
-- name: Create Databases
+- name: Create instance of Databases
   azure_rm_xsql_databases:
   register: output
 - name: Assert the resource instance is well created

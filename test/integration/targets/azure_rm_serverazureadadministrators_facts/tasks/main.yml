@@ -1,4 +1,4 @@
-- name: Create ServerAzureADAdministrators
+- name: Create instance of ServerAzureADAdministrators
   azure_rm_serverazureadadministrators_facts:
   register: output
 - name: Assert the resource instance is well created

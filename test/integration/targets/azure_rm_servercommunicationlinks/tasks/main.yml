@@ -1,4 +1,4 @@
-- name: Create ServerCommunicationLinks
+- name: Create instance of ServerCommunicationLinks
   azure_rm_servercommunicationlinks:
   register: output
 - name: Assert the resource instance is well created

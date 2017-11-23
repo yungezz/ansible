@@ -1,4 +1,4 @@
-- name: Create BlobAuditingPolicies
+- name: Create instance of DatabaseBlobAuditingPolicies
   azure_rm_databaseblobauditingpolicies:
     audit_actions_and_groups:
       - XXXX - list of values -- not implemented str

@@ -1,4 +1,4 @@
-- name: Create DataMasking
+- name: Create instance of DataMaskingRules
   azure_rm_datamasking_datamaskingrules:
   register: output
 - name: Assert the resource instance is well created

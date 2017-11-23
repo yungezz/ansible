@@ -1,4 +1,4 @@
-- name: Create Usages
+- name: Create instance of DatabaseUsages
   azure_rm_usages_databaseusages_facts:
   register: output
 - name: Assert the resource instance is well created

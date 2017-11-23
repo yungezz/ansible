@@ -1,4 +1,4 @@
-- name: Create ConnectionPolicies
+- name: Create instance of ServerConnectionPolicies
   azure_rm_serverconnectionpolicies:
   register: output
 - name: Assert the resource instance is well created

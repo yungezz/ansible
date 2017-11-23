@@ -1,4 +1,4 @@
-- name: Create DatabaseSecurityAlertPolicies
+- name: Create instance of DatabaseThreatDetectionPolicies
   azure_rm_databasethreatdetectionpolicies:
   register: output
 - name: Assert the resource instance is well created

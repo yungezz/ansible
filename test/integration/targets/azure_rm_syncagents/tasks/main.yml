@@ -1,4 +1,4 @@
-- name: Create SyncAgents
+- name: Create instance of SyncAgents
   azure_rm_syncagents:
   register: output
 - name: Assert the resource instance is well created

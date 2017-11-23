@@ -1,4 +1,4 @@
-- name: Create Sql
+- name: Create instance of TransparentDataEncryptionActivities
   azure_rm_sql_transparentdataencryptionactivities_facts:
   register: output
 - name: Assert the resource instance is well created

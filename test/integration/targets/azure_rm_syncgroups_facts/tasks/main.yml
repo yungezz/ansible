@@ -1,4 +1,4 @@
-- name: Create SyncGroups
+- name: Create instance of SyncGroups
   azure_rm_syncgroups_facts:
   register: output
 - name: Assert the resource instance is well created

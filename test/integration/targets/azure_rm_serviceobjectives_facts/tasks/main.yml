@@ -1,4 +1,4 @@
-- name: Create ServiceObjectives
+- name: Create instance of ServiceObjectives
   azure_rm_serviceobjectives_facts:
   register: output
 - name: Assert the resource instance is well created

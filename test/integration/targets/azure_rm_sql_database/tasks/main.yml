@@ -10,7 +10,7 @@
   assert:
     that:
       - output.changed
-      - output.state.state == 'Ready' 
+      - output.state.state == 'Ready'
 - name: Create instance of Database
   azure_rm_sql_database:
     resource_group: "{{ resource_group }}"

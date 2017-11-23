@@ -1,4 +1,4 @@
-- name: Create ServerKeys
+- name: Create instance of ServerKeys
   azure_rm_serverkeys_facts:
   register: output
 - name: Assert the resource instance is well created

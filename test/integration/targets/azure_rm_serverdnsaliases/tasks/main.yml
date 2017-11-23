@@ -1,4 +1,4 @@
-- name: Create ServerDnsAliases
+- name: Create instance of ServerDnsAliases
   azure_rm_serverdnsaliases:
   register: output
 - name: Assert the resource instance is well created

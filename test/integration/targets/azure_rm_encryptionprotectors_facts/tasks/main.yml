@@ -1,4 +1,4 @@
-- name: Create EncryptionProtectors
+- name: Create instance of EncryptionProtectors
   azure_rm_encryptionprotectors_facts:
   register: output
 - name: Assert the resource instance is well created

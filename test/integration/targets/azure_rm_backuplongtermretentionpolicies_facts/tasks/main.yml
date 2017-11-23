@@ -1,4 +1,4 @@
-- name: Create BackupLongTermRetentionPolicies
+- name: Create instance of BackupLongTermRetentionPolicies
   azure_rm_backuplongtermretentionpolicies_facts:
   register: output
 - name: Assert the resource instance is well created

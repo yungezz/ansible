@@ -1,4 +1,4 @@
-- name: Create FailoverGroups
+- name: Create instance of FailoverGroups
   azure_rm_failovergroups:
     databases:
       - XXXX - list of values -- not implemented str

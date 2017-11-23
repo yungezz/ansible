@@ -1,4 +1,4 @@
-- name: Create BlobAuditingPolicies
+- name: Create instance of DatabaseBlobAuditingPolicies
   azure_rm_databaseblobauditingpolicies_facts:
   register: output
 - name: Assert the resource instance is well created

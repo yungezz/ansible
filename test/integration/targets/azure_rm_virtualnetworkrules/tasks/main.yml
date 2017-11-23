@@ -1,4 +1,4 @@
-- name: Create VirtualNetworkRules
+- name: Create instance of VirtualNetworkRules
   azure_rm_virtualnetworkrules:
   register: output
 - name: Assert the resource instance is well created

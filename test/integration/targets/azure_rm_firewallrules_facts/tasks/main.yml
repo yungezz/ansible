@@ -1,4 +1,4 @@
-- name: Create FirewallRules
+- name: Create instance of FirewallRules
   azure_rm_firewallrules_facts:
   register: output
 - name: Assert the resource instance is well created

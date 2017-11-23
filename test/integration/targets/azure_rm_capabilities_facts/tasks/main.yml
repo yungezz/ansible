@@ -1,4 +1,4 @@
-- name: Create Capabilities
+- name: Create instance of Capabilities
   azure_rm_capabilities_facts:
   register: output
 - name: Assert the resource instance is well created
