@@ -45,13 +45,13 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of Sql
+      - name: Get instance of ElasticPools
         azure_rm_sql_elasticpools_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           elastic_pool_name: "{{ elastic_pool_name }}"
 
-      - name: List instances of Sql
+      - name: List instances of ElasticPools
         azure_rm_sql_elasticpools_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

@@ -14,7 +14,7 @@
           "VariableValue": "None",
           "Documentation": "The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal.",
           "DefaultValueSample": "\"{{ resource_group_name }}\"",
-          "DefaultValueTest": "\"{{ resource_group_name }}\"",
+          "DefaultValueTest": "\"{{ resource_group }}\"",
           "SubOptions": null,
           "RequiredCount": 0
         },
@@ -329,12 +329,12 @@
           ]
         }
       ],
-      "TestPrerequisitesModule": "",
+      "TestPrerequisitesModule": "azure_rm_sql_server",
       "AssertStateVariable": "status",
       "AssertStateExpectedValue": "Online",
       "ModuleOperationNameUpper": "Databases",
       "ModuleOperationName": "databases",
-      "ObjectName": "Databases"
+      "ObjectName": "Database"
     },
     {
       "ModuleName": "azure_rm_sql_databases_facts",
@@ -717,12 +717,12 @@
           ]
         }
       ],
-      "TestPrerequisitesModule": "",
+      "TestPrerequisitesModule": "azure_rm_sql_server",
       "AssertStateVariable": "state",
       "AssertStateExpectedValue": "Ready",
       "ModuleOperationNameUpper": "ElasticPools",
       "ModuleOperationName": "elastic_pools",
-      "ObjectName": "ElasticPools"
+      "ObjectName": "ElasticPool"
     },
     {
       "ModuleName": "azure_rm_sql_elasticpools_facts",

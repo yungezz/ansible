@@ -45,19 +45,19 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of Sql
+      - name: Get instance of RecommendedElasticPools
         azure_rm_sql_recommendedelasticpools_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           recommended_elastic_pool_name: "{{ recommended_elastic_pool_name }}"
 
-      - name: List instances of Sql
+      - name: List instances of RecommendedElasticPools
         azure_rm_sql_recommendedelasticpools_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           recommended_elastic_pool_name: "{{ recommended_elastic_pool_name }}"
 
-      - name: List instances of Sql
+      - name: List instances of RecommendedElasticPools
         azure_rm_sql_recommendedelasticpools_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

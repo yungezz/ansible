@@ -17,9 +17,9 @@ DOCUMENTATION = '''
 ---
 module: azure_rm_sql_elasticpool
 version_added: "2.5"
-short_description: Manage an ElasticPools.
+short_description: Manage an ElasticPool.
 description:
-    - Create, update and delete an instance of ElasticPools.
+    - Create, update and delete an instance of ElasticPool.
 
 options:
     resource_group:
@@ -78,9 +78,9 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Create (or update) Sql
+      - name: Create (or update) ElasticPool
         azure_rm_sql_elasticpool:
-          resource_group: "{{ resource_group_name }}"
+          resource_group: "{{ resource_group }}"
           server_name: zims-server
           name: test-elastic-pool
           tags: "{{ tags }}"
@@ -95,7 +95,7 @@ EXAMPLES = '''
 
 RETURN = '''
 state:
-    description: Current state of ElasticPools
+    description: Current state of ElasticPool
     returned: always
     type: dict
 '''
@@ -113,7 +113,7 @@ except ImportError:
 
 
 class AzureRMElasticPools(AzureRMModuleBase):
-    """Configuration class for an Azure RM ElasticPools resource"""
+    """Configuration class for an Azure RM ElasticPool resource"""
 
     def __init__(self):
         self.module_arg_spec = dict(
@@ -220,24 +220,24 @@ class AzureRMElasticPools(AzureRMModuleBase):
         response = self.get_sql()
 
         if not response:
-            self.log("ElasticPools instance doesn't exist")
+            self.log("ElasticPool instance doesn't exist")
             if self.state == 'absent':
                 self.log("Nothing to delete")
             else:
                 to_be_updated = True
         else:
-            self.log("ElasticPools instance already exists")
+            self.log("ElasticPool instance already exists")
             if self.state == 'absent':
                 self.delete_sql()
                 self.results['changed'] = True
-                self.log("ElasticPools instance deleted")
+                self.log("ElasticPool instance deleted")
             elif self.state == 'present':
-                self.log("Need to check if ElasticPools instance has to be deleted or may be updated")
+                self.log("Need to check if ElasticPool instance has to be deleted or may be updated")
                 to_be_updated = True
 
         if self.state == 'present':
 
-            self.log("Need to Create / Update the ElasticPools instance")
+            self.log("Need to Create / Update the ElasticPool instance")
 
             if self.check_mode:
                 return self.results
@@ -254,11 +254,11 @@ class AzureRMElasticPools(AzureRMModuleBase):
 
     def create_update_sql(self):
         '''
-        Creates or updates ElasticPools with the specified configuration.
+        Creates or updates ElasticPool with the specified configuration.
 
-        :return: deserialized ElasticPools instance state dictionary
+        :return: deserialized ElasticPool instance state dictionary
         '''
-        self.log("Creating / Updating the ElasticPools instance {0}".format(self.name))
+        self.log("Creating / Updating the ElasticPool instance {0}".format(self.name))
 
         try:
             response = self.mgmt_client.elastic_pools.create_or_update(self.resource_group,
@@ -269,34 +269,34 @@ class AzureRMElasticPools(AzureRMModuleBase):
                 response = self.get_poller_result(response)
 
         except CloudError as exc:
-            self.log('Error attempting to create the ElasticPools instance.')
-            self.fail("Error creating the ElasticPools instance: {0}".format(str(exc)))
+            self.log('Error attempting to create the ElasticPool instance.')
+            self.fail("Error creating the ElasticPool instance: {0}".format(str(exc)))
         return response.as_dict()
 
     def delete_sql(self):
         '''
-        Deletes specified ElasticPools instance in the specified subscription and resource group.
+        Deletes specified ElasticPool instance in the specified subscription and resource group.
 
         :return: True
         '''
-        self.log("Deleting the ElasticPools instance {0}".format(self.name))
+        self.log("Deleting the ElasticPool instance {0}".format(self.name))
         try:
             response = self.mgmt_client.elastic_pools.delete(self.resource_group,
                                                              self.server_name,
                                                              self.name)
         except CloudError as e:
-            self.log('Error attempting to delete the ElasticPools instance.')
-            self.fail("Error deleting the ElasticPools instance: {0}".format(str(e)))
+            self.log('Error attempting to delete the ElasticPool instance.')
+            self.fail("Error deleting the ElasticPool instance: {0}".format(str(e)))
 
         return True
 
     def get_sql(self):
         '''
-        Gets the properties of the specified ElasticPools.
+        Gets the properties of the specified ElasticPool.
 
-        :return: deserialized ElasticPools instance state dictionary
+        :return: deserialized ElasticPool instance state dictionary
         '''
-        self.log("Checking if the ElasticPools instance {0} is present".format(self.name))
+        self.log("Checking if the ElasticPool instance {0} is present".format(self.name))
         found = False
         try:
             response = self.mgmt_client.elastic_pools.get(self.resource_group,
@@ -304,9 +304,9 @@ class AzureRMElasticPools(AzureRMModuleBase):
                                                           self.name)
             found = True
             self.log("Response : {0}".format(response))
-            self.log("ElasticPools instance : {0} found".format(response.name))
+            self.log("ElasticPool instance : {0} found".format(response.name))
         except CloudError as e:
-            self.log('Did not find the ElasticPools instance.')
+            self.log('Did not find the ElasticPool instance.')
         if found is True:
             return response.as_dict()
 

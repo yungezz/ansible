@@ -45,7 +45,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of Sql
+      - name: List instances of ElasticPoolActivities
         azure_rm_sql_elasticpoolactivities_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

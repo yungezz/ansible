@@ -53,7 +53,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Create (or update) Sql
+      - name: Create (or update) TransparentDataEncryptions
         azure_rm_sql_transparentdataencryptions:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

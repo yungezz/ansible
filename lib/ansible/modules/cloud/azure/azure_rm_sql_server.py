@@ -71,7 +71,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Create (or update) Servers
+      - name: Create (or update) Server
         azure_rm_sql_server:
           resource_group: "{{ resource_group }}"
           name: zims-server

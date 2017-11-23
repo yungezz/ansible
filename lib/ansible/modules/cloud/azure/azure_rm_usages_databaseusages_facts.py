@@ -45,7 +45,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of Usages
+      - name: List instances of DatabaseUsages
         azure_rm_usages_databaseusages_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

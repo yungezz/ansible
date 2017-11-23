@@ -49,14 +49,14 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of Sql
+      - name: Get instance of ServiceTierAdvisors
         azure_rm_sql_servicetieradvisors_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
           database_name: "{{ database_name }}"
           service_tier_advisor_name: "{{ service_tier_advisor_name }}"
 
-      - name: List instances of Sql
+      - name: List instances of ServiceTierAdvisors
         azure_rm_sql_servicetieradvisors_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

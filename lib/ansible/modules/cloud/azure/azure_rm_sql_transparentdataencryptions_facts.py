@@ -49,7 +49,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: Get instance of Sql
+      - name: Get instance of TransparentDataEncryptions
         azure_rm_sql_transparentdataencryptions_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"

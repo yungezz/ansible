@@ -49,7 +49,7 @@ author:
 '''
 
 EXAMPLES = '''
-      - name: List instances of Sql
+      - name: List instances of TransparentDataEncryptionActivities
         azure_rm_sql_transparentdataencryptionactivities_facts:
           resource_group_name: "{{ resource_group_name }}"
           server_name: "{{ server_name }}"
