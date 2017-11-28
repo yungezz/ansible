@@ -52,6 +52,7 @@ install:
   - pip install -r packaging/requirements/requirements-azure.txt
   - . hacking/env-setup
 script:
+  - docker --version
   - scan_test
   - deactive
   - exit $exit_code
