@@ -26,6 +26,7 @@ before_install:
       if [ $? -ne 0 ]; then
         exit_code=1;
       fi
+
       delete_resource_group $group_name;
     }
   - scan_test() {
