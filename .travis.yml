@@ -36,7 +36,7 @@ before_install:
       done
     }
 install:
-  - apt-get update && apt-get install -y libssl-dev libffi-dev python-dev python-pip docker.io
+  - sudo apt-get update && apt-get install -y libssl-dev libffi-dev python-dev python-pip docker.io
   - pip install pip --upgrade
   - pip install ansible[azure]
   - mkdir ~/.azure
