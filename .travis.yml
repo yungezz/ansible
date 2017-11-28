@@ -32,7 +32,8 @@ before_install:
       delete_resource_group $group_name;
     }
   - scan_test() {
-      for file in "test/integration/targets/azure_rm_*"; do
+      for file in test/integration/targets/azure_rm_*
+      do
         name=${file##test/integration/targets/};
         run_test $name;
       done
