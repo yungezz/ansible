@@ -14,13 +14,14 @@ before_install:
       name=$1
       ansible-playbook delete_resource_group.yml --extra-vars="name=$name"
     }
+  - "write_credetial() { printf \"AZURE_CLIENT_ID: ${clientId}\nAZURE_SECRET: ${secret}\nAZURE_SUBSCRIPTION_ID: ${subscriptionId}\nAZURE_TENANT: ${tenant}\nRESOURCE_GROUP: $group_name\nRESOURCE_GROUP_SECONDARY: $group_name\" >> test/integration/cloud-config-azure.yml }"
   - run_test() {
       test_name=$1
       group_name="ansible-integration-${test_name##azure_rm}"
       create_resource_group $group_name
       rm test/integration/cloud-config-azure.yml
       touch test/integration/cloud-config-azure.yml
-      printf "AZURE_CLIENT_ID: ${clientId}\nAZURE_SECRET: ${secret}\nAZURE_SUBSCRIPTION_ID: ${subscriptionId}\nAZURE_TENANT: ${tenant}\nRESOURCE_GROUP: $group_name\nRESOURCE_GROUP_SECONDARY: $group_name" >> test/integration/cloud-config-azure.yml
+      write_credential
       ansible-test integration $test_name --docker
       if [ $? -ne 0 ]; then
         exit_code=1
