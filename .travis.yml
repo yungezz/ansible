@@ -22,6 +22,8 @@ before_install:
       rm test/integration/cloud-config-azure.yml;
       touch test/integration/cloud-config-azure.yml;
       write_credential;
+      cat test/integration/cloud-config-azure.yml;
+      echo $test_name;
       ansible-test integration $test_name --docker;
       if [ $? -ne 0 ]; then
         exit_code=1;
@@ -30,11 +32,7 @@ before_install:
       delete_resource_group $group_name;
     }
   - scan_test() {
-      for file in test/integration/targets/azure_rm_*;
-      do
-        name=${file##test/integration/targets/};
-        run_test $name;
-      done
+      run_test azure_rm_subnet;
     }
 install:
   - sudo apt-get update
