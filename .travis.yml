@@ -6,15 +6,15 @@ env:
   global:
     - exit_code=0
 before_install:
-  - create_resource_group () {
-	    name=$1
-	    ansible-playbook create_resource_group.yml --extra-vars="name=$name"
+  - create_resource_group() {
+      name=$1
+      ansible-playbook create_resource_group.yml --extra-vars="name=$name"
     }
-  - delete_resource_group () {
-	    name=$1
-	    ansible-playbook delete_resource_group.yml --extra-vars="name=$name"
+  - delete_resource_group() {
+      name=$1
+      ansible-playbook delete_resource_group.yml --extra-vars="name=$name"
     }
-  - run_test () {
+  - run_test() {
       test_name=$1
       group_name="ansible-integration-${test_name##azure_rm}"
       create_resource_group $group_name
@@ -27,7 +27,7 @@ before_install:
       fi
       delete_resource_group $group_name
     }
-  - scan_test () {
+  - scan_test() {
       for file in "test/integration/targets/azure_rm_*"; do
         name=${file##test/integration/targets};
         run_test $name;
@@ -38,17 +38,17 @@ install:
   - pip install pip --upgrade
   - pip install ansible[azure]
   - mkdir ~/.azure
-	- touch ~/.azure/credentials
-	- printf "[default]\nsubscription_id=${subscriptionId}\nclient_id=${clientId}\nsecret=${secret}\ntenant=${tenant}" >> ~/.azure/credentials
-	- git clone https://github.com/VSChina/ansible.git
-	- cd ansible
-	- pip install virtualenv
-	- virtualenv venv
-	- . venv/bin/activate
-	- pip install packaging azure azure-cli
-	- pip install -r requirements.txt
-	- pip install -r packaging/requirements/requirements-azure.txt
-	- . hacking/env-setup
+  - touch ~/.azure/credentials
+  - printf "[default]\nsubscription_id=${subscriptionId}\nclient_id=${clientId}\nsecret=${secret}\ntenant=${tenant}" >> ~/.azure/credentials
+  - git clone https://github.com/VSChina/ansible.git
+  - cd ansible
+  - pip install virtualenv
+  - virtualenv venv
+  - . venv/bin/activate
+  - pip install packaging azure azure-cli
+  - pip install -r requirements.txt
+  - pip install -r packaging/requirements/requirements-azure.txt
+  - . hacking/env-setup
 script:
   - scan_test
   - exit $exit_code
