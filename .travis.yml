@@ -32,7 +32,11 @@ before_install:
       delete_resource_group $group_name;
     }
   - scan_test() {
-      run_test azure_rm_subnet;
+      for file in test/integration/targets/azure_rm_*;
+      do
+        name=${file##test/integration/targets/};
+        run_test $name;
+      done
     }
 install:
   - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
