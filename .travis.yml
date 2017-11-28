@@ -1,5 +1,5 @@
 language: python
-sudo: yes
+sudo: required
 python:
   - "2.7"
 env:
