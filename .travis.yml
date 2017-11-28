@@ -57,5 +57,4 @@ install:
 script:
   - docker --version
   - scan_test
-  - deactive
   - exit $exit_code
