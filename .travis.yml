@@ -2,13 +2,4 @@ language: python
 python:
   - "2.7"
 script:
-  - git remote add upstream https://github.com/ansible/ansible.git
-  - git pull upstream devel
-  - git checkout devel
-after_success:
-  - git config --global user.email "travis@travis-ci.org"
-  - git config --global user.name "Travis CI"
-  - git remote add pages https://${github_token}@github.com/VSChina/ansible.git
-  - git branch
-  - git log
-  - git push pages devel:devel
+  - ./travis.sh
