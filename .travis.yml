@@ -47,7 +47,7 @@ before_install:
           run_test $name;
         fi
 
-	    done
+      done
     }
 install:
   - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
