@@ -5,7 +5,7 @@ python:
 env:
   global:
     - exit_code=0
-    - number_per_job=9
+    - number_per_job=8
     - message=()
   matrix:
     - id=1
