@@ -6,6 +6,7 @@ env:
   global:
     - exit_code=0
     - number_per_job=5
+    - message=()
   matrix:
     - id=1
     - id=2
@@ -28,9 +29,10 @@ before_install:
       rm test/integration/cloud-config-azure.yml;
       touch test/integration/cloud-config-azure.yml;
       write_credential;
-      ansible-test integration $test_name --docker --color=true;
+      ansible-test integration $test_name --docker --color=yes;
       if [ $? -ne 0 ]; then
-        exit_code=1;
+        message+=($test_name);
+        export exit_code=1;
       fi
 
       delete_resource_group $group_name;
@@ -73,4 +75,5 @@ install:
 script:
   - docker --version
   - scan_test
+  - (>&2 echo $message)
   - exit $exit_code
