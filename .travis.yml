@@ -29,7 +29,7 @@ before_install:
       rm test/integration/cloud-config-azure.yml;
       touch test/integration/cloud-config-azure.yml;
       write_credential;
-      ansible-test integration $test_name --docker --color=yes;
+      travis_wait 20 ansible-test integration $test_name --docker --color=yes;
       if [ $? -ne 0 ]; then
         message+=($test_name);
         export exit_code=1;
@@ -53,7 +53,6 @@ before_install:
       done
     }
 install:
-  - travis_wait 30 mvn install
   - sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
