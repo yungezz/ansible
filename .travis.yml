@@ -44,7 +44,7 @@ before_install:
       list=($liststr);
       echo start = $start, end = $end, list_lenth = ${#list[@]};
       for (( i = $start; i < $end; i++ )); do
-        if [ "$end" -lt "${#list[@]}" ]; then
+        if [ "$i" -lt "${#list[@]}" ]; then
           file=${list[$i]};
           name=${file##test/integration/targets/};
           run_test $name;
