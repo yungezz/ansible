@@ -5,3 +5,4 @@
       azure_rm_resourcegroup:
         name: "{{ name }}"
         state: absent
+        force: True
