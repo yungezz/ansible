@@ -38,9 +38,10 @@ before_install:
   - scan_test() {
       end=$((id * number_per_job));
       start=$((end - number_per_job));
-      list=test/integration/targets/azure_rm_*;
+      liststr=test/integration/targets/azure_rm_*;
+      list=($liststr)
       for (( i = $start; i < $end; i++ )); do
-
+        echo $i;
         if [ "$end" -lt "${#list[@]}" ]; then
           file=${list[$i]};
           name=${file##test/integration/targets/};
