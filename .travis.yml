@@ -7,12 +7,13 @@ services:
 env:
   global:
     - exit_code=0
-    - number_per_job=8
+    - number_per_job=7
     - message=()
   matrix:
     - id=1
     - id=2
     - id=3
+    - id=4
 before_install:
   - create_resource_group() {
       name=$1;
