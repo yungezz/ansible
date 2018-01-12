@@ -32,7 +32,7 @@ before_install:
       rm test/integration/cloud-config-azure.yml;
       touch test/integration/cloud-config-azure.yml;
       write_credential;
-      travis_wait 20 ansible-test integration $test_name --docker --color=yes;
+      travis_wait 50 ansible-test integration $test_name --docker --color=yes;
       if [ $? -ne 0 ]; then
         message+=($test_name);
         export exit_code=1;
