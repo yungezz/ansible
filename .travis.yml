@@ -38,7 +38,7 @@ before_install:
         export exit_code=1;
       fi
 
-      delete_resource_group $group_name;
+      travis_wait 50 delete_resource_group $group_name;
     }
   - scan_test() {
       end=$((id * number_per_job));
