@@ -1,3 +1,17 @@
+- name: Create virtual network
+  azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group }}"
+      name: nsgvn
+      address_prefixes: "10.10.0.0/16"
+
+- name: Add subnet
+  azure_rm_subnet:
+      resource_group: "{{ resource_group }}"
+      name: nsgsubnet
+      address_prefix: "10.10.0.0/24"
+      virtual_network: nsgvn
+  register: nsgsubnet
+
 - name: Create security group
   azure_rm_securitygroup:
       resource_group: "{{ resource_group }}"
@@ -7,6 +21,9 @@
           delete: on-exit
           foo: bar
       purge_rules: yes
+      subnets:
+        name: nsgsubnet
+        virtual_network: nsgvn
       rules:
           - name: DenySSH
             protocol: Tcp
@@ -23,7 +40,11 @@
             direction: Inbound
   register: output
 
-- assert: { that: "{{ output.state.rules | length }} == 2" }
+- assert: 
+      that: 
+        - "{{ output.state.rules | length }} == 2"
+        - "{{ output.state.subnets | length }} == 1"
+        - output.state.subnets[0] = nsgsubnet.state.id
 
 - name: Gather facts by tags
   azure_rm_securitygroup_facts:
@@ -58,6 +79,7 @@
       that:
           - "{{ output.state.rules | length }} == 3"
           - output.state.rules[1].source_address_prefix == '174.108.158.0/24'
+          - not output.state.subnets         
 
 - name: Test idempotence
   azure_rm_securitygroup:
