@@ -427,6 +427,10 @@ def compare_rules(r, rule):
     return matched, changed
 
 
+def compare_subnets(x, y):
+    return set(x) == set(y)
+
+
 def create_rule_instance(self, rule):
     '''
     Create an instance of SecurityRule from a dict.
@@ -646,7 +650,9 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                             new_default_rules.append(rule)
                 results['default_rules'] = new_default_rules
 
-            results['subnets'] = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []
+            subnets = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []
+            changed = changed or compare_subnets(results['subnets'], subnets)
+            results['subnets'] = subnets
 
             update_tags, results['tags'] = self.update_tags(results['tags'])
             if update_tags:
