@@ -126,6 +126,7 @@ extends_documentation_fragment:
 author:
     - "Chris Houseknecht (@chouseknecht)"
     - "Matt Davis (@nitzmahone)"
+    - "Yuwei Zhou (@yuwzho) "
 
 '''
 
@@ -326,6 +327,7 @@ state:
 
 try:
     from msrestazure.azure_exceptions import CloudError
+    from msrestazure.tools import resource_id
     from azure.mgmt.network import NetworkManagementClient
 except ImportError:
     # This is handled in azure_rm_common
@@ -480,6 +482,7 @@ def create_network_security_group_dict(nsg):
         type=nsg.type,
         location=nsg.location,
         tags=nsg.tags,
+        subnets=[x.id for x in nsg.subnets] if nsg.subnets else None
     )
     results['rules'] = []
     if nsg.security_rules:
@@ -504,6 +507,13 @@ def create_network_security_group_dict(nsg):
     return results
 
 
+subnet_spec = dict(
+    resource_group=dict(type='str'),
+    name=dict(type='str', required=True),
+    virtual_network=dict(type='str', required=True)
+)
+
+
 class AzureRMSecurityGroup(AzureRMModuleBase):
 
     def __init__(self):
@@ -517,6 +527,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
             resource_group=dict(required=True, type='str'),
             rules=dict(type='list'),
             state=dict(type='str', default='present', choices=['present', 'absent']),
+            subnets=dict(type='list', elements='dict', options=subnet_spec)
         )
 
         self.default_rules = None
@@ -527,6 +538,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
         self.resource_group = None
         self.rules = None
         self.state = None
+        self.subnets = None        
         self.tags = None
         self.client = None  # type: azure.mgmt.network.NetworkManagementClient
         self.nsg_models = None  # type: azure.mgmt.network.models
@@ -634,6 +646,8 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                             new_default_rules.append(rule)
                 results['default_rules'] = new_default_rules
 
+            results['subnets'] = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []
+
             update_tags, results['tags'] = self.update_tags(results['tags'])
             if update_tags:
                 changed = True
@@ -679,6 +693,16 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                 self.results['state']['status'] = 'Deleted'
 
         return self.results
+    
+    def format_subnet_id(self, subnet):
+        subnet.resource_group = subnet.resource_group or self.resource_group
+        return resource_id(name=subnet.virtual_network,
+                           resource_group=subnet.resource_group,
+                           namespace='Microsoft.Network',
+                           type='virtualNetworks',
+                           chile_type_1='subnets',
+                           child_name_1=subnet.name,
+                           subscription=self.subscription_id)
 
     def create_or_update(self, results):
         parameters = self.nsg_models.NetworkSecurityGroup()
@@ -692,6 +716,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                 parameters.default_security_rules.append(create_rule_instance(self, rule))
         parameters.tags = results.get('tags')
         parameters.location = results.get('location')
+        parameters.subnets = [self.nsg_models.Subnet(id=x) for x in results.get('subnets')]
 
         try:
             poller = self.client.network_security_groups.create_or_update(resource_group_name=self.resource_group,
