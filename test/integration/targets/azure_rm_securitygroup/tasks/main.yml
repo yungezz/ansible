@@ -10,7 +10,21 @@
       name: nsgsubnet
       address_prefix: "10.10.0.0/24"
       virtual_network: nsgvn
-  register: nsgsubnet
+  register: nsgsubnet1
+
+- name: Create virtual network
+  azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group_secondary }}"
+      name: nsgvn
+      address_prefixes: "10.10.0.0/16"
+
+- name: Add subnet
+  azure_rm_subnet:
+      resource_group: "{{ resource_group_secondary }}"
+      name: nsgsubnet
+      address_prefix: "10.10.0.0/24"
+      virtual_network: nsgvn
+  register: nsgsubnet2
 
 - name: Create security group
   azure_rm_securitygroup:
@@ -22,8 +36,11 @@
           foo: bar
       purge_rules: yes
       subnets:
-        name: nsgsubnet
-        virtual_network: nsgvn
+        - name: nsgsubnet
+          virtual_network: nsgvn
+        - name: nsgsubnet
+          virtual_network: nsgvn
+          resource_group: "{{ resource_group_secondary }}"
       rules:
           - name: DenySSH
             protocol: Tcp
@@ -43,8 +60,9 @@
 - assert: 
       that: 
         - "{{ output.state.rules | length }} == 2"
-        - "{{ output.state.subnets | length }} == 1"
-        - output.state.subnets[0] = nsgsubnet.state.id
+        - "{{ output.state.subnets | length }} == 2"
+        - output.state.subnets[0] = nsgsubnet1.state.id
+        - output.state.subnets[1] = nsgsubnet2.state.id
 
 - name: Gather facts by tags
   azure_rm_securitygroup_facts:
