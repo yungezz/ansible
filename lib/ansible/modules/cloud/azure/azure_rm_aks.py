@@ -494,7 +494,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         if self.agent_pool_profiles:
             agentpools = [create_agent_pool_profile_instance(profile) for profile in self.agent_pool_profiles]
 
-        service_principal_profile = create_service_principal_profile_instance(self.service_principal) if self.service_principal else None
+        service_principal_profile = create_service_principal_profile_instance(self.service_principal)
 
         parameters = ManagedCluster(
             location=self.location,
@@ -519,7 +519,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
             return create_aks_dict(response)            
         except CloudError as exc:
             self.log('Error attempting to create the AKS instance.')
-            self.fail("Error creating the AKS instance: {0}".format(str(exc)))
+            self.fail("Error creating the AKS instance: {0}".format(exc.message))
 
     def delete_aks(self):
         '''
@@ -534,7 +534,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
             return True            
         except CloudError as e:
             self.log('Error attempting to delete the AKS instance.')
-            self.fail("Error deleting the AKS instance: {0}".format(str(e)))
+            self.fail("Error deleting the AKS instance: {0}".format(e.message))
             return False
 
     def get_aks(self):
