@@ -651,8 +651,9 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                             new_default_rules.append(rule)
                 results['default_rules'] = new_default_rules
 
-            changed = changed or compare_subnets(results['subnets'], subnets)
-            results['subnets'] = subnets
+            if not compare_subnets(results['subnets'], subnets):
+                results['subnets'] = subnets
+                changed = True
 
             update_tags, results['tags'] = self.update_tags(results['tags'])
             if update_tags:
