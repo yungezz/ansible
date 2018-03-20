@@ -5,6 +5,9 @@
      location: eastus
      dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
      kubernetes_version: 1.7.7
+     service_principal:
+         client_id: cf72ca99-f6b9-4004-b0e0-bee10c521948
+         client_secret:mySPNp@ssw0rd!
      linux_profile:
          admin_username: azureuser
          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
@@ -21,6 +24,9 @@
      location: eastus
      dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
      kubernetes_version: 1.7.7
+     service_principal:
+         client_id: cf72ca99-f6b9-4004-b0e0-bee10c521948
+         client_secret:mySPNp@ssw0rd!
      linux_profile:
          admin_username: azureuser
          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
@@ -43,6 +49,9 @@
      location: eastus
      dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
      kubernetes_version: 1.7.7
+     service_principal:
+         client_id: cf72ca99-f6b9-4004-b0e0-bee10c521948
+         client_secret:mySPNp@ssw0rd!
      linux_profile:
          admin_username: azureuser
          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
@@ -64,6 +73,9 @@
      location: eastus
      dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
      kubernetes_version: 1.8.1
+     service_principal:
+         client_id: cf72ca99-f6b9-4004-b0e0-bee10c521948
+         client_secret:mySPNp@ssw0rd!
      linux_profile:
          admin_username: azureuser
          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
@@ -85,6 +97,9 @@
      resource_group: "{{ resource_group }}"
      location: eastus
      dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
+     service_principal:
+         client_id: cf72ca99-f6b9-4004-b0e0-bee10c521948
+         client_secret:mySPNp@ssw0rd!
      linux_profile:
          admin_username: azureuser
          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
@@ -104,16 +119,7 @@
    azure_rm_aks:
      name: "aks{{ resource_group | hash('md5') | truncate(7, True, '') }}"
      resource_group: "{{ resource_group }}"
-     location: eastus
-     dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
      state: absent
-     linux_profile:
-         admin_username: azureuser
-         ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
-     agent_pool_profiles:
-         - name: default
-           count: 2
-           vm_size: Standard_A0
    register: output
 
  - name: Assert the AKS instance is well deleted
@@ -125,16 +131,7 @@
    azure_rm_aks:
      name: "aks{{ resource_group | hash('md5') | truncate(7, True, '') }}"
      resource_group: "{{ resource_group }}"
-     location: eastus
-     dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
      state: absent
-     linux_profile:
-         admin_username: azureuser
-         ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSPmiqkvDH1/+MDAVDZT8381aYqp73Odz8cnD5hegNhqtXajqtiH0umVg7HybX3wt1HjcrwKJovZURcIbbcDvzdH2bnYbF93T4OLXA0bIfuIp6M86x1iutFtXdpN3TTicINrmSXEE2Ydm51iMu77B08ZERjVaToya2F7vC+egfoPvibf7OLxE336a5tPCywavvNihQjL8sjgpDT5AAScjb3YqK/6VLeQ18Ggt8/ufINsYkb+9/Ji/3OcGFeflnDXq80vPUyF3u4iIylob6RSZenC38cXmQB05tRNxS1B6BXCjMRdy0v4pa7oKM2GA4ADKpNrr0RI9ed+peRFwmsclH test@ansible
-     agent_pool_profiles:
-         - name: default
-           count: 2
-           vm_size: Standard_A0
    register: output
 
  - name: Assert idempotent
