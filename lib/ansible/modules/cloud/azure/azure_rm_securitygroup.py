@@ -703,7 +703,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
         return self.results
     
     def format_subnet_id(self, subnet):
-        subnet.resource_group = subnet.resource_group or self.resource_group
+        subnet['resource_group'] = subnet.resource_group or self.resource_group
         return resource_id(name=subnet.virtual_network,
                            resource_group=subnet.resource_group,
                            namespace='Microsoft.Network',
