@@ -409,7 +409,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
 
                     def is_property_changed(profile, property, ignore_case=False):
                         base = response[profile].get(property)
-                        new = getattr(self, profile)[0].get(property)
+                        new = getattr(self, profile).get(property)
                         if ignore_case:
                             return base.lower() != new.lower()
                         else:
