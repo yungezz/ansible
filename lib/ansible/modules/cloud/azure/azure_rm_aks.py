@@ -383,18 +383,20 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         resource_group = self.get_resource_group(self.resource_group)
         if not self.location:
             self.location = resource_group.location
-        
-        response = self.get_aks()        
+
+        response = self.get_aks()
 
         # Check if the AKS instance already present in the RG
         if self.state == 'present':
             # For now Agent Pool cannot be more than 1, just remove this part in the future if it change
-            # agentpoolcount = len(self.agent_pool_profiles)
-            # if agentpoolcount > 1:
-            #     self.fail('You cannot specify more than one agent_pool_profiles currently')
+            agentpoolcount = len(self.agent_pool_profiles)
+            if agentpoolcount > 1:
+                self.fail('You cannot specify more than one agent_pool_profiles currently')
 
             self.results['state'] = response
             if not response:
+                if not self.is_resource_group_empty():
+                    self.fail('This resource group contains existing resources. Choose an empty resource group.')
                 to_be_updated = True
 
             else:
@@ -417,7 +419,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                     if is_property_changed('linux_profile', 'ssh_key'):
                         self.log(("Linux Profile Diff SSH, Was {0} / Now {1}"
                                  .format(response['linux_profile'].ssh.public_keys[0].key_data,
-                                 self.linux_profile[0].get('ssh_key'))))
+                                 self.linux_profile.get('ssh_key'))))
                         to_be_updated = True
                         # self.module.warn("linux_profile.ssh_key cannot be updated")
 
@@ -427,7 +429,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                     if is_property_changed('linux_profile', 'admin_username'):
                         self.log(("Linux Profile Diff User, Was {0} / Now {1}"
                                  .format(response['linux_profile'].admin_username,
-                                 self.linux_profile[0].get('admin_username'))))
+                                 self.linux_profile.get('admin_username'))))
                         to_be_updated = True
                         # self.module.warn("linux_profile.admin_username cannot be updated")
 
@@ -552,6 +554,16 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         except CloudError:
             self.log('Did not find the AKS instance.')
             return False
+
+    def is_resource_group_empty(self):
+        '''
+        Check whether the resource group is empty
+        return: True/False
+        '''
+        try:
+            return len(self.rm_client.resources.list_by_resource_group(self.resource_group)) == 0
+        except CloudError as exc:
+            self.fail("Cannot get information for resource group {0} - {1}".format(self.resource_group, exc.message))
 
 
 def main():
