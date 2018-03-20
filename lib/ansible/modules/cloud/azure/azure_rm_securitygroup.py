@@ -587,6 +587,8 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                 except Exception as exc:
                     self.fail("Error validating default rule {0} - {1}".format(rule, str(exc)))
 
+        subnets = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []        
+
         try:
             nsg = self.client.network_security_groups.get(self.resource_group, self.name)
             results = create_network_security_group_dict(nsg)
@@ -650,7 +652,6 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                             new_default_rules.append(rule)
                 results['default_rules'] = new_default_rules
 
-            subnets = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []
             changed = changed or compare_subnets(results['subnets'], subnets)
             results['subnets'] = subnets
 
@@ -675,6 +676,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
             results['rules'] = []
             results['default_rules'] = []
             results['tags'] = {}
+            results['subnets'] = subnets
 
             if self.rules:
                 results['rules'] = self.rules
