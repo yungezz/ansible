@@ -413,23 +413,23 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                         else:
                             return base != new
 
-                    # Cannot Update the SSH Key for now // Uncomment this block in the future to support it
+                    # Cannot Update the SSH Key for now // Let service to handle it
                     if is_property_changed('linux_profile', 'ssh_key'):
-                        # self.log(("Linux Profile Diff SSH, Was {0} / Now {1}"
-                        #          .format(response['linux_profile'].ssh.public_keys[0].key_data,
-                        #          self.linux_profile[0].get('ssh_key'))))
-                        # to_be_updated = True
-                        self.module.warn("linux_profile.ssh_key cannot be updated")
+                        self.log(("Linux Profile Diff SSH, Was {0} / Now {1}"
+                                 .format(response['linux_profile'].ssh.public_keys[0].key_data,
+                                 self.linux_profile[0].get('ssh_key'))))
+                        to_be_updated = True
+                        # self.module.warn("linux_profile.ssh_key cannot be updated")
 
                     # self.log("linux_profile response : {0}".format(response['linux_profile'].get('admin_username')))
                     # self.log("linux_profile self : {0}".format(self.linux_profile[0].get('admin_username')))
-                    # Cannot Update the Username for now // Uncomment this block in the future to support it
+                    # Cannot Update the Username for now // Let service to handle it
                     if is_property_changed('linux_profile', 'admin_username'):
-                        # self.log(("Linux Profile Diff User, Was {0} / Now {1}"
-                        #          .format(response['linux_profile'].admin_username,
-                        #          self.linux_profile[0].get('admin_username'))))
-                        # to_be_updated = True
-                        self.module.warn("linux_profile.admin_username cannot be updated")
+                        self.log(("Linux Profile Diff User, Was {0} / Now {1}"
+                                 .format(response['linux_profile'].admin_username,
+                                 self.linux_profile[0].get('admin_username'))))
+                        to_be_updated = True
+                        # self.module.warn("linux_profile.admin_username cannot be updated")
 
                     # Cannot have more that one agent pool profile for now
                     if len(response['agent_pool_profiles']) != len(self.agent_pool_profiles):
@@ -494,7 +494,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         if self.agent_pool_profiles:
             agentpools = [create_agent_pool_profile_instance(profile) for profile in self.agent_pool_profiles]
 
-        service_principal_profile = create_service_principal_profile_instance(self.service_principal)
+        service_principal_profile = create_service_principal_profile_instance(self.service_principal) if self.service_principal else None
 
         parameters = ManagedCluster(
             location=self.location,
