@@ -542,7 +542,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
         self.resource_group = None
         self.rules = None
         self.state = None
-        self.subnets = None        
+        self.subnets = None
         self.tags = None
         self.client = None  # type: azure.mgmt.network.NetworkManagementClient
         self.nsg_models = None  # type: azure.mgmt.network.models
@@ -587,7 +587,7 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                 except Exception as exc:
                     self.fail("Error validating default rule {0} - {1}".format(rule, str(exc)))
 
-        subnets = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []        
+        subnets = [self.format_subnet_id(x) for x in self.subnets] if self.subnets else []
 
         try:
             nsg = self.client.network_security_groups.get(self.resource_group, self.name)
@@ -701,15 +701,15 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
                 self.results['state']['status'] = 'Deleted'
 
         return self.results
-    
+
     def format_subnet_id(self, subnet):
         subnet['resource_group'] = subnet.get('resource_group') or self.resource_group
-        return resource_id(name=subnet.virtual_network,
-                           resource_group=subnet.resource_group,
+        return resource_id(name=subnet.get('virtual_network'),
+                           resource_group=subnet.get('resource_group'),
                            namespace='Microsoft.Network',
                            type='virtualNetworks',
                            chile_type_1='subnets',
-                           child_name_1=subnet.name,
+                           child_name_1=subnet.get('name'),
                            subscription=self.subscription_id)
 
     def create_or_update(self, results):
