@@ -92,7 +92,7 @@
     tags:
        testing: testing
        delete: on-fini
-    register: output
+  register: output
 
 - assert:
     that: 
@@ -109,7 +109,7 @@
     tags:
        testing: testing
        delete: on-fini
-    register: output
+  register: output
 
 - assert:
     that: not output.changed
