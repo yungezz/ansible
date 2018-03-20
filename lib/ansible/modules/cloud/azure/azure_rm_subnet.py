@@ -290,8 +290,8 @@ class AzureRMSubnet(AzureRMModuleBase):
         resource_group = self.nsg_resource_group or self.resource_group
         id = format_resource_id(val=nsg,
                                 subscription_id=self.subscription_id,
-                                namespace='',
-                                types='',
+                                namespace='Microsoft.Network',
+                                types='networkSecurityGroups',
                                 resource_group=resource_group)
         name = azure_id_to_dict(id).get('name')
         return dict(id=id, name=name)
