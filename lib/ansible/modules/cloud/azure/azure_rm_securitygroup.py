@@ -485,8 +485,7 @@ def create_network_security_group_dict(nsg):
         name=nsg.name,
         type=nsg.type,
         location=nsg.location,
-        tags=nsg.tags,
-        subnets=[x.id for x in nsg.subnets] if nsg.subnets else None
+        tags=nsg.tags
     )
     results['rules'] = []
     if nsg.security_rules:

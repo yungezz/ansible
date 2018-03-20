@@ -61,8 +61,8 @@
       that: 
         - "{{ output.state.rules | length }} == 2"
         - "{{ output.state.subnets | length }} == 2"
-        - output.state.subnets[0] = nsgsubnet1.state.id
-        - output.state.subnets[1] = nsgsubnet2.state.id
+        - output.state.subnets[0] == nsgsubnet1.state.id
+        - output.state.subnets[1] == nsgsubnet2.state.id
 
 - name: Gather facts by tags
   azure_rm_securitygroup_facts:
