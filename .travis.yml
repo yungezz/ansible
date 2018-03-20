@@ -93,3 +93,10 @@ script:
   - scan_test
   - (>&2 echo $message)
   - exit $exit_code
+
+notifications:
+  email:
+    - yuwzho@microsoft.com
+    - zikalino@microsoft.com
+    - yungez@microsoft.com
+    - yaweiw@microsoft.com
