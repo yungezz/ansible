@@ -296,15 +296,6 @@ class AzureRMSubnet(AzureRMModuleBase):
         name = azure_id_to_dict(id).get('name')
         return dict(id=id, name=name)
 
-    def get_security_group(self, name):
-        self.log("Fetching security group {0}".format(name))
-        nsg = None
-        try:
-            nsg = self.network_client.network_security_groups.get(self.resource_group, name)
-        except Exception as exc:
-            self.fail("Error: fetching network security group {0} - {1}.".format(name, str(exc)))
-        return nsg
-
 
 def main():
     AzureRMSubnet()
