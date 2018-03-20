@@ -360,7 +360,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         self.service_principal = None
 
         required_if = [
-            ('state', 'present', ['dns_prefix', 'linux_profile', 'agent_pool_profiles'])
+            ('state', 'present', ['dns_prefix', 'linux_profile', 'agent_pool_profiles', 'service_principal'])
         ]
 
         self.results = dict(changed=False, state=dict())
