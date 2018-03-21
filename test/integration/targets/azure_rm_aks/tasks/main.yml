@@ -97,6 +97,7 @@
      resource_group: "{{ resource_group }}"
      location: eastus
      dns_prefix: "aks{{ resource_group | hash('md5') | truncate(10, True, '') }}"
+     kubernetes_version: 1.8.1     
      service_principal:
          client_id: "{{ AZURE_CLIENT_ID }}"
          client_secret: "{{ AZURE_SECRET }}"

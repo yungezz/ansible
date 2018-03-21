@@ -71,7 +71,8 @@ options:
                 required: true
             count:
                 description:
-                    - Number of agents (VMs) to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive).
+                    - Number of agents (VMs) to host docker containers.
+                    - Allowed values must be in the range of 1 to 100 (inclusive).
                 required: true
             vm_size:
                 description:
