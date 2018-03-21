@@ -449,7 +449,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                                     or profile_result['os_disk_size_gb'] != profile_self['os_disk_size_gb'] \
                                     or profile_result['dns_prefix'] != profile_self['dns_prefix'] \
                                     or profile_result['vnet_subnet_id'] != profile_self.get('vnet_subnet_id') \
-                                    or set(profile_result['ports'] or []) != set(profile_self.get('ports', [])):
+                                    or set(profile_result['ports'] or []) != set(profile_self.get('ports') or []):
                                     self.log(("Agent Profile Diff - Origin {0} / Update {1}"
                                               .format(str(profile_result), str(profile_self))))
                                     to_be_updated = True
