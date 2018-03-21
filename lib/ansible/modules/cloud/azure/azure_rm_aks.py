@@ -290,7 +290,7 @@ linux_profile_spec = dict(
 
 service_principal_spec = dict(
     client_id=dict(type='str', required=True),
-    client_secret=dict(type='str', required=True)
+    client_secret=dict(type='str')
 )
 
 
