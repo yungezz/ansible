@@ -297,7 +297,7 @@ agent_pool_profile_spec = dict(
     name=dict(type='str', required=True),
     count=dict(type='int', required=True),
     vm_size=dict(type='str', required=True),
-    os_disk_size_gb=dict(type='int', default=0),
+    os_disk_size_gb=dict(type='int'),
     dns_prefix=dict(type='str'),
     ports=dict(type='list', elements='int'),
     storage_profiles=dict(type='str', choices=['StorageAccount', 'ManagedDisks']),
@@ -395,8 +395,6 @@ class AzureRMManagedCluster(AzureRMModuleBase):
 
             self.results['state'] = response
             if not response:
-                if not self.is_resource_group_empty():
-                    self.fail('This resource group contains existing resources. Choose an empty resource group.')
                 to_be_updated = True
 
             else:
@@ -450,9 +448,8 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                                     or profile_result['vm_size'] != profile_self['vm_size'] \
                                     or profile_result['os_disk_size_gb'] != profile_self['os_disk_size_gb'] \
                                     or profile_result['dns_prefix'] != profile_self['dns_prefix'] \
-                                    or profile_result['storage_profile'] != profile_self['storage_profile'] \
-                                    or profile_result['vnet_subnet_id'] != profile_self['vnet_subnet_id'] \
-                                    or set(profile_result['ports']) != set(profile_self['ports']):
+                                    or profile_result['vnet_subnet_id'] != profile_self.get('vnet_subnet_id') \
+                                    or set(profile_result['ports'] or []) != set(profile_self.get('ports', [])):
                                     self.log(("Agent Profile Diff - Origin {0} / Update {1}"
                                               .format(str(profile_result), str(profile_self))))
                                     to_be_updated = True
@@ -554,16 +551,6 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         except CloudError:
             self.log('Did not find the AKS instance.')
             return False
-
-    def is_resource_group_empty(self):
-        '''
-        Check whether the resource group is empty
-        return: True/False
-        '''
-        try:
-            return len(self.rm_client.resources.list_by_resource_group(self.resource_group)) == 0
-        except CloudError as exc:
-            self.fail("Cannot get information for resource group {0} - {1}".format(self.resource_group, exc.message))
 
 
 def main():
