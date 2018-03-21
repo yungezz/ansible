@@ -14,7 +14,7 @@
      agent_pool_profiles:
          - name: default
            count: 1
-           vm_size: Standard_A0
+           vm_size: Standard_DS1_v2
    check_mode: yes
 
  - name: Create an AKS instance
@@ -33,7 +33,7 @@
      agent_pool_profiles:
          - name: default
            count: 1
-           vm_size: Standard_A0
+           vm_size: Standard_DS1_v2
    register: output
 
  - name: Assert the AKS instance is well created
@@ -58,7 +58,7 @@
      agent_pool_profiles:
          - name: default
            count: 1
-           vm_size: Standard_A0
+           vm_size: Standard_DS1_v2
    register: output
 
  - name: Assert idempotent
@@ -82,7 +82,7 @@
      agent_pool_profiles:
          - name: default
            count: 1
-           vm_size: Standard_A0
+           vm_size: Standard_DS1_v2
    register: output
 
  - name: Assert the AKS instance is upgraded
@@ -106,7 +106,7 @@
      agent_pool_profiles:
          - name: default
            count: 2
-           vm_size: Standard_A0
+           vm_size: Standard_DS1_v2
    register: output
 
  - name: Assert the AKS instance is well scaled
