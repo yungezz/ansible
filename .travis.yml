@@ -9,6 +9,7 @@ env:
     - exit_code=0
     - number_per_job=2
     - message=()
+    - max_retry_count=2
   matrix:
     - id=1
     - id=2
