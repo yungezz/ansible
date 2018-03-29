@@ -56,15 +56,15 @@ before_install:
         travis_wait 50 ansible-test integration $test_name --docker --color=yes;
         
         if [ $? -ne 0 ]; then
-          echo test $test_name failed;
+          echo test $test_name failed at $loop time run;
 
-          if [ $loopm -eq $max_retry_count ]; then
+          if [ $loop -eq $max_retry_count ]; then
             message+=($test_name);
             export exit_code=1;
           fi;
           loop=$[$loop+1];
         else
-          echo test $test_name passed;
+          echo test $test_name passed at $loop time run;
           travis_wait 50 delete_resource_group $group_name;
           break;
         fi;
