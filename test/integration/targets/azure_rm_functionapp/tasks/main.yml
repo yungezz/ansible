@@ -1,18 +1,19 @@
 - name: Fix resource prefix
   set_fact:
     fixed_resource_prefix: "{{ resource_prefix | replace('-','x') }}"
+    storage_account_name: "sa{{ resource_prefix | replace('-','x') | truncate (20, True, '') }} "
 
 - name: create storage account for function apps
   azure_rm_storageaccount:
     resource_group: '{{ resource_group }}'
-    name: sa{{ fixed_resource_prefix }}
+    name: '{{ storage_account_name }}'
     account_type: Standard_LRS
 
 - name: create basic function app
   azure_rm_functionapp:
     resource_group: '{{ resource_group }}'
     name: af{{ fixed_resource_prefix }}
-    storage_account: sa{{ fixed_resource_prefix }}
+    storage_account: '{{ storage_account_name }}'
   register: output
 
 - name: assert the function was created
@@ -46,7 +47,7 @@
   azure_rm_functionapp:
     resource_group: '{{ resource_group }}'
     name: af{{ fixed_resource_prefix }}
-    storage_account: sa{{ fixed_resource_prefix }}
+    storage_account: '{{ storage_account_name }}'
     app_settings:
       hello: world
       things: more stuff
@@ -60,7 +61,7 @@
   azure_rm_functionapp:
     resource_group: '{{ resource_group }}'
     name: af{{ fixed_resource_prefix }}
-    storage_account: sa{{ fixed_resource_prefix }}
+    storage_account: '{{ storage_account_name }}'
     app_settings:
       hello: world
       things: more stuff
@@ -85,5 +86,5 @@
 - name: delete storage account
   azure_rm_storageaccount:
     resource_group: '{{ resource_group }}'
-    name: sa{{ fixed_resource_prefix }}
+    name: '{{ storage_account_name }}'
     state: absent
