@@ -143,6 +143,31 @@ state:
     returned: always
     type: dict
     example:
+        agent_pool_profiles:
+         - count: 1
+           dns_prefix: Null
+           name: default
+           os_disk_size_gb: Null
+           os_type: Linux
+           ports: Null
+           storage_profile: ManagedDisks
+           vm_size: Standard_DS1_v2
+           vnet_subnet_id: Null
+        changed: false
+        dns_prefix: aks9860bdcd89
+        id: "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourcegroups/yuwzhoaks/providers/Microsoft.ContainerService/managedClusters/aks9860bdc"
+        kube_config: "......"
+        kubernetes_version: 1.7.7
+        linux_profile:
+           admin_username: azureuser
+           ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADA.....
+        location: eastus
+        name: aks9860bdc
+        provisioning_state: Succeeded
+        service_principal_profile:
+           client_id: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+        tags: {}
+        type: Microsoft.ContainerService/ManagedClusters
 '''
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 import base64
