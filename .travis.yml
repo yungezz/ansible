@@ -3,7 +3,7 @@ python:
   - "2.7"
 script:
   - git remote add upstream https://github.com/ansible/ansible.git
-  - travis_wait 50 git fetch origin
+  - git fetch origin -p
   - travis_wait 50 git checkout origin/devel
   - travis_wait 50 git pull upstream devel
   - git config --global user.email "travis@travis-ci.org"
