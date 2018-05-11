@@ -31,7 +31,7 @@ options:
         required: true
     state:
         description:
-            - Assert the state of the AKS. Use 'present' to create or update an AKS and 'absent' to delete it.
+            - Assert the state of the AKS. Use C(present) to create or update an AKS and C(absent) to delete it.
         default: present
         choices:
             - absent
@@ -42,14 +42,12 @@ options:
     dns_prefix:
         description:
             - DNS prefix specified when creating the managed cluster.
-        required: true
     kubernetes_version:
         description:
             - Version of Kubernetes specified when creating the managed cluster.
     linux_profile:
         description:
             - The linux profile suboptions.
-        required: true
         suboptions:
             admin_username:
                 description:
@@ -62,7 +60,6 @@ options:
     agent_pool_profiles:
         description:
             - The agent pool profile suboptions.
-        required: true
         suboptions:
             name:
                 description:
@@ -83,8 +80,6 @@ options:
     service_principal:
         description:
             - The service principal suboptions.
-        required: true
-        default: null
         suboptions:
             client_id:
                 description:
@@ -113,17 +108,17 @@ EXAMPLES = '''
         resource_group: Testing
         dns_prefix: akstest
         linux_profile:
-            - admin_username: azureuser
-              ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAA...
+          admin_username: azureuser
+          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAA...
         service_principal:
-            - client_id: "cf72ca99-f6b9-4004-b0e0-bee10c521948"
-              client_secret: "mySPNp@ssw0rd!"
+          client_id: "cf72ca99-f6b9-4004-b0e0-bee10c521948"
+          client_secret: "mySPNp@ssw0rd!"
         agent_pool_profiles:
-            - name: default
-              count: 5
-              vm_size: Standard_D2_v2
+          - name: default
+            count: 5
+            vm_size: Standard_D2_v2
         tags:
-            Environment: Production
+          Environment: Production
 
     - name: Remove a managed Azure Container Services (AKS) instance
       azure_rm_aks:
@@ -133,20 +128,21 @@ EXAMPLES = '''
         resource_group: Testing
         state: absent
         linux_profile:
-            - admin_username: azureuser
-              ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAA...
+          admin_username: azureuser
+          ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAA...
         agent_pool_profiles:
-            - name: default
-              count: 4
-              vm_size: Standard_A0
+          - name: default
+            count: 4
+            vm_size: Standard_A0
         tags:
-            Ansible: azure_rm_aks
+          Ansible: azure_rm_aks
 '''
 RETURN = '''
 state:
     description: Current state of the Azure Container Service (AKS)
     returned: always
     type: dict
+    example:
 '''
 from ansible.module_utils.azure_rm_common import AzureRMModuleBase
 import base64
@@ -316,15 +312,6 @@ class AzureRMManagedCluster(AzureRMModuleBase):
 
     def __init__(self):
         self.module_arg_spec = dict(
-            cloud_environment=dict(
-                type='str',
-                default='AzureCloud'
-            ),
-            auth_source=dict(
-                type='str',
-                choices=['auto', 'cli', 'credential_file', 'env', 'msi'],
-                default='auto'
-            ),
             resource_group=dict(
                 type='str',
                 required=True
@@ -408,7 +395,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                 self.fail(
                     'You cannot specify more than one agent_pool_profiles currently')
 
-            self.results['state'] = response
+            self.results = response
             if not response:
                 to_be_updated = True
 
@@ -473,14 +460,14 @@ class AzureRMManagedCluster(AzureRMModuleBase):
 
             if to_be_updated:
                 self.log("Need to Create / Update the AKS instance")
-                self.results['changed'] = True
 
-                if self.check_mode:
-                    return self.results
+                if not self.check_mode:
+                    self.results = self.create_update_aks()
+                    self.log("Creation / Update done")
 
-                self.results['state'] = self.create_update_aks()
+                self.results['changed'] = True                
+                return self.results
 
-                self.log("Creation / Update done")
         elif self.state == 'absent' and response:
             self.log("Need to Delete the AKS instance")
             self.results['changed'] = True
