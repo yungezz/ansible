@@ -10,5 +10,4 @@ script:
   - git config --global user.name "Travis CI"
   - git remote add pages https://${github_token}@github.com/VSChina/ansible.git
   - git branch
-  - git log
   - git push pages devel:devel
