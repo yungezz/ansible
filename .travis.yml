@@ -6,6 +6,7 @@ script:
   - git fetch upstream -p
   - git checkout upstream/devel
   - git pull upstream devel
+  - git checkout devel
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git remote add pages https://${github_token}@github.com/VSChina/ansible.git
