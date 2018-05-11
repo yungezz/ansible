@@ -395,8 +395,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                 self.fail(
                     'You cannot specify more than one agent_pool_profiles currently')
 
-            if aks:
-                self.results = response
+            self.results = response
             if not response:
                 to_be_updated = True
 
