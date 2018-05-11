@@ -395,7 +395,8 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                 self.fail(
                     'You cannot specify more than one agent_pool_profiles currently')
 
-            self.results = response
+            if response:
+                self.results = response
             if not response:
                 to_be_updated = True
 
@@ -557,7 +558,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
             return create_aks_dict(response)
         except CloudError:
             self.log('Did not find the AKS instance.')
-            return dict()
+            return False
 
     def get_aks_kubeconfig(self):
         '''
