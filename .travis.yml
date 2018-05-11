@@ -3,11 +3,11 @@ python:
   - "2.7"
 script:
   - git remote add upstream https://github.com/ansible/ansible.git
-  - git pull upstream devel
-  - git checkout devel
+  - travis_wait 50 git pull upstream devel
+  - travis_wait 50 git checkout devel
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git remote add pages https://${github_token}@github.com/VSChina/ansible.git
   - git branch
   - git log
-  - git push pages devel:devel
+  - travis_wait 50 git push pages devel:devel
