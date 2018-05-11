@@ -365,7 +365,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
              'dns_prefix', 'linux_profile', 'agent_pool_profiles', 'service_principal'])
         ]
 
-        self.results = dict(changed=False, state=dict())
+        self.results = dict(changed=False)
 
         super(AzureRMManagedCluster, self).__init__(derived_arg_spec=self.module_arg_spec,
                                                     supports_check_mode=True,
@@ -395,7 +395,8 @@ class AzureRMManagedCluster(AzureRMModuleBase):
                 self.fail(
                     'You cannot specify more than one agent_pool_profiles currently')
 
-            self.results = response
+            if aks:
+                self.results = response
             if not response:
                 to_be_updated = True
 
@@ -515,15 +516,13 @@ class AzureRMManagedCluster(AzureRMModuleBase):
         # self.log("agent_pool_profiles : {0}".format(parameters.agent_pool_profiles))
 
         try:
-            poller = self.containerservice_client.managed_clusters.create_or_update(
-                self.resource_group, self.name, parameters)
+            poller = self.containerservice_client.managed_clusters.create_or_update(self.resource_group, self.name, parameters)
             response = self.get_poller_result(poller)
             response.kube_config = self.get_aks_kubeconfig()
             return create_aks_dict(response)
         except CloudError as exc:
             self.log('Error attempting to create the AKS instance.')
-            self.fail(
-                "Error creating the AKS instance: {0}".format(exc.message))
+            self.fail("Error creating the AKS instance: {0}".format(exc.message))
 
     def delete_aks(self):
         '''
@@ -559,7 +558,7 @@ class AzureRMManagedCluster(AzureRMModuleBase):
             return create_aks_dict(response)
         except CloudError:
             self.log('Did not find the AKS instance.')
-            return False
+            return dict()
 
     def get_aks_kubeconfig(self):
         '''
