@@ -74,13 +74,13 @@ options:
                 description:
                   - Port or range of ports from which traffic originates.
                 aliases:
-                - source_port_ranges
+                  - source_port_ranges
                 default: "*"
             destination_port_range:
                 description:
                   - Port or range of ports to which traffic is headed.
                 aliases:
-                - destination_port_ranges
+                  - destination_port_ranges
                 default: "*"
             source_address_prefix:
                 description:
@@ -90,7 +90,7 @@ options:
                   - If this is an ingress rule, specifies where network traffic originates from.
                 default: "*"
                 aliases:
-                - source_address_prefixes
+                  - source_address_prefixes
             destination_address_prefix:
                 description:
                   - The destination address prefix.
@@ -99,7 +99,7 @@ options:
                   - Default tags such as C(VirtualNetwork), C(AzureLoadBalancer) and C(Internet) can also be used.
                 default: "*"
                 aliases:
-                - destination_address_prefixes
+                  - destination_address_prefixes
             access:
                 description:
                   - Whether or not to allow the traffic flow.
@@ -427,22 +427,22 @@ def create_rule_instance(self, rule):
     :return: SecurityRule
     '''
     return self.nsg_models.SecurityRule(
-        self.description = rule.get('description', None),
-        self.protocol = rule.get('protocol', None),
-        self.source_port_range = rule.get('source_port_range', None),
-        self.destination_port_range = rule.get('destination_port_range', None),
-        self.source_address_prefix = rule.get('source_address_prefix', None),
-        self.source_address_prefixes = rule.get('source_address_prefixes', None),
-        self.destination_address_prefix = rule.get('destination_address_prefix', None),
-        self.destination_address_prefixes = rule.get('destination_address_prefixes', None),
-        self.source_port_ranges = rule.get('source_port_ranges', None),
-        self.destination_port_ranges = rule.get('destination_port_ranges', None),
-        self.access = rule.get('access', None),
-        self.priority = rule.get('priority', None),
-        self.direction = rule.get('direction', None),
-        self.provisioning_state = rule.get('provisioning_state', None),
-        self.name = rule.get('name', None),
-        self.etag = rule.get('etag', None)
+        self.description=rule.get('description', None),
+        self.protocol=rule.get('protocol', None),
+        self.source_port_range=rule.get('source_port_range', None),
+        self.destination_port_range=rule.get('destination_port_range', None),
+        self.source_address_prefix=rule.get('source_address_prefix', None),
+        self.source_address_prefixes=rule.get('source_address_prefixes', None),
+        self.destination_address_prefix=rule.get('destination_address_prefix', None),
+        self.destination_address_prefixes=rule.get('destination_address_prefixes', None),
+        self.source_port_ranges=rule.get('source_port_ranges', None),
+        self.destination_port_ranges=rule.get('destination_port_ranges', None),
+        self.access=rule.get('access', None),
+        self.priority=rule.get('priority', None),
+        self.direction=rule.get('direction', None),
+        self.provisioning_state=rule.get('provisioning_state', None),
+        self.name=rule.get('name', None),
+        self.etag=rule.get('etag', None)
     )
 
 
@@ -505,7 +505,7 @@ def create_network_security_group_dict(nsg):
     return results
 
 
-rule_spec=dict(
+rule_spec = dict(
     name=dict(type='str', required=True),
     description=dict(type='str'),
     protocol=dict(type='str', choices=['Udp', 'Tcp', '*'], default='*'),
