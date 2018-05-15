@@ -351,6 +351,7 @@ def validate_rule(self, rule, rule_type=None):
     :param rule_type: Set to 'default' if the rule is part of the default set of rules.
     :return: None
     '''
+    priority = rule.get('priority', 0)
     if rule_type != 'default' and (priority < 100 or priority > 4096):
         raise Exception("Rule priority must be between 100 and 4096")
 
