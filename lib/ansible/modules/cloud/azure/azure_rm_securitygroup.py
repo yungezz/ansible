@@ -509,14 +509,14 @@ def create_network_security_group_dict(nsg):
 rule_spec = dict(
     name=dict(type='str', required=True),
     description=dict(type='str'),
-    protocol=dict(type='str', choices=['Udp', 'Tcp', '*'], default='*', required=True),
-    source_port_range=dict(type='raw', default='*', aliases=['source_port_ranges'], required=True),
-    destination_port_range=dict(type='raw', default='*', aliases=['destination_port_ranges'], required=True),
-    source_address_prefix=dict(type='raw', default='*', aliases=['source_address_prefixes'], required=True),
-    destination_address_prefix=dict(type='raw', default='*', aliases=['destination_address_prefixes'], required=True),
-    access=dict(type='str', choices=['Allow', 'Deny'], default='Allow', required=True),
+    protocol=dict(type='str', choices=['Udp', 'Tcp', '*'], default='*'),
+    source_port_range=dict(type='raw', default='*', aliases=['source_port_ranges']),
+    destination_port_range=dict(type='raw', default='*', aliases=['destination_port_ranges']),
+    source_address_prefix=dict(type='raw', default='*', aliases=['source_address_prefixes']),
+    destination_address_prefix=dict(type='raw', default='*', aliases=['destination_address_prefixes']),
+    access=dict(type='str', choices=['Allow', 'Deny'], default='Allow'),
     priority=dict(type='int', required=True),
-    direction=dict(type='str', choices=['Inbound', 'Outbound'], default='Inbound', required=True)
+    direction=dict(type='str', choices=['Inbound', 'Outbound'], default='Inbound')
 )
 
 
