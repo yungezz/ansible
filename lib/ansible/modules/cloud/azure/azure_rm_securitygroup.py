@@ -525,13 +525,13 @@ class AzureRMSecurityGroup(AzureRMModuleBase):
     def __init__(self):
 
         self.module_arg_spec = dict(
-            default_rules=dict(type='list', options=rule_spec),
+            default_rules=dict(type='list', elements='dict', options=rule_spec),
             location=dict(type='str'),
             name=dict(type='str', required=True),
             purge_default_rules=dict(type='bool', default=False),
             purge_rules=dict(type='bool', default=False),
             resource_group=dict(required=True, type='str'),
-            rules=dict(type='list', options=rule_spec),
+            rules=dict(type='list', elements='dict', options=rule_spec),
             state=dict(type='str', default='present', choices=['present', 'absent']),
         )
 
