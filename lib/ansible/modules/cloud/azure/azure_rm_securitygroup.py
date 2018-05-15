@@ -427,22 +427,22 @@ def create_rule_instance(self, rule):
     :return: SecurityRule
     '''
     return self.nsg_models.SecurityRule(
-        self.description=rule.get('description', None),
-        self.protocol=rule.get('protocol', None),
-        self.source_port_range=rule.get('source_port_range', None),
-        self.destination_port_range=rule.get('destination_port_range', None),
-        self.source_address_prefix=rule.get('source_address_prefix', None),
-        self.source_address_prefixes=rule.get('source_address_prefixes', None),
-        self.destination_address_prefix=rule.get('destination_address_prefix', None),
-        self.destination_address_prefixes=rule.get('destination_address_prefixes', None),
-        self.source_port_ranges=rule.get('source_port_ranges', None),
-        self.destination_port_ranges=rule.get('destination_port_ranges', None),
-        self.access=rule.get('access', None),
-        self.priority=rule.get('priority', None),
-        self.direction=rule.get('direction', None),
-        self.provisioning_state=rule.get('provisioning_state', None),
-        self.name=rule.get('name', None),
-        self.etag=rule.get('etag', None)
+        description=rule.get('description', None),
+        protocol=rule.get('protocol', None),
+        source_port_range=rule.get('source_port_range', None),
+        destination_port_range=rule.get('destination_port_range', None),
+        source_address_prefix=rule.get('source_address_prefix', None),
+        source_address_prefixes=rule.get('source_address_prefixes', None),
+        destination_address_prefix=rule.get('destination_address_prefix', None),
+        destination_address_prefixes=rule.get('destination_address_prefixes', None),
+        source_port_ranges=rule.get('source_port_ranges', None),
+        destination_port_ranges=rule.get('destination_port_ranges', None),
+        access=rule.get('access', None),
+        priority=rule.get('priority', None),
+        direction=rule.get('direction', None),
+        provisioning_state=rule.get('provisioning_state', None),
+        name=rule.get('name', None),
+        etag=rule.get('etag', None)
     )
 
 
