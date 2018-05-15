@@ -402,7 +402,7 @@ def compare_rules(r, rule):
             r['source_port_range'] = rule.get('source_port_range')
         if str(rule['destination_port_range']) != str(r['destination_port_range']):
             changed = True
-            r['source_port_range'] = rule.get('source_port_range')
+            r['destination_port_range'] = rule.get('destination_port_range')
         if rule['access'] != r['access']:
             changed = True
             r['access'] = rule.get('access')
