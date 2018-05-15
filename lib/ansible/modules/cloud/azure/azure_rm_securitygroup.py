@@ -374,15 +374,15 @@ def compare_rules_change(old_list, new_list, purge_list):
 
     for new_rule in new_list:
         matched = False
-        return_list.append(new_rule)
         for old_rule in old_list:
-            rule_matched, rule_changed = compare_rules(new_rule, old_rule)
+            rule_matched, rule_changed = compare_rules(old_rule, new_rule)
             if rule_matched:
                 matched = True
             if rule_changed:
                 changed = True
         if not matched:
             changed = True
+            return_list.append(new_rule)
     return changed, return_list
 
 
@@ -393,30 +393,43 @@ def compare_rules(r, rule):
         matched = True
         if rule.get('description', None) != r['description']:
             changed = True
+            r['description'] = rule.get('description')
         if rule['protocol'] != r['protocol']:
             changed = True
+            r['protocol'] = rule.get('protocol')
         if str(rule['source_port_range']) != str(r['source_port_range']):
             changed = True
+            r['source_port_range'] = rule.get('source_port_range')
         if str(rule['destination_port_range']) != str(r['destination_port_range']):
             changed = True
+            r['source_port_range'] = rule.get('source_port_range')
         if rule['access'] != r['access']:
             changed = True
+            r['access'] = rule.get('access')
         if rule['priority'] != r['priority']:
             changed = True
+            r['priority'] = rule.get('priority')
         if rule['direction'] != r['direction']:
             changed = True
+            r['direction'] = rule.get('direction')
         if rule['source_address_prefix'] != str(r['source_address_prefix']):
             changed = True
+            r['source_address_prefix'] = rule.get('source_address_prefix')            
         if rule['destination_address_prefix'] != str(r['destination_address_prefix']):
             changed = True
+            r['destination_address_prefix'] = rule.get('destination_address_prefix')            
         if set(rule.get('source_address_prefixes') or []) != set(r.get('source_address_prefixes') or []):
             changed = True
+            r['source_address_prefixes'] = rule.get('source_address_prefixes')            
         if set(rule.get('destination_address_prefixes') or []) != set(r.get('destination_address_prefixes') or []):
             changed = True
+            r['destination_address_prefixes'] = rule.get('destination_address_prefixes')            
         if set(rule.get('source_port_ranges') or []) != set(r.get('source_port_ranges') or []):
             changed = True
+            r['source_port_ranges'] = rule.get('source_port_ranges')            
         if set(rule.get('destination_port_ranges') or []) != set(r.get('destination_port_ranges') or []):
             changed = True
+            r['destination_port_ranges'] = rule.get('destination_port_ranges')            
     return matched, changed
 
 
