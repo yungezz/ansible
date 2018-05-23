@@ -11,19 +11,11 @@ author:
 version_added: "2.6"
 requirements:
 
-extends_documentation_fragment:
-  - azure
 short_description: Look up Azure service principal attributes.
 description:
   - Describes attributes of your Azure service principal account. You can specify one of the listed
     attribute choices or omit it to see all attributes.
 options:
-  attribute:
-    description: The attribute for which to get the value(s).
-    choices:
-      - app-id
-      - display-name
-      - object-id
 """
 
 EXAMPLES = """
@@ -47,39 +39,27 @@ _raw:
 """
 
 from ansible.errors import AnsibleError
+from ansible.plugins import AnsiblePlugin
+from ansible.plugins.lookup import LookupBase
 
 try:
+    from azure.common.credentials import ServicePrincipalCredentials
     from azure.graphrbac import GraphRbacManagementClient
     from msrestazure import azure_cloud
     from msrestazure.azure_exceptions import CloudError
 except ImportError:
     raise AnsibleError(
-        "The lookup aws_account_attribute requires azure.graphrbac, msrest")
+        "The lookup azure_service_principal_attribute requires azure.graphrbac, msrest")
 
-
-def _boto3_conn(region, credentials):
-    boto_profile = credentials.pop('aws_profile', None)
-
-    try:
-        connection = boto3.session.Session(
-            profile_name=boto_profile).client('ec2', region, **credentials)
-    except (botocore.exceptions.ProfileNotFound, botocore.exceptions.PartialCredentialsError) as e:
-        if boto_profile:
-            try:
-                connection = boto3.session.Session(
-                    profile_name=boto_profile).client('ec2', region)
-            except (botocore.exceptions.ProfileNotFound, botocore.exceptions.PartialCredentialsError) as e:
-                raise AnsibleError("Insufficient credentials found.")
-        else:
-            raise AnsibleError("Insufficient credentials found.")
-    return connection
 
 
 def _get_credentials(options):
     credentials = {}
-    credentials['azure_client_id'] = options.get('azure_client_id', None)
-    credentials['azure_secret'] = options.get('azure_secret', None)
-    credentials['azure_tenant'] = options.get('azure_tenant', 'common')
+    #credentials['azure_client_id'] = options.get('azure_client_id', None)
+    credentials['azure_client_id'] = options['azure_client_id']
+    #credentials['azure_secret'] = options.get('azure_secret', None)
+    credentials['azure_secret'] = options['azure_secret']
+    credentials['azure_tenant'] = options['azure_tenant']
     credentials['azure_cloud_environment'] = options.get(
         'azure_cloud_environment', None)
 
@@ -89,8 +69,13 @@ def _get_credentials(options):
 class LookupModule(LookupBase):
     def run(self, terms, variables, **kwargs):
 
-        self.set_options(var_options=variables, direct=kwargs)
-        credentials = _get_credentials(self._options)
+        #self.set_options(var_options=variables, direct=kwargs)
+        self.set_options(direct=kwargs)
+        #credentials = _get_credentials(self._options)
+        credentials = {}
+        credentials['azure_client_id'] = self.get_option('azure_client_id')
+        credentials['azure_secret'] = self.get_option('azure_secret')
+        credentials['azure_tenant'] = self.get_option('azure_tenant')
 
         cloud_environment = azure_cloud.AZURE_PUBLIC_CLOUD
         if credentials['azure_cloud_environment'] is not None:
@@ -102,7 +87,7 @@ class LookupModule(LookupBase):
                                                         tenant=credentials['azure_tenant'],
                                                         cloud_environment=cloud_environment,
                                                         resource=cloud_environment.endpoints.active_directory_graph_resource_id,
-                                                        verify=false)
+                                                        verify=False)
 
         client = GraphRbacManagementClient(
             azure_credentials, credentials['azure_tenant'], base_url=cloud_environment.endpoints.active_directory_graph_resource_id)
