@@ -95,33 +95,31 @@ class LookupModule(LookupBase):
         credentials['azure_tenant'] = self.get_option('azure_tenant', 'common')
 
         _cloud_environment = azure_cloud.AZURE_PUBLIC_CLOUD
-#        if self.get_option('azure_cloud_environment', None) is not None:
-#            cloud_environment = azure_cloud.get_cloud_from_metadata_endpoint(
-#                credentials['azure_cloud_environment'])
+        if self.get_option('azure_cloud_environment', None) is not None:
+            cloud_environment = azure_cloud.get_cloud_from_metadata_endpoint(credentials['azure_cloud_environment'])
 
         azure_credentials = ServicePrincipalCredentials(client_id=credentials['azure_client_id'],
                                                         secret=credentials['azure_secret'],
-                                                        tenant=credentials['azure_tenant'])
-                                                        #cloud_environment=_cloud_environment)
-                                                        #resource=_cloud_environment.endpoints.active_directory_graph_resource_id)
+                                                        tenant=credentials['azure_tenant'],
+                                                        #cloud_environment=_cloud_environment,
+                                                        resource=_cloud_environment.endpoints.active_directory_graph_resource_id)
 
-        auth_context = AuthenticationContext(_cloud_environment.endpoints.active_directory + '/' + credentials['azure_tenant'])
+        #auth_context = AuthenticationContext(_cloud_environment.endpoints.active_directory + '/' + credentials['azure_tenant'])
         
         # get on behalf of token 
-        creds = auth_context.acquire_token_with_client_credentials(_cloud_environment.endpoints.active_directory_graph_resource_id, credentials['azure_client_id'], credentials['azure_secret']) 
-        if creds is None:
-            raise AnsibleError('invalid token')
+        #creds = auth_context.acquire_token_with_client_credentials(_cloud_environment.endpoints.active_directory_graph_resource_id, credentials['azure_client_id'], credentials['azure_secret']) 
+        #if creds is None:
+        #    raise AnsibleError('invalid token')
 
         #creds = auth_context.acquire_token_with_client_credentials('00000002-0000-0000-c000-000000000000', credentials['azure_client_id'], credentials['azure_secret']) 
-        copy_aad_cred = copy.deepcopy(azure_credentials)
-        copy_aad_cred.token['access_token'] = creds['accessToken']
+        #copy_aad_cred = copy.deepcopy(azure_credentials)
+        #copy_aad_cred.token['access_token'] = creds['accessToken']
 #        if auth_token is not None:
 #            raise AnsibleError("auth_token is null {0} {1}");
 #        else:
 #            raise AnsibleError("auth_token is: {0}".format(auth_token))
 
-        client = GraphRbacManagementClient(copy_aad_cred, credentials['azure_tenant'])
-#, base_url=_cloud_environment.endpoints.active_directory_graph_resource_id)
+        client = GraphRbacManagementClient(azure_credentials, credentials['azure_tenant'], base_url=_cloud_environment.endpoints.active_directory_graph_resource_id)
         
         if not client:
             raise AnsibleError('invalid client')
@@ -132,7 +130,8 @@ class LookupModule(LookupBase):
             response = list(client.service_principals.list(filter="appId eq '{}'".format(credentials['azure_client_id'])))
             sp = response[0]
 
-            return sp.object_id
+            #return ''.join(map(str, sp.object_id.split(',')))
+            return sp.object_id.split(',')
         except CloudError as ex:
             raise AnsibleError(
                 "Failed to get service principal object id: %s" % to_native(ex))
