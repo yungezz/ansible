@@ -2,3 +2,4 @@ cloud/azure
 posix/ci/cloud/group3/azure
 unstable
 destructive
+disabled
