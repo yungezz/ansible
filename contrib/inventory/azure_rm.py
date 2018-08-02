@@ -606,7 +606,7 @@ class AzureInventory(object):
                 try:
                     virtual_machines = self._compute_client.virtual_machines.list(resource_group)
                     if self.include_vm_scale_sets:
-                        virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory()
+                        virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory(resource_group)
                 except Exception as exc:
                     sys.exit("Error: fetching virtual machines for resource group {0} - {1}".format(resource_group, str(exc)))
                 if self._args.host or self.tags:
@@ -618,7 +618,6 @@ class AzureInventory(object):
             # get all VMs within the subscription
             try:
                 virtual_machines = self._compute_client.virtual_machines.list_all()
-                print('vmss enabled:' + str(self.include_vm_scale_sets))
                 if self.include_vm_scale_sets:
                     virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory()
             except Exception as exc:
@@ -626,15 +625,16 @@ class AzureInventory(object):
 
             if self._args.host or self.tags or self.locations:
                 selected_machines = self._selected_machines(virtual_machines)
-                print('select machine:' + str(len(selected_machines)))
                 self._load_machines(selected_machines)
             else:
                 self._load_machines(virtual_machines)
 
-    def get_vmss_vm_inventory(self):
-        print('get vmss')
+    def get_vmss_vm_inventory(self, resource_group=None):
         try:
-            virtual_machine_scale_sets = self._compute_client.virtual_machine_scale_sets.list_all()
+            if resource_group:
+                virtual_machine_scale_sets = self._compute_client.virtual_machine_scale_sets.list(resource_group)
+            else:
+                virtual_machine_scale_sets = self._compute_client.virtual_machine_scale_sets.list_all()
         except Exception as exc:
             sys.exit("Error: fetching virtual machine scale set - {0}".format(str(exc)))
 
@@ -644,7 +644,6 @@ class AzureInventory(object):
         for scale_set in selected_vmsses:
             vmss_vms += self.get_vm_instances_in_vmss(scale_set)
 
-        print('vmss: ' + str(len(vmss_vms)))
         return vmss_vms
 
     def get_vm_instances_in_vmss(self, vmss):
@@ -665,6 +664,7 @@ class AzureInventory(object):
                     vm.private_ip_address = nic_config.get("private_ip_address", None)
                     vm.public_ip_address = nic_config.get("public_ip_address", None)
                     vm.hardware_profile = type('obj', (object,), {'vm_size': vmss.sku.name})
+                    vm.vmss_vm = True
                     vm_instances.append(vm)
         return vm_instances
 
@@ -796,9 +796,7 @@ class AzureInventory(object):
     def _selected_machines(self, virtual_machines):
         selected_machines = []
         for machine in virtual_machines:
-            print('machine name:' + machine.name)
             if self._args.host and self._args.host == machine.name:
-                print('self.args.hostl' + self._args.host)
                 selected_machines.append(machine)
             if self.tags and self._tags_match(machine.tags, self.tags):
                 selected_machines.append(machine)
@@ -888,7 +886,6 @@ class AzureInventory(object):
         # look for environment values.
         file_settings = self._load_settings()
         if file_settings:
-            print('in file setting')
             for key in AZURE_CONFIG_SETTINGS:
                 if key in ('resource_groups', 'tags', 'locations') and file_settings.get(key):
                     values = file_settings.get(key).split(',')
@@ -898,7 +895,6 @@ class AzureInventory(object):
                     val = self._to_boolean(file_settings[key])
                     setattr(self, key, val)
         else:
-            print('in env setting')
             env_settings = self._get_env_settings()
             for key in AZURE_CONFIG_SETTINGS:
                 if key in('resource_groups', 'tags', 'locations') and env_settings.get(key):
@@ -930,7 +926,6 @@ class AzureInventory(object):
         env_settings = dict()
         for attribute, env_variable in AZURE_CONFIG_SETTINGS.items():
             env_settings[attribute] = os.environ.get(env_variable, None)
-        print('env_settings: ' + env_settings)
         return env_settings
 
     def _load_settings(self):
