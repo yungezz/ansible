@@ -257,7 +257,7 @@ AZURE_CONFIG_SETTINGS = dict(
     group_by_security_group='AZURE_GROUP_BY_SECURITY_GROUP',
     group_by_tag='AZURE_GROUP_BY_TAG',
     use_private_ip='AZURE_USE_PRIVATE_IP',
-    include_vm_scale_sets='AZURE_INCLUDE_VM_SCALE_SETS'
+    include_vm_scale_sets='INCLUDE_VM_SCALE_SETS'
 )
 
 AZURE_MIN_VERSION = "2.0.0"
@@ -903,7 +903,7 @@ class AzureInventory(object):
     def _get_env_settings(self):
         env_settings = dict()
         for attribute, env_variable in AZURE_CONFIG_SETTINGS.items():
-            env_settings[attribute] = os.environ.get(env_variable, None)
+            env_settings[attribute.lower()] = os.environ.get(env_variable, None)
         return env_settings
 
     def _load_settings(self):
