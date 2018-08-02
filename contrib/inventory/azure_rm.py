@@ -569,8 +569,6 @@ class AzureInventory(object):
                             help='Send debug messages to STDOUT')
         parser.add_argument('--host', action='store',
                             help='Get all information about an instance')
-        parser.add_argument('--vmss', action='store',
-                            help='Get all information about a virtual machine scale set')
         parser.add_argument('--pretty', action='store_true', default=False,
                             help='Pretty print JSON output(default: False)')
         parser.add_argument('--profile', action='store',
@@ -805,8 +803,9 @@ class AzureInventory(object):
 
     def _selected_machines(self, virtual_machines):
         selected_machines = []
+
         for machine in virtual_machines:
-            if self._args.host and self._args.host == machine.name:
+            if self._args.host and not self.include_vm_scale_sets and self._args.host == machine.name:
                 selected_machines.append(machine)
             if self.tags and self._tags_match(machine.tags, self.tags):
                 selected_machines.append(machine)
@@ -818,7 +817,7 @@ class AzureInventory(object):
     def _selected_vmss(self, vmsses):
         selected_vmsses = []
         for vmss in vmsses:
-            if self._args.vmss and self._args.vmss == vmss.name:
+            if self._args.host and self._args.host == vmss.name:
                 selected_vmsses.append(vmss)
         return selected_vmsses
 
