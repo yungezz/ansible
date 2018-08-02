@@ -606,7 +606,7 @@ class AzureInventory(object):
                 try:
                     virtual_machines = self._compute_client.virtual_machines.list(resource_group)
                     if self.include_vm_scale_sets:
-                        virtual_machines = virtual_machines + self.get_vmss_vm_inventory(resource_group)
+                        virtual_machines = list(virtual_machines).extend(self.get_vmss_vm_inventory(resource_group))
 
                 except Exception as exc:
                     sys.exit("Error: fetching virtual machines for resource group {0} - {1}".format(resource_group, str(exc)))
@@ -620,7 +620,7 @@ class AzureInventory(object):
             try:
                 virtual_machines = self._compute_client.virtual_machines.list_all()
                 if self.include_vm_scale_sets:
-                    virtual_machines = virtual_machines + self.get_vmss_vm_inventory()
+                    virtual_machines = list(virtual_machines).extend(self.get_vmss_vm_inventory())
             except Exception as exc:
                 sys.exit("Error: fetching virtual machines - {0}".format(str(exc)))
 
