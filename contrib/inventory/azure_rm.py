@@ -256,7 +256,8 @@ AZURE_CONFIG_SETTINGS = dict(
     group_by_location='AZURE_GROUP_BY_LOCATION',
     group_by_security_group='AZURE_GROUP_BY_SECURITY_GROUP',
     group_by_tag='AZURE_GROUP_BY_TAG',
-    use_private_ip='AZURE_USE_PRIVATE_IP'
+    use_private_ip='AZURE_USE_PRIVATE_IP',
+    include_vm_scale_sets='AZURE_INCLUDE_VM_SCALE_SETS'
 )
 
 AZURE_MIN_VERSION = "2.0.0"
@@ -471,6 +472,7 @@ class AzureRM(object):
                              self.subscription_id,
                              base_url=base_url,
                              api_version=api_version)
+
         client.config.add_user_agent(ANSIBLE_USER_AGENT)
         return client
 
@@ -480,7 +482,7 @@ class AzureRM(object):
         if not self._network_client:
             self._network_client = self.get_mgmt_svc_client(NetworkManagementClient,
                                                             self._cloud_environment.endpoints.resource_manager,
-                                                            '2017-06-01')
+                                                            '2018-02-01')
             self._register('Microsoft.Network')
         return self._network_client
 
@@ -490,7 +492,7 @@ class AzureRM(object):
         if not self._resource_client:
             self._resource_client = self.get_mgmt_svc_client(ResourceManagementClient,
                                                              self._cloud_environment.endpoints.resource_manager,
-                                                             '2017-05-10')
+                                                             '2018-02-01')
         return self._resource_client
 
     @property
@@ -499,7 +501,7 @@ class AzureRM(object):
         if not self._compute_client:
             self._compute_client = self.get_mgmt_svc_client(ComputeManagementClient,
                                                             self._cloud_environment.endpoints.resource_manager,
-                                                            '2017-03-30')
+                                                            '2017-12-01')
             self._register('Microsoft.Compute')
         return self._compute_client
 
@@ -530,6 +532,7 @@ class AzureInventory(object):
         self.group_by_tag = True
         self.include_powerstate = True
         self.use_private_ip = False
+        self.include_vm_scale_sets = False
 
         self._inventory = dict(
             _meta=dict(
@@ -600,6 +603,8 @@ class AzureInventory(object):
             for resource_group in self.resource_groups:
                 try:
                     virtual_machines = self._compute_client.virtual_machines.list(resource_group)
+                    if self.include_vm_scale_sets:
+                        virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory()
                 except Exception as exc:
                     sys.exit("Error: fetching virtual machines for resource group {0} - {1}".format(resource_group, str(exc)))
                 if self._args.host or self.tags:
@@ -611,6 +616,8 @@ class AzureInventory(object):
             # get all VMs within the subscription
             try:
                 virtual_machines = self._compute_client.virtual_machines.list_all()
+                if self.include_vm_scale_sets:
+                    virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory()
             except Exception as exc:
                 sys.exit("Error: fetching virtual machines - {0}".format(str(exc)))
 
@@ -620,9 +627,54 @@ class AzureInventory(object):
             else:
                 self._load_machines(virtual_machines)
 
+    def get_vmss_vm_inventory(self):
+        virtual_machine_scale_sets = self._compute_client.virtual_machine_scale_sets.list_all()
+        selected_scale_sets = self._selected_machines(virtual_machine_scale_sets)
+        vmss_vms = []
+        for scale_set in selected_scale_sets:
+            vmss_vms += self.get_vm_instances_in_vmss(scale_set)
+        return vmss_vms
+
+    def get_vm_instances_in_vmss(self, vmss):
+        id_dict = azure_id_to_dict(vmss.id)
+        resource_group = id_dict['resourceGroups']
+        vms = []
+        nic_configs = self.get_vm_nics_for_vmss(resource_group, vmss.name)
+        for vm in self._compute_client.virtual_machine_scale_set_vms.list(resource_group, vmss.name):
+            for nic_config in nic_configs:
+                vm_id = azure_id_to_dict(vm.id)
+                nic_id = azure_id_to_dict(nic_config["id"])
+                if vm_id["virtualMachineScaleSets"] == nic_id["virtualMachineScaleSets"] and \
+                   vm_id["virtualMachines"] == nic_id["virtualMachines"] and \
+                   vm_id["resourceGroups"].lower() == nic_id["resourceGroups"].lower():
+                    vm.private_ip_address = nic_config.get("private_ip_address")
+                    vm.public_ip_address = nic_config.get("public_ip_address")
+                    vm.hardware_profile = type('obj', (object,), {'vm_size': vmss.sku.name})
+                    vm.vmss_vm = True
+                    vms.append(vm)
+        return vms
+
+    def get_vm_nics_for_vmss(self, resource_group, name):
+        vmss_nics = self._network_client.network_interfaces.list_virtual_machine_scale_set_network_interfaces(resource_group, name)
+        vm_nics = []
+        for vm in vmss_nics:
+            vm_nic_info = {}
+            vm_nic_info["id"] = vm.id
+            for ip_configuration in vm.ip_configurations:
+                if ip_configuration.private_ip_address:
+                    vm_nic_info.update({"private_ip_address": vm.private_ip_address})
+
+                if ip_configuration.public_ip_address:
+                    vm_nic_info.update({"public_ip_address": vm.public_ip_address})
+
+            vm_nics.append(vm_nic_info)
+        return vm_nics
+
     def _load_machines(self, machines):
         for machine in machines:
             id_dict = azure_id_to_dict(machine.id)
+
+            vmss_vm = getattr(machine, 'vmss_vm', False)
 
             # TODO - The API is returning an ID value containing resource group name in ALL CAPS. If/when it gets
             #       fixed, we should remove the .lower(). Opened Issue
@@ -687,39 +739,43 @@ class AzureInventory(object):
                             host_vars['windows_rm']['listeners'].append(dict(protocol=listener.protocol.name,
                                                                              certificate_url=listener.certificate_url))
 
-            for interface in machine.network_profile.network_interfaces:
-                interface_reference = self._parse_ref_id(interface.id)
-                network_interface = self._network_client.network_interfaces.get(
-                    interface_reference['resourceGroups'],
-                    interface_reference['networkInterfaces'])
-                if network_interface.primary:
-                    if self.group_by_security_group and \
-                       self._security_groups[resource_group].get(network_interface.id, None):
-                        host_vars['security_group'] = \
-                            self._security_groups[resource_group][network_interface.id]['name']
-                        host_vars['security_group_id'] = \
-                            self._security_groups[resource_group][network_interface.id]['id']
-                    host_vars['network_interface'] = network_interface.name
-                    host_vars['network_interface_id'] = network_interface.id
-                    host_vars['mac_address'] = network_interface.mac_address
-                    for ip_config in network_interface.ip_configurations:
-                        host_vars['private_ip'] = ip_config.private_ip_address
-                        host_vars['private_ip_alloc_method'] = ip_config.private_ip_allocation_method
-                        if self.use_private_ip:
-                            host_vars['ansible_host'] = ip_config.private_ip_address
-                        if ip_config.public_ip_address:
-                            public_ip_reference = self._parse_ref_id(ip_config.public_ip_address.id)
-                            public_ip_address = self._network_client.public_ip_addresses.get(
-                                public_ip_reference['resourceGroups'],
-                                public_ip_reference['publicIPAddresses'])
-                            if not self.use_private_ip:
-                                host_vars['ansible_host'] = public_ip_address.ip_address
-                            host_vars['public_ip'] = public_ip_address.ip_address
-                            host_vars['public_ip_name'] = public_ip_address.name
-                            host_vars['public_ip_alloc_method'] = public_ip_address.public_ip_allocation_method
-                            host_vars['public_ip_id'] = public_ip_address.id
-                            if public_ip_address.dns_settings:
-                                host_vars['fqdn'] = public_ip_address.dns_settings.fqdn
+            if vmss_vm:
+                host_vars['ansible_host'] = machine.private_ip_address
+                host_vars['public_ip'] = machine.public_ip_address
+            else:
+                for interface in machine.network_profile.network_interfaces:
+                    interface_reference = self._parse_ref_id(interface.id)
+                    network_interface = self._network_client.network_interfaces.get(
+                        interface_reference['resourceGroups'],
+                        interface_reference['networkInterfaces'])
+                    if network_interface.primary:
+                        if self.group_by_security_group and \
+                           self._security_groups[resource_group].get(network_interface.id, None):
+                            host_vars['security_group'] = \
+                                self._security_groups[resource_group][network_interface.id]['name']
+                            host_vars['security_group_id'] = \
+                                self._security_groups[resource_group][network_interface.id]['id']
+                        host_vars['network_interface'] = network_interface.name
+                        host_vars['network_interface_id'] = network_interface.id
+                        host_vars['mac_address'] = network_interface.mac_address
+                        for ip_config in network_interface.ip_configurations:
+                            host_vars['private_ip'] = ip_config.private_ip_address
+                            host_vars['private_ip_alloc_method'] = ip_config.private_ip_allocation_method
+                            if self.use_private_ip:
+                                host_vars['ansible_host'] = ip_config.private_ip_address
+                            if ip_config.public_ip_address:
+                                public_ip_reference = self._parse_ref_id(ip_config.public_ip_address.id)
+                                public_ip_address = self._network_client.public_ip_addresses.get(
+                                    public_ip_reference['resourceGroups'],
+                                    public_ip_reference['publicIPAddresses'])
+                                if not self.use_private_ip:
+                                    host_vars['ansible_host'] = public_ip_address.ip_address
+                                host_vars['public_ip'] = public_ip_address.ip_address
+                                host_vars['public_ip_name'] = public_ip_address.name
+                                host_vars['public_ip_alloc_method'] = public_ip_address.public_ip_allocation_method
+                                host_vars['public_ip_id'] = public_ip_address.id
+                                if public_ip_address.dns_settings:
+                                    host_vars['fqdn'] = public_ip_address.dns_settings.fqdn
 
             self._add_host(host_vars)
 
