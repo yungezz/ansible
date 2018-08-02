@@ -569,6 +569,8 @@ class AzureInventory(object):
                             help='Send debug messages to STDOUT')
         parser.add_argument('--host', action='store',
                             help='Get all information about an instance')
+        parser.add_argument('--vmss', action='store',
+                            help='Get all information about a virtual machine scale set')
         parser.add_argument('--pretty', action='store_true', default=False,
                             help='Pretty print JSON output(default: False)')
         parser.add_argument('--profile', action='store',
@@ -631,39 +633,40 @@ class AzureInventory(object):
 
     def get_vmss_vm_inventory(self):
         print('get vmss')
-        virtual_machine_scale_sets = self._compute_client.virtual_machine_scale_sets.list_all()
-#        print('raw vmss:' + virtual_machine_scale_sets)
-#        selected_scale_sets = self._selected_machines(virtual_machine_scale_sets)
-#        print('selected number:' + str(len(selected_scale_sets))) 
+        try:
+            virtual_machine_scale_sets = self._compute_client.virtual_machine_scale_sets.list_all()
+        except Exception as exc:
+            sys.exit("Error: fetching virtual machine scale set - {0}".format(str(exc)))
+
         vmss_vms = []
-        for scale_set in virtual_machine_scale_sets:
+        selected_vmsses = self._selected_vmss(virtual_machine_scale_sets)
+
+        for scale_set in selected_vmsses:
             vmss_vms += self.get_vm_instances_in_vmss(scale_set)
+
         print('vmss: ' + str(len(vmss_vms)))
         return vmss_vms
 
     def get_vm_instances_in_vmss(self, vmss):
         id_dict = azure_id_to_dict(vmss.id)
         resource_group = id_dict['resourceGroups']
-        vms = []
+        vm_instances = []
+        vms_raw = self._compute_client.virtual_machine_scale_set_vms.list(resource_group, vmss.name)
         nic_configs = self.get_vm_nics_for_vmss(resource_group, vmss.name)
-        for vm in self._compute_client.virtual_machine_scale_set_vms.list(resource_group, vmss.name):
-#            vm['name'] = vmss.name
-#            vm['resource_group'] = vmss.resource_group
-#            vm['location'] = vmss.location
-#            vm['tags'] = vmss.tags
+
+        for vm in vms_raw:
+
             for nic_config in nic_configs:
                 vm_id = azure_id_to_dict(vm.id)
                 nic_id = azure_id_to_dict(nic_config["id"])
                 if vm_id["virtualMachineScaleSets"] == nic_id["virtualMachineScaleSets"] and \
                    vm_id["virtualMachines"] == nic_id["virtualMachines"] and \
                    vm_id["resourceGroups"].lower() == nic_id["resourceGroups"].lower():
-                    vm.private_ip_address = nic_config.get("private_ip_address")
-                    vm.public_ip_address = nic_config.get("public_ip_address")
+                    vm.private_ip_address = nic_config.get("private_ip_address", None)
+                    vm.public_ip_address = nic_config.get("public_ip_address", None)
                     vm.hardware_profile = type('obj', (object,), {'vm_size': vmss.sku.name})
-                    vm.vmss_vm = True
-                    vm.vmss_name = vm_id["virtualMachineScaleSets"]
-                    vms.append(vm)
-        return vms
+                    vm_instances.append(vm)
+        return vm_instances
 
     def get_vm_nics_for_vmss(self, resource_group, name):
         vmss_nics = self._network_client.network_interfaces.list_virtual_machine_scale_set_network_interfaces(resource_group, name)
@@ -802,15 +805,14 @@ class AzureInventory(object):
             if self.locations and machine.location in self.locations:
                 selected_machines.append(machine)
 
-        for machine in virtual_machines:
-            if machine.get('vmss_vm', False):
-                if self._args.host and self._args.host == machine.name:
-                    selected_machines.append(machine)
-                if self.tags and self._tags_match(machine.tags, self.tags):
-                    selected_machines.append(machine)
-                if self.locations and machine.location in self.locations:
-                    selected_machines.append(machine)
         return selected_machines
+
+    def _selected_vmss(self, vmsses):
+        selected_vmsses = []
+        for vmss in vmsses:
+            if self._args.vmss and self._args.vmss == vmss.name:
+                selected_vmsses.append(vmss)
+        return selected_vmsses
 
     def _get_security_groups(self, resource_group):
         ''' For a given resource_group build a mapping of network_interface.id to security_group name '''
