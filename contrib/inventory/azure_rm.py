@@ -482,7 +482,7 @@ class AzureRM(object):
         if not self._network_client:
             self._network_client = self.get_mgmt_svc_client(NetworkManagementClient,
                                                             self._cloud_environment.endpoints.resource_manager,
-                                                            '2018-02-01')
+                                                            '2017-06-01')
             self._register('Microsoft.Network')
         return self._network_client
 
@@ -492,7 +492,7 @@ class AzureRM(object):
         if not self._resource_client:
             self._resource_client = self.get_mgmt_svc_client(ResourceManagementClient,
                                                              self._cloud_environment.endpoints.resource_manager,
-                                                             '2018-02-01')
+                                                             '2017-05-10')
         return self._resource_client
 
     @property
@@ -501,7 +501,7 @@ class AzureRM(object):
         if not self._compute_client:
             self._compute_client = self.get_mgmt_svc_client(ComputeManagementClient,
                                                             self._cloud_environment.endpoints.resource_manager,
-                                                            '2017-12-01')
+                                                            '2017-03-30')
             self._register('Microsoft.Compute')
         return self._compute_client
 
