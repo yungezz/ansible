@@ -107,6 +107,10 @@ required. For a specific host, this script returns the following variables:
   "virtual_machine_size": "Standard_DS4"
 }
 
+Run for Specific Virtual Machine Scale Set
+-----------------------
+When run for a specific Virtual Machine Scale Set using the --vmss option, a resource group is required.
+
 Groups
 ------
 When run in --list mode, instances are grouped by the following categories:
@@ -142,6 +146,10 @@ AZURE_TAGS=key1:value1,key2:value2
 
 If you don't need the powerstate, you can improve performance by turning off powerstate fetching:
 AZURE_INCLUDE_POWERSTATE=no
+
+Select hosts in Virtual machine scale set by setting below environment variable,
+or set include_vm_scale_sets in azure_rm.ini:
+AZURE_INCLUDE_VM_SCALE_SETS=yes
 
 azure_rm.ini
 ------------
@@ -257,7 +265,7 @@ AZURE_CONFIG_SETTINGS = dict(
     group_by_security_group='AZURE_GROUP_BY_SECURITY_GROUP',
     group_by_tag='AZURE_GROUP_BY_TAG',
     use_private_ip='AZURE_USE_PRIVATE_IP',
-    include_vm_scale_sets='INCLUDE_VM_SCALE_SETS'
+    include_vm_scale_sets='AZURE_INCLUDE_VM_SCALE_SETS'
 )
 
 AZURE_MIN_VERSION = "2.0.0"
@@ -606,11 +614,11 @@ class AzureInventory(object):
                 try:
                     virtual_machines = self._compute_client.virtual_machines.list(resource_group)
                     if self.include_vm_scale_sets:
-                        virtual_machines = list(virtual_machines).extend(self.get_vmss_vm_inventory(resource_group))
+                        virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory(resource_group)
 
                 except Exception as exc:
                     sys.exit("Error: fetching virtual machines for resource group {0} - {1}".format(resource_group, str(exc)))
-                if self._args.host or self.tags:
+                if self._args.host or self.tags orr self._args.vmss:
                     selected_machines = self._selected_machines(virtual_machines)
                     self._load_machines(selected_machines)
                 else:
@@ -620,7 +628,7 @@ class AzureInventory(object):
             try:
                 virtual_machines = self._compute_client.virtual_machines.list_all()
                 if self.include_vm_scale_sets:
-                    virtual_machines = list(virtual_machines) + (self.get_vmss_vm_inventory())
+                    virtual_machines = list(virtual_machines) + self.get_vmss_vm_inventory()
             except Exception as exc:
                 sys.exit("Error: fetching virtual machines - {0}".format(str(exc)))
 
@@ -629,15 +637,6 @@ class AzureInventory(object):
                 self._load_machines(selected_machines)
             else:
                 self._load_machines(virtual_machines)
-
-    def get_virtual_machines(self, resource_group=None):
-        try:
-            if resource_group:
-                return self._compute_client.virtual_machines.list(resource_group)
-            else:
-                return self._compute_client.virtual_machines.list_all()
-        except Exception as exc:
-            sys.exit("Error: featching virtual machine {0} - {1}".format(resource_group if resource_group else "", str(exc)))
 
     def get_vmss_vm_inventory(self, resource_group=None):
         try:
@@ -676,6 +675,7 @@ class AzureInventory(object):
                     vm.hardware_profile = type('obj', (object,), {'vm_size': vmss.sku.name})
                     vm.vmss_vm = True
                     vm.vmss_name = vm_id["virtualMachineScaleSets"]
+                    vm.nic_id = nic_config["id"]
                     vm_instances.append(vm)
         return vm_instances
 
@@ -767,6 +767,11 @@ class AzureInventory(object):
             if vmss_vm:
                 host_vars['ansible_host'] = machine.private_ip_address
                 host_vars['public_ip'] = machine.public_ip_address
+
+                if self.group_by_security_group and \
+                   self._security_groups[resource_group].get(machine.nic_id, None):
+                    host_vars['security_group'] = self._security_groups[resource_group][network_interface.id]['name']
+                    host_vars['security_group_id'] = self._security_groups[resource_group][network_interface.id]['id']
             else:
                 for interface in machine.network_profile.network_interfaces:
                     interface_reference = self._parse_ref_id(interface.id)
