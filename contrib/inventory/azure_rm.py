@@ -678,7 +678,7 @@ class AzureInventory(object):
                     vm.vmss_vm = True
                     vm.vmss_name = vm_id["virtualMachineScaleSets"]
                     vm.nic_id = nic_config["id"]
-                    vm.nic_name = nic_id["name"]
+                    vm.nic_name = nic_id["networkInterfaces"]
 
 
                     vm_instances.append(vm)
@@ -826,7 +826,7 @@ class AzureInventory(object):
                 selected_machines.append(machine)
             if self.locations and machine.location in self.locations:
                 selected_machines.append(machine)
-            if self._args.vmss and self._args.vmss == machine.vmss_name:
+            if self._args.vmss and self._args.vmss == getattr(machine, 'vmss_name', None):
                 selected_machines.append(machine)
 
         return selected_machines
