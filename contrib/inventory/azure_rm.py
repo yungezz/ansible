@@ -569,6 +569,8 @@ class AzureInventory(object):
                             help='Send debug messages to STDOUT')
         parser.add_argument('--host', action='store',
                             help='Get all information about an instance')
+        parser.add_argument('--vmss', action='store',
+                            help='Get all information about a virtual machine scale set')
         parser.add_argument('--pretty', action='store_true', default=False,
                             help='Pretty print JSON output(default: False)')
         parser.add_argument('--profile', action='store',
@@ -618,7 +620,7 @@ class AzureInventory(object):
             try:
                 virtual_machines = self._compute_client.virtual_machines.list_all()
                 if self.include_vm_scale_sets:
-                    virtual_machines = list(virtual_machines).extend(self.get_vmss_vm_inventory())
+                    virtual_machines = list(virtual_machines) + (self.get_vmss_vm_inventory())
             except Exception as exc:
                 sys.exit("Error: fetching virtual machines - {0}".format(str(exc)))
 
@@ -673,6 +675,7 @@ class AzureInventory(object):
                     vm.public_ip_address = nic_config.get("public_ip_address", None)
                     vm.hardware_profile = type('obj', (object,), {'vm_size': vmss.sku.name})
                     vm.vmss_vm = True
+                    vm.vmss_name = vm_id["virtualMachineScaleSets"]
                     vm_instances.append(vm)
         return vm_instances
 
@@ -805,20 +808,26 @@ class AzureInventory(object):
         selected_machines = []
 
         for machine in virtual_machines:
-            if self._args.host and not self.include_vm_scale_sets and self._args.host == machine.name:
+            if self._args.host and self._args.host == machine.name:
                 selected_machines.append(machine)
             if self.tags and self._tags_match(machine.tags, self.tags):
                 selected_machines.append(machine)
             if self.locations and machine.location in self.locations:
+                selected_machines.append(machine)
+            if self._args.vmss and self._args.vmss == machine.vmss_name:
                 selected_machines.append(machine)
 
         return selected_machines
 
     def _selected_vmss(self, vmsses):
         selected_vmsses = []
-        for vmss in vmsses:
-            if self._args.host and self._args.host == vmss.name:
-                selected_vmsses.append(vmss)
+
+        if self._args.vmss:
+            for vmss in vmsses:
+                if self._args.vmss == vmss.name:
+                    selected_vmsses.append(vmss)
+        else:
+            selected_vmsses = vmsses
         return selected_vmsses
 
     def _get_security_groups(self, resource_group):
