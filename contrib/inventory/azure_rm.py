@@ -624,7 +624,7 @@ class AzureInventory(object):
             except Exception as exc:
                 sys.exit("Error: fetching virtual machines - {0}".format(str(exc)))
 
-            if self._args.host or self.tags or self.locations:
+            if self._args.host or self.tags or self.locations or self._args.vmss:
                 selected_machines = self._selected_machines(virtual_machines)
                 self._load_machines(selected_machines)
             else:
@@ -814,7 +814,7 @@ class AzureInventory(object):
                 selected_machines.append(machine)
             if self.locations and machine.location in self.locations:
                 selected_machines.append(machine)
-            if self._args.vmss and self._args.vmss == machine.vmss_name:
+            if self._args.vmss and self._args.vmss == getattr(machine, 'vmss_name', None):
                 selected_machines.append(machine)
 
         return selected_machines
