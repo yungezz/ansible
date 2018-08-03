@@ -743,7 +743,7 @@ class AzureInventory(object):
                 operating_system_type=machine.storage_profile.os_disk.os_type.value
             )
 
-            if self.include_powerstate and not self.include_vm_scale_sets::
+            if self.include_powerstate and not self.include_vm_scale_sets:
                 host_vars['powerstate'] = self._get_powerstate(resource_group, machine.name)
 
             if machine.storage_profile.image_reference:
@@ -826,7 +826,7 @@ class AzureInventory(object):
                 selected_machines.append(machine)
             if self.locations and machine.location in self.locations:
                 selected_machines.append(machine)
-            if self._args.vmss and self._args.vmss == getattr(machine, 'vmss_name', None):
+            if self._args.vmss and self._args.vmss == machine.vmss_name:
                 selected_machines.append(machine)
 
         return selected_machines
